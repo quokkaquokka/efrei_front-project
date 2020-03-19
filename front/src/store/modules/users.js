@@ -36,7 +36,16 @@ const getters = {
     return false
   }
 }
+// POST /signin
+// username et password
 
+//POST /signup
+/* const data = {
+    password: this.password,
+    email: this.email,
+    firstname: this.firstname,
+    lastname: this.lastname
+  };*/
 const actions = {
   async fetchUser ({ commit }) {
     commit('AUTH_REQUEST')
@@ -49,10 +58,20 @@ const actions = {
     }
   },
 
-  async signin ({ commit }, { username, password }) {
+  async signin ({ commit }, { email, password }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/signin'), { username, password })
+      const { data } = await axios.post(api('/signin'), { email, password })
+      commit('AUTH_SUCCESS', data)
+    } catch (err) {
+      commit('AUTH_ERROR')
+    }
+  },
+
+  async signup ({ commit }, { email, password, firstname, lastname }) {
+    commit('AUTH_REQUEST')
+    try {
+      const { data } = await axios.post(api('/signup'), { email, password, firstname, lastname })
       commit('AUTH_SUCCESS', data)
     } catch (err) {
       commit('AUTH_ERROR')

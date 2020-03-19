@@ -1,9 +1,15 @@
 <template>
-  <div id="login">
-    <v-form class="login">
-      <h1>Sign in</h1>
-      <label>Username</label>
-      <input required v-model="username" type="text" placeholder="Username" />
+  <div id="signup">
+    <v-form class="signup">
+      <h1>Sign up</h1>
+      <label>Firstname</label>
+      <input required v-model="firstname" type="text" placeholder="Firstname" />
+      <br />
+      <label>Lastname</label>
+      <input required v-model="lastname" type="text" placeholder="lastname" />
+      <br />
+      <label>Email</label>
+      <input required v-model="email" type="text" placeholder="Email" />
       <br />
       <label>Password</label>
       <input required v-model="password" type="password" placeholder="Password" />
@@ -11,13 +17,16 @@
 
      <v-btn
         color="submit"
-        @click="login({
-          email: username,
-          password: password
+        @click="signup({
+          email: email,
+          password: password,
+          firstname: firstname,
+          lastname: lastname
         })"
       >
         Login
       </v-btn>
+      <router-link to="/signin">Already have an account? Sign In!</router-link> |
     </v-form>
     <br />
   </div>
@@ -29,8 +38,10 @@ export default {
   name: "login",
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
+      firstname: "",
+      lastname: ""
     };
   },
   computed: {
@@ -38,7 +49,7 @@ export default {
     ...mapState(["user"])
   },
   methods: {
-    ...mapActions("user", ["login"]),
+    ...mapActions("user", ["signup"]),
     ...mapMutations("user", ["AUTH_SUCCESS", "AUTH_ERROR"]),
   },
   mounted() {}
@@ -46,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-#login {
+#signup {
   width: 500px;
   border: 1px solid #cccccc;
   background-color: #ffffff;
