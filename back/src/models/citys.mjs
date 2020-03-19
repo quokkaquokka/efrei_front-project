@@ -2,7 +2,7 @@
 
 /*
 
-MODEL : ALGOLIA
+MODEL MONGO
 {
   "name": "Dreux",
   "postalCode": "28100",
@@ -81,6 +81,6 @@ MODEL : ALGOLIA
       "chiffre": 79
     }
   ],
-  "objectID": "185234750"
+  "_id": "185234750"
 }
 */
