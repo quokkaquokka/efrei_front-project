@@ -1,15 +1,3 @@
-
-// POST /signin
-// username et password
-
-//POST /signup
-/* const data = {
-    password: this.password,
-    email: this.email,
-    firstname: this.firstname,
-    lastname: this.lastname
-  };*/
-
 import axios from 'axios'
 import config from '../../client.config'
 
@@ -61,10 +49,10 @@ const actions = {
     }
   },
 
-  async login ({ commit }, { email, password }) {
+  async signin ({ commit }, { username, password }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/login'), { username: email, password })
+      const { data } = await axios.post(api('/signin'), { username, password })
       commit('AUTH_SUCCESS', data)
     } catch (err) {
       commit('AUTH_ERROR')
