@@ -6,7 +6,6 @@ import { getRecoveryToken, removeRecoveryToken } from './recoveryPassword.mjs'
 
 const COLLECTION_NAME = 'users'
 const MODEL = {
-  username: null,
   firstname: null,
   lastname: null,
   email: null,
