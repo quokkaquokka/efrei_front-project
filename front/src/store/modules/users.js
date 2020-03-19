@@ -1,3 +1,15 @@
+
+// POST /signin
+// username et password
+
+//POST /signup
+/* const data = {
+    password: this.password,
+    email: this.email,
+    firstname: this.firstname,
+    lastname: this.lastname
+  };*/
+
 import axios from 'axios'
 import config from '../../client.config'
 

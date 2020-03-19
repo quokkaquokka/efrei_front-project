@@ -1,10 +1,13 @@
 import axios from 'axios'
 import config from '../../client.config'
 
+// GET /ads -> recupere totue les annonces
+// GET /ads/{id}  -> lit une annonce via l'id
 /** @param {String} path */
 function api (path) {
   return config.apiURL + path
 }
+
 
 const state = {
   ads: []
