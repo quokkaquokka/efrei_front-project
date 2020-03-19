@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Pour tester ton code</router-link> |
+      <router-link to="/signin">Pour tester ton code</router-link> |
       <router-link
         v-if="isAuthenticated"
-        to="/"
+        to="/signin"
         v-on:click.native="this.logout()"
         replace
       >Logout</router-link><br>
