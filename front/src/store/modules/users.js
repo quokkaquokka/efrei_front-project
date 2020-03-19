@@ -9,13 +9,20 @@ function api (path) {
 const state = {
   connected: false,
   user: {
-    firstname: '',
-    lastname: '',
-    email: '',
-    role: {
-      name: '',
-      rights: []
-    }
+    username: null,
+    firstname: null,
+    lastname: null,
+    email: null,
+    password: null,
+    roles: [], // string array
+    groups: [], // string array
+    isActive: true,
+    deleted: false,
+    deletedDate: null,
+    createdDate: null,
+    lastModifiedDate: null,
+    activeAfterDate: null,
+    expirationDate: null
   },
   status: ''
 }
