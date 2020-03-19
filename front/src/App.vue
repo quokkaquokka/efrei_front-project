@@ -4,9 +4,32 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view @authenticated="isAuthenticated" />
   </div>
 </template>
+
+<script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+export default {
+  name: "App",
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters("user", ["isAuthenticated"]),
+    ...mapState(["user"])
+  },
+  mounted() {
+    if (!this.isAuthenticated) {
+      this.$router.replace({ name: "login" });
+    }
+  },
+  methods: {
+    ...mapActions("user", ["logout"]),
+    ...mapMutations("user", ["AUTH_SUCCESS", "AUTH_ERROR"])
+  }
+};
+</script>
 
 <style>
 #app {
