@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import usersStore from './modules/users'
+import userStore from './modules/user'
 import adsStore from './modules/ads'
 import citiesStore from './modules/cities'
 
@@ -12,8 +12,8 @@ export default new Vuex.Store({
   mutations: {},
   getters: {},
   modules: {
-    users: usersStore,
+    user: userStore,
     ads: adsStore,
-    cities: citiesStore,
+    cities: citiesStore
   }
 })

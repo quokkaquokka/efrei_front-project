@@ -8,7 +8,6 @@ function api (path) {
   return config.apiURL + path
 }
 
-
 const state = {
   ads: []
 }

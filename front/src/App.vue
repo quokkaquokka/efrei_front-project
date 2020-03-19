@@ -1,34 +1,45 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link
+        v-if="isAuthenticated"
+        to="/login"
+        v-on:click.native="this.logout()"
+        replace
+      >Logout</router-link><br>
+      <router-link
+        v-if="isAuthenticated"
+        to="/home"
+        replace
+      ><h1 align='center'>Title</h1></router-link>
     </div>
+
     <router-view @authenticated="isAuthenticated" />
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+
 export default {
-  name: "App",
-  data() {
-    return {};
+  name: 'App',
+  data () {
+    return {}
   },
   computed: {
-    ...mapGetters("user", ["isAuthenticated"]),
-    ...mapState(["user"])
+    ...mapGetters('user', ['isAuthenticated']),
+    ...mapState(['user'])
   },
-  mounted() {
+  mounted () {
     if (!this.isAuthenticated) {
-      this.$router.replace({ name: "login" });
+      this.$router.replace({ name: 'login' })
     }
   },
   methods: {
-    ...mapActions("user", ["logout"]),
-    ...mapMutations("user", ["AUTH_SUCCESS", "AUTH_ERROR"])
+    ...mapActions('user', ['logout']),
+    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR'])
   }
-};
+}
 </script>
 
 <style>

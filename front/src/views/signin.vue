@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <v-form class="login">
+    <form class="login">
       <h1>Sign in</h1>
       <label>Email</label>
       <input required v-model="email" type="text" placeholder="Email" />
@@ -9,7 +9,7 @@
       <input required v-model="password" type="password" placeholder="Password" />
       <hr />
 
-     <v-btn
+     <button
         color="submit"
         @click="signin({
           email: email,
@@ -17,33 +17,33 @@
         })"
       >
         Login
-      </v-btn>
+      </button>
       <router-link to="/signup">Don't have an account yet? Sign Up!</router-link> |
-    </v-form>
+    </form>
     <br />
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
-  name: "login",
-  data() {
+  name: 'login',
+  data () {
     return {
-      email: "",
-      password: "",
-    };
+      email: '',
+      password: ''
+    }
   },
   computed: {
-    ...mapGetters("user", ["isAuthenticated"]),
-    ...mapState(["user"])
+    ...mapGetters('user', ['isAuthenticated']),
+    ...mapState(['user'])
   },
   methods: {
-    ...mapActions("user", ["signin"]),
-    ...mapMutations("user", ["AUTH_SUCCESS", "AUTH_ERROR"]),
+    ...mapActions('user', ['signin']),
+    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR'])
   },
-  mounted() {}
-};
+  mounted () {}
+}
 </script>
 
 <style scoped>

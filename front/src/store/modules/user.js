@@ -9,7 +9,6 @@ function api (path) {
 const state = {
   connected: false,
   user: {
-    username: null,
     firstname: null,
     lastname: null,
     email: null,
@@ -36,16 +35,7 @@ const getters = {
     return false
   }
 }
-// POST /signin
-// username et password
 
-//POST /signup
-/* const data = {
-    password: this.password,
-    email: this.email,
-    firstname: this.firstname,
-    lastname: this.lastname
-  };*/
 const actions = {
   async fetchUser ({ commit }) {
     commit('AUTH_REQUEST')
@@ -94,7 +84,7 @@ const mutations = {
   AUTH_REQUEST (state) {
     state.status = 'loading'
   },
-  AUTH_SUCCESS (state, { username,
+  AUTH_SUCCESS (state, {
     firstname,
     lastname,
     email,
@@ -107,7 +97,8 @@ const mutations = {
     createdDate,
     lastModifiedDate,
     activeAfterDate,
-    expirationDate }) {
+    expirationDate
+  }) {
     state.status = 'success'
     state.connected = true
     state.user.firstname = firstname
@@ -129,7 +120,6 @@ const mutations = {
     state.connected = false
   },
   UNSET_USER (state) {
-    state.user.username = null
     state.user.firstname = null
     state.user.lastname = null
     state.user.email = null
