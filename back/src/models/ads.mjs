@@ -3,7 +3,7 @@
 const COLLECTION_NAME = 'ads'
 /*
 
-MODEL ALGOLIA
+MODEL
 Model example
 {
   "titre": "Maison/villa de 118 m² - 5 chambres - LORIENT ",
@@ -42,7 +42,7 @@ Model example
   "nbpieces": 6,
   "nbchambres": 5,
   "date_construction": "1962",
-  "objectID": "185233870"
+  "_id": "185233870"
 }
 
 */
