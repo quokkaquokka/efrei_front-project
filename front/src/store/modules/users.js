@@ -75,23 +75,55 @@ const mutations = {
   AUTH_REQUEST (state) {
     state.status = 'loading'
   },
-  AUTH_SUCCESS (state, { firstname, lastname, email, role }) {
+  AUTH_SUCCESS (state, { username,
+    firstname,
+    lastname,
+    email,
+    password,
+    roles, // string array
+    groups, // string array
+    isActive,
+    deleted,
+    deletedDate,
+    createdDate,
+    lastModifiedDate,
+    activeAfterDate,
+    expirationDate }) {
     state.status = 'success'
     state.connected = true
     state.user.firstname = firstname
     state.user.lastname = lastname
     state.user.email = email
-    state.user.role = role
+    state.user.password = password
+    state.user.roles = roles
+    state.user.groups = groups
+    state.user.isActive = isActive
+    state.user.deleted = deleted
+    state.user.deletedDate = deletedDate
+    state.user.createdDate = createdDate
+    state.user.lastModifiedDate = lastModifiedDate
+    state.user.activeAfterDate = activeAfterDate
+    state.user.expirationDate = expirationDate
   },
   AUTH_ERROR (state) {
     state.status = 'error'
     state.connected = false
   },
   UNSET_USER (state) {
-    state.user.firstname = ''
-    state.user.lastname = ''
-    state.user.email = ''
-    state.user.role = null
+    state.user.username = null
+    state.user.firstname = null
+    state.user.lastname = null
+    state.user.email = null
+    state.user.password = null
+    state.user.roles = [] // string array
+    state.user.groups = [] // string array
+    state.user.isActive = true
+    state.user.deleted = false
+    state.user.deletedDate = null
+    state.user.createdDate = null
+    state.user.lastModifiedDate = null
+    state.user.activeAfterDate = null
+    state.user.expirationDate = null
     state.connected = false
   }
 }
