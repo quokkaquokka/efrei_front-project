@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
+      <router-link to="/">Pour tester ton code</router-link> |
       <router-link
         v-if="isAuthenticated"
-        to="/login"
+        to="/"
         v-on:click.native="this.logout()"
         replace
       >Logout</router-link><br>
@@ -24,7 +25,8 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'App',
   data () {
-    return {}
+    return {
+    }
   },
   computed: {
     ...mapGetters('user', ['isAuthenticated']),
