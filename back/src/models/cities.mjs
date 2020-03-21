@@ -1,4 +1,21 @@
+'use strict'
+import mongodb from '../services/mongodb.mjs'
 
+const COLLECTION_NAME = 'cities'
+
+const getCities = async (filters = undefined) => {
+  return await mongodb.fetch(COLLECTION_NAME, filters)
+}
+
+const getCity = async(id = undefined) => {
+  if(id === undefined) return []
+  return await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+}
+
+export {
+  getCities,
+  getCity
+}
 
 /*
 
