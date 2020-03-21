@@ -67,4 +67,5 @@ export default {
   remove,
   disconnect: () => internals.client.close(),
   transaction,
+  ObjectID: mongodb.ObjectID
 }

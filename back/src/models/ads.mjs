@@ -7,8 +7,14 @@ const getAds = async (filters = undefined) => {
   return await mongodb.fetch(COLLECTION_NAME, filters)
 }
 
+const getAd = async(id = undefined) => {
+  if(id === undefined) return []
+  return await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+}
+
 export {
   getAds,
+  getAd
 }
 /*
 

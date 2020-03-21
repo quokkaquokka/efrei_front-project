@@ -4,24 +4,24 @@ import glob from 'glob'
 
 const register = async (server, options = {}) => {
   const routes = glob.sync('**/*.route.mjs', { absolute: true, cwd: server.app.cwd })
-  let errorOccured = false
+  // let errorOccured = false
 
   for (const absolutePath of routes) {
-    console.log('AbsolutPath', absolutePath)
     await import(absolutePath)
       .then(route => {
         server.route(route.default, options)
         console.log('Route: ', route.default.path, '(' + route.default.method + ')')
       })
       .catch(e => {
-        errorOccured = true
+        // errorOccured = true
         console.error('Error: cannot load route: ' + absolutePath)
+        throw e
       })
   }
 
-  if (errorOccured) {
-    throw new Error('Some errors occured while loading routes.')
-  }
+  // if (errorOccured) {
+  //   throw new Error('Some errors occured while loading routes.')
+  // }
 }
 
 const plugin = {
