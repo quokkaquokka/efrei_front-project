@@ -1,10 +1,12 @@
-import { getAds } from '../model/ads.mjs'
+import { getAds } from '../../models/ads.mjs'
 
 export default {
   method: 'GET',
-  path: '/ads',
-  options: {},
-  handler: (request, h) => {
+  path: '/api/v1/ads',
+  options: {
+    auth: false
+  },
+  handler: async (request, h) => {
     return await getAds()
   }
 }

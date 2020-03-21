@@ -1,6 +1,15 @@
 'use strict'
+import mongodb from '../services/mongodb.mjs'
 
 const COLLECTION_NAME = 'ads'
+
+const getAds = async (filters = undefined) => {
+  return await mongodb.fetch(COLLECTION_NAME, filters)
+}
+
+export {
+  getAds,
+}
 /*
 
 MODEL
@@ -47,10 +56,4 @@ Model example
 
 */
 
-const getAds = async (filters = undefined) => {
-  return await mongodb.fetch(COLLECTION_NAME, filters)
-}
 
-export {
-  getAds,
-}

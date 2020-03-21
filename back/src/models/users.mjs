@@ -1,7 +1,7 @@
-import omit from 'lodash/omit'
-import extend from 'lodash/extend'
+import omit from 'lodash/omit.js'
+import extend from 'lodash/extend.js'
 import Bcrypt from 'bcrypt'
-import mongodb from '../services/mongodb'
+import mongodb from '../services/mongodb.mjs'
 import { getRecoveryToken, removeRecoveryToken } from './recoveryPassword.mjs'
 
 const COLLECTION_NAME = 'users'

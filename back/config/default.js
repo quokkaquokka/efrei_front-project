@@ -24,12 +24,12 @@ module.exports = {
         name: 'session.mjs',
         local: true,
         options: {
-          key: defer(function() { return this.session.hashKey }),
+          key: defer(function () { return this.session.hashKey }),
           cookieKey: false,
-          duration: defer(function() { return this.session.duration }), // defer permet to get the session.value of this config object
+          duration: defer(function () { return this.session.duration }), // defer permet to get the session.value of this config object
           verifyOptions: {
             ignoreExpiration: false,
-            algorithms: defer(function() { return [this.session.algorithm] }),
+            algorithms: defer(function () { return [this.session.algorithm] }),
           }
         }
       },

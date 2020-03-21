@@ -3,7 +3,7 @@
 import config from 'config'
 import { addRecoveryToken } from '../../models/recoveryPassword.mjs'
 import { getUserByEmail } from '../../models/users.mjs'
-import { send } from '../../services/mailer.mjs'
+import mailer from '../../services/mailer.mjs'
 
 export default {
   method: 'GET',
@@ -22,7 +22,7 @@ export default {
     const token = await addRecoveryToken(email)
     const urlTarget = config.domainFront + '/reset-password?token=' + token
 
-    await send({
+    await mailer.send({
       from: 'no-reply@chooseyourself.fr',
       to: email,
       subject: 'Récupération de mot de passe',

@@ -1,4 +1,4 @@
-import { getRecoveryTokens } from '../../../models/recoveryPassword'
+import { getRecoveryTokens } from '../../../models/recoveryPassword.mjs'
 
 export default {
   method: 'GET',

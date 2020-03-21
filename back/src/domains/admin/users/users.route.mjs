@@ -1,4 +1,4 @@
-import { getUsers } from '../../../models/users'
+import { getUsers } from '../../../models/users.mjs'
 
 export default {
   method: 'GET',
