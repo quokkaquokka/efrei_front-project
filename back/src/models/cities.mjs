@@ -1,7 +1,20 @@
 'use strict'
 import mongodb from '../services/mongodb.mjs'
+import extend from 'lodash/extend.js'
 
 const COLLECTION_NAME = 'cities'
+
+const MODEL = {
+  name: null,
+  postalCode: null,
+  prixMoyen: null,
+  tailleLogement: [],
+  locataires: null,
+  propriétaires: null,
+  catSocioprofessionelle: [],
+  eta_scolaires: [],
+  parkings: []
+}
 
 const getCities = async (filters = undefined) => {
   return await mongodb.fetch(COLLECTION_NAME, filters)
@@ -12,9 +25,24 @@ const getCity = async(id = undefined) => {
   return await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
 }
 
+const insertCity = async city => {
+  const cityObj = extend({}, MODEL, city)
+  return await mongodb.insert(COLLECTION_NAME, cityObj)
+}
+
+const deleteCity = async (id = undefined) => {
+  const result = {
+    n: 0
+  }
+  if(id === undefined) return result
+  return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+}
+
 export {
   getCities,
-  getCity
+  getCity,
+  insertCity,
+  deleteCity
 }
 
 /*

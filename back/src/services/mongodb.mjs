@@ -29,10 +29,8 @@ const insert = async (collectionName, data) => {
   const collection = internals.db.collection(collectionName)
 
   if (Array.isArray(data)) {
-    // console.log('mongodb.insertMany - data', data)
     return collection.insertMany(data)
   }
-  // console.log('mongodb.insertOne - data', data)
   return collection.insertOne(data)
 }
 

@@ -1,0 +1,27 @@
+BACK
+- API Ad
+    [x] GET /ads
+    [x] GET /ads/id
+    [x] DELETE /ads/id
+    [x] POST /ads
+    [] PUT /ads/id
+- API AdsUser
+    [x] GET /ads/user/{uid}
+    [x] GET /ads/{aid}/user/{uid}
+    [x] DELETE /ads/user/{id}
+    [x] POST /ads/user
+    [] PUT /ads/user/id
+- API Cities
+    [x] GET /Cities
+    [x] GET /cities/id
+    [x] POST /cities
+    [x] DELETE /cities
+    [] PUT /cities/id
+- API CtitiesUser
+    [] GET /cities/user/{uid}
+    [] GET /cities/{aid}/user/{uid}
+    [] DELETE /cities/user/{id}
+    [] POST /cities/user
+    [] PUT /cities/user/id
+
+FRONT
