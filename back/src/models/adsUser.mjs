@@ -1,3 +1,24 @@
+'use strict'
+import mongodb from '../services/mongodb.mjs'
+
+const COLLECTION_NAME = 'adsUser'
+
+const getAdsUser = async (uid = undefined) => {
+    if(uid === undefined) return []
+    return await mongodb.fetch(COLLECTION_NAME, {"userId": uid})
+}
+
+const getAdUser = async(aid = undefined, uid = undefined) => {
+  if(uid === undefined || aid === undefined) return []
+  return await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "annonceId": aid})
+}
+
+export {
+  getAdsUser,
+  getAdUser
+}
+
+
 /*
 {
     "_id":5e768bae1c9d440000e09b90",

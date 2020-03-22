@@ -1,7 +1,35 @@
 'use strict'
 import mongodb from '../services/mongodb.mjs'
+import extend from 'lodash/extend.js'
 
 const COLLECTION_NAME = 'ads'
+
+const MODEL = {
+  titre: null,
+  img: [],
+  id_annonce: null,
+  ville: null,
+  source: null,
+  type: null,
+  prix: null,
+  cp: null,
+  surface: null,
+  prixm2: null,
+  rendement: -1,
+  loyer: -1,
+  investissement: null,
+  transaction: "vente",
+  description: null,
+  neuf: false,
+  permalien: null,
+  phone: null,
+  equipement: [],
+  surface_terrain: 0,
+  nbpieces: null,
+  nbchambres: null,
+  date_construction: "N.C"
+}
+
 
 const getAds = async (filters = undefined) => {
   return await mongodb.fetch(COLLECTION_NAME, filters)
@@ -12,9 +40,25 @@ const getAd = async(id = undefined) => {
   return await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
 }
 
+const insertAd = async ad => {
+  console.log('Insert Ad', typeof ad)
+  const adObj = extend({}, MODEL, ad)
+  return await mongodb.insert(COLLECTION_NAME, adObj)
+}
+
+const deleteAd = async (id = undefined) => {
+  const result = {
+    n: 0
+  }
+  if(id === undefined) return result
+  return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+}
+
 export {
   getAds,
-  getAd
+  getAd,
+  insertAd,
+  deleteAd
 }
 /*
 
