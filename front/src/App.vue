@@ -4,7 +4,7 @@
       <router-link
         v-if="isAuthenticated"
         to="/signin"
-        v-on:click.native="this.logout()"
+        v-on:click.native="logout()"
         replace
       >Logout</router-link><br>
       <router-link
@@ -32,14 +32,13 @@ export default {
     ...mapState(['user'])
   },
   mounted () {
-    console.log(this.isAuthenticated)
     if (!this.isAuthenticated) {
       this.$router.replace({ name: 'signin' })
     }
   },
   methods: {
     ...mapActions('user', ['logout']),
-    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR'])
+    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR', 'UNSET_USER'])
   }
 }
 </script>
