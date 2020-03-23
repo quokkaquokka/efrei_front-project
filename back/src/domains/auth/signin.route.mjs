@@ -8,18 +8,18 @@ import { addSession } from '../../services/sessions.mjs'
 
 export default {
   method: 'POST',
-  path: '/signin',
+  path: '/api/v1/signin',
   options: {
     auth: {
       mode: 'try'
     }
   },
   handler: async (request, h) => {
-    const { username, password } = request.payload
-    if (!username || !password) {
+    const { email, password } = request.payload
+    if (!email || !password) {
       return h.response({ status: 'ERROR', error: 'MISSING_CREDENTIAL' }).code(400)
     }
-    const account = await validateCredential(username, password)
+    const account = await validateCredential(email, password)
     if (!account) {
       return h.response({ status: 'KO', code: 'INVALID_CREDENTIAL' }).code(400)
     }
