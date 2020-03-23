@@ -1,24 +1,23 @@
 <template>
-  <div id="login">
-    <form class="login">
+  <div id='login'>
+    <form class='login'>
       <h1>Sign in</h1>
       <label>Email</label>
-      <input required v-model="email" type="text" placeholder="Email" />
+      <input required v-model='email' type='text' placeholder='Email' />
       <br />
       <label>Password</label>
-      <input required v-model="password" type="password" placeholder="Password" />
+      <input required v-model='password' type='password' placeholder='Password' />
       <hr />
 
-     <button
-        color="submit"
-        @click="signin({
+      <button
+        color='submit'
+        @click='signin({
           email: email,
           password: password
-        })"
-      >
-        Login
-      </button>
-      <router-link to="/signup">Don't have an account yet? Sign Up!</router-link> |
+        })'
+      >Login</button>
+      <br />
+      <router-link to='/signup'>Don't have an account yet? Sign Up!</router-link>|
     </form>
     <br />
   </div>
@@ -55,4 +54,4 @@ export default {
   margin-top: 50px;
   padding: 20px;
 }
-</style>s
+</style>

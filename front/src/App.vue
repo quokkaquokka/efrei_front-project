@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/signin">Pour tester ton code</router-link> |
       <router-link
         v-if="isAuthenticated"
         to="/signin"
@@ -34,7 +33,7 @@ export default {
   },
   mounted () {
     if (!this.isAuthenticated) {
-      this.$router.replace({ name: 'login' })
+      this.$router.replace({ name: 'signin' })
     }
   },
   methods: {
