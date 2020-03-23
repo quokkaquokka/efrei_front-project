@@ -32,6 +32,7 @@ export default {
     ...mapState(['user'])
   },
   mounted () {
+    console.log(this.isAuthenticated)
     if (!this.isAuthenticated) {
       this.$router.replace({ name: 'signin' })
     }

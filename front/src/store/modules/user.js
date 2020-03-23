@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '../../client.config'
+import router from '../../router/index'
 
 /** @param {String} path */
 function api (path) {
@@ -53,6 +54,7 @@ const actions = {
     try {
       const { data } = await axios.post(api('/signin'), { email, password })
       commit('AUTH_SUCCESS', data)
+      router.replace('/home')
     } catch (err) {
       commit('AUTH_ERROR')
     }
@@ -63,6 +65,7 @@ const actions = {
     try {
       const { data } = await axios.post(api('/signup'), { email, password, firstname, lastname })
       commit('AUTH_SUCCESS', data)
+      router.replace('/home')
     } catch (err) {
       commit('AUTH_ERROR')
     }
@@ -74,6 +77,7 @@ const actions = {
       const { data } = await axios.post(api('/logout'))
       commit('UNSET_USER', data)
       commit('AUTH_SUCCESS')
+      router.replace('/signin')
     } catch (err) {
       commit('AUTH_ERROR')
     }
