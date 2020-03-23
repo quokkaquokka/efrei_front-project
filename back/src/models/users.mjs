@@ -95,9 +95,9 @@ const insertUser = async user => {
 }
 
 const addUserIfNotExists = async user => {
-  const { username } = user
+  const { email } = user
   await mongodb.transaction(async () => {
-    const data = await getUserByUsername(username)
+    const data = await getUserByEmail(email)
     console.log('Users', data)
     if (data) {
       throw new Error('USER_ALREADY_EXISTS')
