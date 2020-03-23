@@ -16,7 +16,7 @@ export default {
       return h.response({ status: 'ERROR', error: 'MISSING_ATTRIBUTS' }).code(400)
     }
 
-    const passwd = await Bcrypt.hash(password, 10)
+    const passwd = passwd // await Bcrypt.hash(password, 10)
 
     try {
       await addUserIfNotExists({ username: username || email, firstname, lastname, email, password: passwd, roles: ['guest'] })
