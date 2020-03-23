@@ -21,14 +21,14 @@ const MODEL = {
   expirationDate: null
 }
 
-const validateCredential = async (username, password) => {
-  const user = await getUserByUsername(username)
-
+const validateCredential = async (email, password) => {
+  const user = await getUserByEmail(email)
+  console.log('user', user)
   if (!user) {
     throw new Error('INVALID_CREDENTIAL')
   }
 
-  // inactive account
+  // inactive account500Internal S500Internal Server Errorerver Error
   if (user.isActive !== undefined && !user.isActive) {
     throw new Error('INACTIVE_USER')
   }
@@ -44,7 +44,8 @@ const validateCredential = async (username, password) => {
     }
   }
 
-  if (user && (await Bcrypt.compare(password, user.password))) {
+  if (user && password === user.password) {
+    // if (user && (await Bcrypt.compare(password, user.password))) {
     return omit(user, ["password"]);
   }
 
@@ -67,7 +68,6 @@ const getUserByEmail = async email => {
   if (users.length === 0) return
   if (users.length !== 1) throw new Error('MULTIPLE_USER_FOR_EMAIL')
 
-  console.log('users[0]', users[0])
   return users[0]
 }
 
