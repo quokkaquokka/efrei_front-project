@@ -1,6 +1,6 @@
 export default {
   method: 'GET',
-  path: '/logout',
+  path: '/api/v1/logout',
   options: {},
   handler: (request, h) => {
     request.cookieAuth.clear()
