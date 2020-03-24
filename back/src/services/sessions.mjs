@@ -5,10 +5,10 @@ import moment from 'moment'
 
 const sessions = []
 
-const findSession = async sessionId => {
+const findSession = sessionId => {
   const currentTimestamp = moment().valueOf()
 
-  return sessions.find(([id, expiration]) => id === sessionId && expiration > currentTimestamp)
+  return sessions.find(({id, expiration}) => id === sessionId && expiration > currentTimestamp)
 }
 
 const removeSession = sessionId => {
@@ -20,6 +20,7 @@ const addSession = async session => {
     .add(config.session.duration, 'm')
     .valueOf()
   const internalSession = extend(session, { expiration })
+  console.log('add jwt ', internalSession)
 
   sessions.push(internalSession)
 }

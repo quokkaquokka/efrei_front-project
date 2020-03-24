@@ -4,12 +4,10 @@ import extend from 'lodash/extend.js'
 import { findSession } from '../services/sessions.mjs'
 
 const validate = async (decoded, request, h) => {
-  const userSession = await findSession(decoded.id)
-
+  const userSession = findSession(decoded.id)
   if (!userSession) {
     return { isValid: false }
   }
-
   return { isValid: true, credentials: userSession }
 }
 

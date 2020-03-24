@@ -28,6 +28,6 @@ export default {
     var token = jwt.sign(newUserSession, config.session.hashKey, { algorithm: config.session.algorithm })
     addSession(newUserSession)
 
-    return h.response({ status: 'OK', user: account, token }).header('Authorization', token)
+    return h.response({ status: 'OK', user: account, token }).header('Authorization', 'Bearer ' + token)
   }
 }
