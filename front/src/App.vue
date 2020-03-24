@@ -9,6 +9,11 @@
       >Logout</router-link><br>
       <router-link
         v-if="isAuthenticated"
+        to="/ads"
+        replace
+      ><h1 align='center'>Liste des annonces</h1></router-link>
+      <router-link
+        v-if="isAuthenticated"
         to="/home"
         replace
       ><h1 align='center'>Title</h1></router-link>

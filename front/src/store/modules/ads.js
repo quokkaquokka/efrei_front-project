@@ -18,7 +18,7 @@ const getters = {
 
 const mutations = {
   addAd (state, ad) {
-    const existing = state.ads.findIndex(e => e.id === ad.id)
+    const existing = state.ads.findIndex(e => e._id === ad._id)
     if (existing !== -1) {
       state.ads[existing] = ad
     } else {
