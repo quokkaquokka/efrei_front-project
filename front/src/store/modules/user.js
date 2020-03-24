@@ -10,11 +10,11 @@ function api (path) {
 const state = {
   connected: false,
   user: {
-    firstname: null,
-    lastname: null,
-    email: null,
-    password: null,
-    roles: [], // string array
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    scopes: [], // string array
     groups: [], // string array
     isActive: true,
     deleted: false,
@@ -28,7 +28,8 @@ const state = {
 }
 
 const getters = {
-  isAuthenticated: state => !!state.connected,
+  isAuthenticated: state => state.connected,
+  getUser: state => state.user,
   hasAccessRight: state => right => {
     if (state.user.role && state.user.role.rights) {
       return !!state.user.role.rights.find(r => r === right)
@@ -41,7 +42,7 @@ const actions = {
   async fetchUser ({ commit }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.get(api('/me'))
+      const { data } = await axios.get(api('/user'))
 
       commit('AUTH_SUCCESS', data)
     } catch (err) {
@@ -76,7 +77,6 @@ const actions = {
     try {
       const { data } = await axios.post(api('/logout'))
       commit('UNSET_USER', data)
-      commit('AUTH_SUCCESS')
       router.replace('/signin')
     } catch (err) {
       commit('AUTH_ERROR')
@@ -89,19 +89,21 @@ const mutations = {
     state.status = 'loading'
   },
   AUTH_SUCCESS (state, {
-    firstname,
-    lastname,
-    email,
-    password,
-    roles, // string array
-    groups, // string array
-    isActive,
-    deleted,
-    deletedDate,
-    createdDate,
-    lastModifiedDate,
-    activeAfterDate,
-    expirationDate
+    user: {
+      firstname,
+      lastname,
+      email,
+      password,
+      scopes, // string array
+      groups, // string array
+      isActive,
+      deleted,
+      deletedDate,
+      createdDate,
+      lastModifiedDate,
+      activeAfterDate,
+      expirationDate
+    }
   }) {
     state.status = 'success'
     state.connected = true
@@ -109,7 +111,7 @@ const mutations = {
     state.user.lastname = lastname
     state.user.email = email
     state.user.password = password
-    state.user.roles = roles
+    state.user.scopes = scopes
     state.user.groups = groups
     state.user.isActive = isActive
     state.user.deleted = deleted
@@ -124,11 +126,12 @@ const mutations = {
     state.connected = false
   },
   UNSET_USER (state) {
-    state.user.firstname = null
-    state.user.lastname = null
-    state.user.email = null
-    state.user.password = null
-    state.user.roles = [] // string array
+    state.connected = false
+    state.user.firstname = ''
+    state.user.lastname = ''
+    state.user.email = ''
+    state.user.password = ''
+    state.user.scopes = [] // string array
     state.user.groups = [] // string array
     state.user.isActive = true
     state.user.deleted = false
@@ -137,7 +140,6 @@ const mutations = {
     state.user.lastModifiedDate = null
     state.user.activeAfterDate = null
     state.user.expirationDate = null
-    state.connected = false
   }
 }
 export default {
