@@ -1,15 +1,16 @@
 <template>
   <div id='login'>
     <form class='login'>
-      <h1>Sign in</h1>
-      <label>Email</label>
-      <input required v-model='email' type='text' placeholder='Email' />
-      <br />
-      <label>Password</label>
-      <input required v-model='password' type='password' placeholder='Password' />
-      <hr />
-
-      <button
+      <h1>Se connecter</h1>
+      <div class="form-group">
+        <label>Email</label>
+        <input required v-model='email' type='text' class="form-control" placeholder='Email'/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input required v-model='password' type='password' class="form-control" placeholder='Mot de passe' />
+      </div>
+      <button class="btn btn-outline-primary" style="float: right;"
         color='submit'
         @click='signin({
           email: email,
