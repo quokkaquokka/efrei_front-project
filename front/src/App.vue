@@ -19,6 +19,15 @@
         Liste des annonces
       </router-link>
       </li>
+      <li class="nav-item">
+       <router-link
+          v-if="isAuthenticated"
+          to="/cities"
+          replace
+        >
+        Liste des villes
+      </router-link>
+      </li>
     </ul>
     <router-link class="form-inline my-2 my-lg-0"
       v-if="isAuthenticated"
