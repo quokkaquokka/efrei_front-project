@@ -1,18 +1,18 @@
 <template>
-    <div class="ad">
-        <div class="row">
-            <div class="col-md" id="item">
-                <div class="description">
-                    <span id="departement">{{ city.departement }}</span> <br>
-                    <button type="button" class="btn btn-outline-primary"  id="favorite" @click="addItemFavori"><i class="far fa-star"></i> Suivre cette ville</button>
-                    <router-link :to="`/city/${city._id}`">
-                        <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
-                    </router-link>
-                </div>
-                <h4 id="myH4">Prix moyen: {{ city.prixMoyen }} €</h4>
-            </div>
+  <div class="ad">
+    <div class="row">
+      <div class="col-md" id="item">
+        <div class="description">
+          <span id="departement">{{ city.departement }}</span> <br>
+          <button type="button" class="btn btn-outline-primary"  id="favorite" @click="addItemFavori"><i class="far fa-star"></i> Suivre cette ville</button>
+          <router-link :to="`/city/${city._id}`">
+            <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
+          </router-link>
         </div>
+        <h4 id="myH4">Prix moyen: {{ city.prixMoyen }} €</h4>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

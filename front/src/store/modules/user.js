@@ -1,6 +1,7 @@
 import axios from 'axios'
 import config from '../../client.config'
 import router from '../../router/index'
+import jwtDecode from 'jwt-decode'
 
 /** @param {String} path */
 function api (path) {
@@ -9,6 +10,8 @@ function api (path) {
 
 const state = {
   connected: false,
+  token: null,
+  tokenExpiryDate: null,
   user: {
     firstname: '',
     lastname: '',
@@ -28,6 +31,8 @@ const state = {
 }
 
 const getters = {
+  token: state => state.token,
+  tokenExpiry: state => state.tokenExpiry,
   isAuthenticated: state => state.connected,
   getUser: state => state.user,
   hasAccessRight: state => right => {
@@ -43,7 +48,6 @@ const actions = {
     commit('AUTH_REQUEST')
     try {
       const { data } = await axios.get(api('/user'))
-
       commit('AUTH_SUCCESS', data)
     } catch (err) {
       commit('AUTH_ERROR')
@@ -55,6 +59,13 @@ const actions = {
     try {
       const { data } = await axios.post(api('/signin'), { email, password })
       commit('AUTH_SUCCESS', data)
+      // stock the token of the user
+      state.token = data.token
+      localStorage.setItem('token', state.token)
+      // decode the token to have the expiration date
+      const decoded = jwtDecode(data.token)
+      state.tokenExpiryDate = decoded.exp
+      localStorage.setItem('tokenExpiry', state.tokenExpiryDate)
       router.replace('/home')
     } catch (err) {
       commit('AUTH_ERROR')
@@ -127,6 +138,7 @@ const mutations = {
   },
   UNSET_USER (state) {
     state.connected = false
+    state.token = null
     state.user.firstname = ''
     state.user.lastname = ''
     state.user.email = ''

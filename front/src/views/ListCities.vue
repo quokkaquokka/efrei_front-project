@@ -1,7 +1,7 @@
 <template>
   <div class="list-cities">
     <div class="row">
-      <div class="col-9" id="ad">
+      <div class="col-9" id="city">
         <SearchAds :search="searchAttributes"> </SearchAds>
         <div v-for="city in cities" :key="city._id">
           <CityItem :city="city"></CityItem>
@@ -28,7 +28,6 @@ export default {
   }),
   async mounted () {
     await this.fetchCities()
-    console.log('cities', this.cities)
   },
   computed: {
     ...mapState('cities', ['cities'])
@@ -48,9 +47,9 @@ export default {
   background-color: #F9F9F9;
   max-width: 250px
 }
-
-#ad {
-  margin-right: auto;
+#city{
   margin-left: auto;
+  margin-right: auto;
 }
+
 </style>
