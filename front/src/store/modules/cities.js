@@ -31,10 +31,23 @@ const mutations = {
   }
 }
 
+const getters = {
+  getCityById: state => id => {
+    return state.cities.find(_ => {
+      return _._id === id
+    })
+  }
+}
+
 const actions = {
   async fetchCities ({ commit }) {
     const { data } = await axios.get(api('/cities'))
     data.forEach(d => commit('addCity', d))
+  },
+
+  async fetchCity ({ commit }, { id }) {
+    const { data } = await axios.get(api('/cities/' + id))
+    commit('addCity', data)
   }
 }
 
@@ -42,5 +55,6 @@ export default {
   namespaced: true,
   state,
   actions,
-  mutations
+  mutations,
+  getters
 }

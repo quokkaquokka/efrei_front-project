@@ -21,9 +21,6 @@ export default {
     city: Object
   },
   methods: {
-    getImgUrl (ad) {
-      return ad.img[0]
-    },
     addItemFavori () {
       // TODO: implement
       // add in user the item
