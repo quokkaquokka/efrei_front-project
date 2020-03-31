@@ -28,7 +28,6 @@
       </button>
       <router-link to="/signin">Already have an account? Sign In!</router-link> |
     </form>
-    <br />
   </div>
 </template>
 

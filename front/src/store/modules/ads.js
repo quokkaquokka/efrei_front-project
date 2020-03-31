@@ -41,7 +41,7 @@ const actions = {
 
   async fetchAd ({ commit }, { id }) {
     const { data } = await axios.get(api('/ads/' + id))
-    commit('addAd', data)
+    commit('addCity', data)
   },
 
   async createAd ({ commit }, { ad }) {

@@ -20,8 +20,6 @@ export default {
     ...mapActions('user', ['fetchUser'])
   },
   async mounted () {
-    console.log(this.isAuthenticated)
-    console.log(this.getUser)
   }
 }
 </script>

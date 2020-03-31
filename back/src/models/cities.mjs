@@ -22,7 +22,8 @@ const getCities = async (filters = undefined) => {
 
 const getCity = async(id = undefined) => {
   if(id === undefined) return []
-  return await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+  const data = await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+  return data[0] 
 }
 
 const insertCity = async city => {
