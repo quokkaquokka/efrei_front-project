@@ -52,12 +52,21 @@ export default {
     ...mapActions('ads', ['createAd']),
     ...mapActions('ads', ['deleteAd']),
     ...mapActions('cities', ['fetchCity']),
+    ...mapActions('cities', ['createCity']),
+    ...mapActions('cities', ['deleteCity']),
     async test () {
       // const tmp = await this.fetchAd({ id: '5e7332c41c9d440000a38461' })
       // const ads = { titre: 'totooooo' }
       // this.createAd({ ad: ads })
       // this.deleteAd({ adId: '5e8263c4f8a1491b6a2c503c' })
       // const tmp2 = await this.fetchCity({ id: '5e7332071c9d440000a38460' })
+      /* const city = {
+        firstname: 'toto',
+        lastname: 'ttt',
+        email: 'trtr'
+      } */
+      // await this.createCity({ city: city })
+      // this.deleteCity({ cityId: '5e82f9351c9d440000a34179' })
     }
   },
   mounted () {}
