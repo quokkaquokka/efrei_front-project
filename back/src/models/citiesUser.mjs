@@ -5,15 +5,16 @@ import extend from 'lodash/extend.js'
 const COLLECTION_NAME = 'citiesUser'
 
 const MODEL = {
-  name: null,
-  postalCode: null,
+  userId: null,
+  villeId: null,
   prixMoyen: null,
-  tailleLogement: [],
-  locataires: null,
-  propriétaires: null,
-  catSocioprofessionelle: [],
-  eta_scolaires: [],
-  parkings: []
+  hotels: [],
+  nbHotels: null,
+  quartiers: [],
+  attractivites: [],
+  routes: [],
+  transports: [],
+  demographie: null
 }
 
 const getCitiesUser = async (uid = undefined) => {
