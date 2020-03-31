@@ -26,6 +26,10 @@
     <button class="btn btn-outline-primary" style="float: right;"
       @click='test'
     >TEST</button>
+    <div v-for="city in citiesUser" :key="city._id">
+      <p>{{ city._id }}</p>
+      <p>{{ city.userId }}</p>
+    </div>
   </div>
 </template>
 
@@ -41,19 +45,16 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['isAuthenticated']),
-    ...mapState(['user'])
+    ...mapState(['user']),
     // test
+    ...mapState('citiesUser', ['citiesUser'])
   },
   methods: {
     ...mapActions('user', ['signin']),
     ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR']),
     // test
-    ...mapActions('ads', ['fetchAd']),
-    ...mapActions('ads', ['createAd']),
-    ...mapActions('ads', ['deleteAd']),
-    ...mapActions('cities', ['fetchCity']),
-    ...mapActions('cities', ['createCity']),
-    ...mapActions('cities', ['deleteCity']),
+    ...mapActions('citiesUser', ['fetchCitiesUser']),
+    ...mapActions('citiesUser', ['fetchCityUser']),
     async test () {
       // const tmp = await this.fetchAd({ id: '5e7332c41c9d440000a38461' })
       // const ads = { titre: 'totooooo' }
@@ -69,7 +70,9 @@ export default {
       // this.deleteCity({ cityId: '5e82f9351c9d440000a34179' })
     }
   },
-  mounted () {}
+  async mounted () {
+    await this.fetchCitiesUser({ uid: '5e734aab1c9d440000a38469' })
+  }
 }
 </script>
 
