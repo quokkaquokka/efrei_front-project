@@ -35,12 +35,7 @@ const getters = {
   tokenExpiry: state => state.tokenExpiry,
   isAuthenticated: state => state.connected,
   getUser: state => state.user,
-  hasAccessRight: state => right => {
-    if (state.user.role && state.user.role.rights) {
-      return !!state.user.role.rights.find(r => r === right)
-    }
-    return false
-  }
+  hasAccessRight: state => state.user.scopes.includes('admin')
 }
 
 const actions = {

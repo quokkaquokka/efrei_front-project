@@ -15,7 +15,7 @@
       <div class="form-group">
         <label>Type</label><br>
         <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="switchMaison" v-model="ancien">
+          <input type="checkbox" class="custom-control-input" id="switchMaison" v-model="maison">
           <label class="custom-control-label" for="switchMaison">Maison</label>
         </div>
         <div class="custom-control custom-switch">
