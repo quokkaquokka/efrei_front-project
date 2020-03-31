@@ -1,6 +1,6 @@
 <template>
-  <div id='login'>
-    <form class='login'>
+  <div id='signin'>
+    <form class='signin'>
       <h1>Sign in</h1>
       <label>Email</label>
       <input required v-model='email' type='text' placeholder='Email' />
@@ -15,7 +15,7 @@
           email: email,
           password: password
         })'
-      >Login</button>
+      >Sign In</button>
       <br />
       <router-link to='/signup'>Don't have an account yet? Sign Up!</router-link>|
     </form>
@@ -26,7 +26,7 @@
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
-  name: 'login',
+  name: 'signin',
   data () {
     return {
       email: '',
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-#login {
+#signin {
   width: 500px;
   border: 1px solid #cccccc;
   background-color: #ffffff;
