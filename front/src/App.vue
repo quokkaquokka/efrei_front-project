@@ -1,18 +1,16 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark"  style="background-color: #00A0C6;">
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+  <div v-if="isAuthenticated" class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
         <router-link
-          v-if="isAuthenticated"
           to="/home"
           replace
         >Accueil</router-link>
       </li>
       <li class="nav-item">
        <router-link
-          v-if="isAuthenticated"
           to="/ads"
           replace
         >
@@ -21,16 +19,23 @@
       </li>
       <li class="nav-item">
        <router-link
-          v-if="isAuthenticated"
           to="/cities"
           replace
         >
         Liste des villes
       </router-link>
       </li>
+      <li class="nav-item">
+       <router-link
+          v-if="hasAccessRight"
+          to="/dashcities"
+          replace
+        >
+        Dashboard villes
+      </router-link>
+      </li>
     </ul>
     <router-link class="form-inline my-2 my-lg-0"
-      v-if="isAuthenticated"
       to="/signin"
       v-on:click.native="logout()"
       replace>
@@ -52,12 +57,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['isAuthenticated']),
+    ...mapGetters('user', ['isAuthenticated', 'hasAccessRight']),
     ...mapState(['user'])
   },
   mounted () {
     if (!this.isAuthenticated) {
-      this.$router.replace({ name: 'signin' })
+      this.$router.push('/signin')
     }
   },
   methods: {

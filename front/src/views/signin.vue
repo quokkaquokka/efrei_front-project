@@ -16,7 +16,7 @@
           email: email,
           password: password
         })'
-      >Login</button>
+      >Sign In</button>
       <br />
       <router-link to='/signup'>Don't have an account yet? Sign Up!</router-link>|
     </form>
@@ -36,7 +36,7 @@
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
-  name: 'login',
+  name: 'signin',
   data () {
     return {
       email: '',
@@ -45,39 +45,17 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['isAuthenticated']),
-    ...mapState(['user']),
-    // test
-    ...mapState('citiesUser', ['citiesUser'])
+    ...mapState(['user'])
   },
   methods: {
     ...mapActions('user', ['signin']),
-    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR']),
-    // test
-    ...mapActions('citiesUser', ['fetchCitiesUser']),
-    ...mapActions('citiesUser', ['fetchCityUser']),
-    async test () {
-      // const tmp = await this.fetchAd({ id: '5e7332c41c9d440000a38461' })
-      // const ads = { titre: 'totooooo' }
-      // this.createAd({ ad: ads })
-      // this.deleteAd({ adId: '5e8263c4f8a1491b6a2c503c' })
-      // const tmp2 = await this.fetchCity({ id: '5e7332071c9d440000a38460' })
-      /* const city = {
-        firstname: 'toto',
-        lastname: 'ttt',
-        email: 'trtr'
-      } */
-      // await this.createCity({ city: city })
-      // this.deleteCity({ cityId: '5e82f9351c9d440000a34179' })
-    }
-  },
-  async mounted () {
-    await this.fetchCitiesUser({ uid: '5e734aab1c9d440000a38469' })
+    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR'])
   }
 }
 </script>
 
 <style scoped>
-#login {
+#signin {
   width: 500px;
   border: 1px solid #cccccc;
   background-color: #ffffff;

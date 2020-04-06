@@ -10,6 +10,8 @@
 import axios from 'axios'
 import config from '../../client.config'
 
+// GET /ads -> recupere totue les annonces
+// GET /ads/{id}  -> lit une annonce via l'id
 /** @param {String} path */
 function api (path) {
   return config.apiURL + path
@@ -25,12 +27,6 @@ const mutations = {
       state.cities[existing] = city
     } else {
       state.cities.push(city)
-    }
-  },
-  removeCity (state, { cityId }) {
-    const existing = state.cities.findIndex(e => e.id === cityId)
-    if (existing !== -1) {
-      state.cities.splice(existing, 1)
     }
   }
 }
@@ -52,16 +48,6 @@ const actions = {
   async fetchCity ({ commit }, { id }) {
     const { data } = await axios.get(api('/cities/' + id))
     commit('addCity', data)
-  },
-
-  async createCity ({ commit }, { city }) {
-    const { data } = await axios.post(api('/cities'), city)
-    commit('addCity', data)
-  },
-
-  async deleteCity ({ commit }, { cityId }) {
-    await axios.delete(api('/cities/' + cityId))
-    commit('removeCity', { cityId })
   }
 }
 
