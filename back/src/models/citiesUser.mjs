@@ -24,7 +24,8 @@ const getCitiesUser = async (uid = undefined) => {
 
 const getCityUser = async(uid = undefined, cid = undefined) => {
   if(uid === undefined || cid === undefined) return []
-  return await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "villeId": cid})
+  const data = await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "villeId": cid})
+  return data[0]
 }
 
 const insertCityUser = async cityUser => {

@@ -25,10 +25,8 @@ const mutations = {
     const existing = state.citiesUser.findIndex(e => e._id === cityUser._id)
     if (existing !== -1) {
       state.citiesUser[existing] = cityUser
-      console.log('already existe')
     } else {
       state.citiesUser.push(cityUser)
-      console.log('push', state.citiesUser)
     }
   },
   removeCityUser (state, { cityUserId }) {
@@ -45,11 +43,10 @@ const getters = {
 const actions = {
   async fetchCitiesUser ({ commit }, { uid }) {
     const { data } = await axios.get(api('/cities/user/' + uid))
-    console.log('data', data)
     data.forEach(d => commit('addCityUser', d))
   },
 
-  async fetchCityUser ({ commit }, { cid }, { uid }) {
+  async fetchCityUser ({ commit }, { uid, cid }) {
     const { data } = await axios.get(api('/cities/' + cid + '/user/' + uid))
     commit('addCityUser', data)
   },

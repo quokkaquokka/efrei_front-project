@@ -1,6 +1,6 @@
 <template>
-  <div id='login'>
-    <form class='login'>
+  <div id='signin'>
+    <form>
       <h1>Se connecter</h1>
       <div class="form-group">
         <label>Email</label>
@@ -20,16 +20,6 @@
       <br />
       <router-link to='/signup'>Don't have an account yet? Sign Up!</router-link>|
     </form>
-    <br>
-    <br>
-    <br>
-    <button class="btn btn-outline-primary" style="float: right;"
-      @click='test'
-    >TEST</button>
-    <div v-for="city in citiesUser" :key="city._id">
-      <p>{{ city._id }}</p>
-      <p>{{ city.userId }}</p>
-    </div>
   </div>
 </template>
 
