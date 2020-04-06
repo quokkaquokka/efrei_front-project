@@ -26,6 +26,10 @@
     <button class="btn btn-outline-primary" style="float: right;"
       @click='test'
     >TEST</button>
+    <div v-for="city in citiesUser" :key="city._id">
+      <p>{{ city._id }}</p>
+      <p>{{ city.userId }}</p>
+    </div>
   </div>
 </template>
 
@@ -42,25 +46,11 @@ export default {
   computed: {
     ...mapGetters('user', ['isAuthenticated']),
     ...mapState(['user'])
-    // test
   },
   methods: {
     ...mapActions('user', ['signin']),
-    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR']),
-    // test
-    ...mapActions('ads', ['fetchAd']),
-    ...mapActions('ads', ['createAd']),
-    ...mapActions('ads', ['deleteAd']),
-    ...mapActions('cities', ['fetchCity']),
-    async test () {
-      // const tmp = await this.fetchAd({ id: '5e7332c41c9d440000a38461' })
-      // const ads = { titre: 'totooooo' }
-      // this.createAd({ ad: ads })
-      // this.deleteAd({ adId: '5e8263c4f8a1491b6a2c503c' })
-      // const tmp2 = await this.fetchCity({ id: '5e7332071c9d440000a38460' })
-    }
-  },
-  mounted () {}
+    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR'])
+  }
 }
 </script>
 
