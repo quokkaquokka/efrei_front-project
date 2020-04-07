@@ -27,28 +27,30 @@ const fetch = async (collectionName, query = {}) => {
 
 const insert = async (collectionName, data) => {
   const collection = internals.db.collection(collectionName)
-
   if (Array.isArray(data)) {
-    return collection.insertMany(data)
+    const resultMany = await collection.insertMany(data)
+    return resultMany.ops
   }
-  return collection.insertOne(data)
+  const result = await collection.insertOne(data)
+  return result.ops
 }
 
 const update = async (collectionName, query, options = {}) => {
   const collection = await internals.db.collection(collectionName)
-  return collection.updateMany(query, options)
+  const result = await collection.updateMany(query, options)
+  return { modifiedCount: result.modifiedCount }
   // return collection.updateOne(query, options)
 }
 
 const remove = async (collectionName, query, options = {}) => {
   const collection = await internals.db.collection(collectionName)
-  return collection.deleteMany(query, options)
+  const result = await collection.deleteMany(query, options)
+  return { deleteCount: result.deletedCount }
   // return collection.deleteOne(query, options)
 }
 
 const transaction = async (operationsFunc, transactionOptions = {}) => {
   const session = internals.client.startSession()
-
   try {
     await session.withTransaction(operationsFunc, transactionOptions)
   } finally {
