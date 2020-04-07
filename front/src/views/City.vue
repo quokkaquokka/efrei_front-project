@@ -4,19 +4,19 @@
       <div class="col-9" id="city">
         <CityItem :city="city"></CityItem>
         <div class="col-6" id="cityDescriptionsLeft">
-          <DoughnutChart
+          <Chart
             :dataChart="dataPopulation"
-          ></DoughnutChart>
+          ></Chart>
         </div>
         <div class="col-6" id="cityDescriptionsRight">
-          <DoughnutChart
+          <Chart
             :dataChart="dataTypeLogement"
-          ></DoughnutChart>
+          ></Chart>
         </div>
         <div class="col-6" id="cityDescriptionsLeft">
-          <DoughnutChart
+          <Chart
             :dataChart="dataSocio"
-          ></DoughnutChart>
+          ></Chart>
         </div>
         <div class="col-6" id="cityDescriptionsRight">
           <h3>Parkings</h3>
@@ -41,12 +41,12 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import CityItem from '../components/CityItem.vue'
-import DoughnutChart from '../components/Chart.vue'
+import Chart from '../components/Chart.vue'
 import CityForm from '../components/CityForm.vue'
 export default {
   components: {
     CityItem,
-    DoughnutChart,
+    Chart,
     CityForm
   },
   data: () => ({
