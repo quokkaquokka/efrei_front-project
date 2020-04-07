@@ -59,6 +59,11 @@ const actions = {
   async deleteCityUser ({ commit }, { cityId }) {
     await axios.delete(api('/cities/user/' + cityId))
     commit('removeCityUser', { cityId })
+  },
+
+  async updateCityUser ({ commit }, { cityUser }) {
+    const { data } = await axios.put(api('/cities/user'), cityUser)
+    commit('addCityUser', data)
   }
 }
 

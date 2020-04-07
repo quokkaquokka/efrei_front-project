@@ -36,14 +36,12 @@ const insert = async (collectionName, data) => {
 
 const update = async (collectionName, query, options = {}) => {
   const collection = await internals.db.collection(collectionName)
-
   return collection.updateMany(query, options)
   // return collection.updateOne(query, options)
 }
 
 const remove = async (collectionName, query, options = {}) => {
   const collection = await internals.db.collection(collectionName)
-
   return collection.deleteMany(query, options)
   // return collection.deleteOne(query, options)
 }

@@ -21,7 +21,8 @@ const getAdsUser = async (uid = undefined) => {
 
 const getAdUser = async(aid = undefined, uid = undefined) => {
   if(uid === undefined || aid === undefined) return []
-  return await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "annonceId": aid})
+  const data = await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "annonceId": aid})
+  return data[0]
 }
 
 const deleteAdUser = async (id = undefined) => {
@@ -38,11 +39,25 @@ const insertAdUser = async adUser => {
     return await mongodb.insert(COLLECTION_NAME, adUserObj)
 }
 
+const updateAdUser = async (adUser = undefined) => {
+    const id = adUser._id
+    delete adUser._id
+    try {
+      return await mongodb.update(COLLECTION_NAME, { _id: new mongodb.ObjectID(id) }, { $set: { ...adUser } })
+    } catch(e) {
+      const result = {
+        nModified: 0
+      }
+      return result
+    }
+}
+
 export {
   getAdsUser,
   getAdUser,
   deleteAdUser,
-  insertAdUser
+  insertAdUser,
+  updateAdUser
 }
 
 
