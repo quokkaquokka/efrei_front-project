@@ -57,6 +57,7 @@ const actions = {
   },
 
   async createCity ({ commit }, { city }) {
+    // console.log(city)
     const { data } = await axios.post(api('/cities'), city)
     commit('addCity', data)
   },

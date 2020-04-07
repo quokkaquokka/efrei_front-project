@@ -59,7 +59,7 @@
             <input type="text" class="form-control" v-model='prixTaille' placeholder='Ex: 380 €'>
           </div>
           <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addHotel'>Ajouter</button>
+            <button type="button" class="btn btn-outline-info" @click='addTaille'>Ajouter</button>
           </div>
         </div>
       </form>
@@ -132,16 +132,14 @@
         </div>
       </form>
     </div>
-    <button type="button" class="btn btn-outline-primary mt-3" @click='add' style="float: right">Ajouter la ville</button>
+    <button type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
   </div>
 
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  props: {
-    cityId: String
-  },
   data: () => ({
     city: {
       name: '',
@@ -163,6 +161,7 @@ export default {
     chiffreParking: ''
   }),
   methods: {
+    ...mapActions('cities', ['createCity']),
     addTaille () {
       this.prixTaille.replace('€', '')
       this.prixTaille.replace(' ', '')
@@ -191,11 +190,10 @@ export default {
       this.nameParking = ''
       this.chiffreParking = null
     },
-    initUserCity () {
-      // si jamais la ville est deja une ville de l'utilisateur la charger
-    },
-    add () {
-      console.log(this.city)
+    async addCity () {
+      // console.log(this.city)
+      await this.createCity({ city: this.city })
+      this.$router.push('/dashcities')
     }
   }
 }
