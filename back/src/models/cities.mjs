@@ -23,7 +23,7 @@ const getCities = async (filters = undefined) => {
 const getCity = async(id = undefined) => {
   if(id === undefined) return []
   const data = await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
-  return data[0] 
+  return data[0]
 }
 
 const insertCity = async city => {
@@ -39,11 +39,25 @@ const deleteCity = async (id = undefined) => {
   return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
 }
 
+const updateCity = async (city = undefined) => {
+  const id = city._id
+  delete city._id
+  try {
+    return await mongodb.update(COLLECTION_NAME, { _id: new mongodb.ObjectID(id) }, { $set: { ...city } })
+  } catch(e) {
+    const result = {
+      nModified: 0
+    }
+    return result
+  }
+}
+
 export {
   getCities,
   getCity,
   insertCity,
-  deleteCity
+  deleteCity,
+  updateCity
 }
 
 /*

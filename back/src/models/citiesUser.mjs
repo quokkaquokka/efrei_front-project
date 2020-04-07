@@ -5,15 +5,16 @@ import extend from 'lodash/extend.js'
 const COLLECTION_NAME = 'citiesUser'
 
 const MODEL = {
-  name: null,
-  postalCode: null,
+  userId: null,
+  villeId: null,
   prixMoyen: null,
-  tailleLogement: [],
-  locataires: null,
-  propriétaires: null,
-  catSocioprofessionelle: [],
-  eta_scolaires: [],
-  parkings: []
+  hotels: [],
+  nbHotels: null,
+  quartiers: [],
+  attractivites: [],
+  routes: [],
+  transports: [],
+  demographie: null
 }
 
 const getCitiesUser = async (uid = undefined) => {
@@ -23,7 +24,8 @@ const getCitiesUser = async (uid = undefined) => {
 
 const getCityUser = async(uid = undefined, cid = undefined) => {
   if(uid === undefined || cid === undefined) return []
-  return await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "villeId": cid})
+  const data = await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "villeId": cid})
+  return data[0]
 }
 
 const insertCityUser = async cityUser => {
@@ -39,9 +41,23 @@ const deleteCityUser = async (id = undefined) => {
   return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
 }
 
+const updateCityUser = async (cityUser = undefined) => {
+  const id = cityUser._id
+  delete cityUser._id
+  try {
+    return await mongodb.update(COLLECTION_NAME, { _id: new mongodb.ObjectID(id) }, { $set: { ...cityUser } })
+  } catch(e) {
+    const result = {
+      nModified: 0
+    }
+    return result
+  }
+}
+
 export {
   getCitiesUser,
   getCityUser,
   insertCityUser,
-  deleteCityUser
+  deleteCityUser,
+  updateCityUser
 }

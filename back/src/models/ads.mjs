@@ -54,12 +54,28 @@ const deleteAd = async (id = undefined) => {
   return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
 }
 
+const updateAd = async (ad = undefined) => {
+  const id = ad._id
+  delete ad._id
+  try {
+    return await mongodb.update(COLLECTION_NAME, { _id: new mongodb.ObjectID(id) }, { $set: { ...ad } })
+  } catch(e) {
+    const result = {
+      nModified: 0
+    }
+    return result
+  }
+}
+
 export {
   getAds,
   getAd,
   insertAd,
-  deleteAd
+  deleteAd,
+  updateAd
 }
+
+
 /*
 
 MODEL

@@ -28,6 +28,12 @@ const mutations = {
     } else {
       state.cities.push(city)
     }
+  },
+  removeCity (state, { cityId }) {
+    const existing = state.cities.findIndex(e => e.id === cityId)
+    if (existing !== -1) {
+      state.cities.splice(existing, 1)
+    }
   }
 }
 
@@ -47,6 +53,21 @@ const actions = {
 
   async fetchCity ({ commit }, { id }) {
     const { data } = await axios.get(api('/cities/' + id))
+    commit('addCity', data)
+  },
+
+  async createCity ({ commit }, { city }) {
+    const { data } = await axios.post(api('/cities'), city)
+    commit('addCity', data)
+  },
+
+  async deleteCity ({ commit }, { cityId }) {
+    await axios.delete(api('/cities/' + cityId))
+    commit('removeCity', { cityId })
+  },
+
+  async updateCity ({ commit }, { city }) {
+    const { data } = await axios.put(api('/cities'), city)
     commit('addCity', data)
   }
 }

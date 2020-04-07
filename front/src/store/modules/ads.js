@@ -1,8 +1,6 @@
 import axios from 'axios'
 import config from '../../client.config'
 
-// GET /ads -> recupere totue les annonces
-// GET /ads/{id}  -> lit une annonce via l'id
 /** @param {String} path */
 function api (path) {
   return config.apiURL + path
@@ -41,7 +39,7 @@ const actions = {
 
   async fetchAd ({ commit }, { id }) {
     const { data } = await axios.get(api('/ads/' + id))
-    commit('addCity', data)
+    commit('addAd', data)
   },
 
   async createAd ({ commit }, { ad }) {
@@ -54,8 +52,8 @@ const actions = {
     commit('removeAd', { adId })
   },
 
-  async updateAd ({ commit }, { id, ad }) {
-    const { data } = await axios.put(api('/ads/' + id), ad)
+  async updateAd ({ commit }, { ad }) {
+    const { data } = await axios.put(api('/ads'), ad)
     commit('addAd', data)
   }
 }
