@@ -40,7 +40,7 @@ export default {
     },
     async removeCity (cityId) {
       await this.deleteCity({ cityId: cityId })
-      this.fetchCities()
+      await this.fetchCities()
       console.log(this.cities)
     }
   }
