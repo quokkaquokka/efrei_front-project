@@ -2,7 +2,8 @@
   <div class="list-cities">
     <div class="row">
       <div class="col-9" id="city">
-        <SearchAds :search="searchAttributes"> </SearchAds>
+        <SearchAds :search="searchAttributes"> </SearchAds><br>
+        <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit" @click="addCity"><i class="fas fa-plus-square"></i> Ajouter une ville</button>
         <div v-for="city in cities" :key="city._id">
           <CityDash :city="city"></CityDash>
         </div>
@@ -14,7 +15,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import CityDash from '../components/CityDash.vue'
-import SearchAds from '../components/SearchDash.vue'
+import SearchAds from '../components/SearchBar.vue'
 export default {
   components: {
     CityDash,
@@ -35,7 +36,8 @@ export default {
   methods: {
     ...mapActions('cities', ['fetchCities']),
     addCity () {
-      //  TODO: implement
+      console.log('ADD CITY')
+      this.$router.push('/addcity')
     }
   }
 }
