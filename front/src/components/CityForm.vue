@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import ItemArrayForm from '../components/ItemArrayForm.vue'
 export default {
   components: {
@@ -156,11 +156,12 @@ export default {
     }
   }),
   methods: {
+    ...mapActions('citiesUser', ['createCityUser']),
     addHotel () {
-      this.prixHotel.replace('€', '')
+      /* this.prixHotel.replace('€', '')
       this.prixHotel.replace(' ', '')
-      const prix = parseInt(this.prixHotel, 10)
-      this.citiesUser.hotels.push({ name: this.nameHotel, prix: prix })
+      const prix = parseInt(this.prixHotel, 10) */
+      this.citiesUser.hotels.push({ name: this.nameHotel, prix: this.prixHotel })
       this.nameHotel = ''
       this.prixHotel = null
     },
@@ -178,16 +179,26 @@ export default {
     initUserCity () {
       // si jamais la ville est deja une ville de l'utilisateur la charger
     },
-    save () {
-      console.log(this.quartiers)
-      console.log(this.routes)
+    async save () {
+      if (!this.getUser) {
+        // display an error message for the connection of the user
+        return
+      }
+      this.citiesUser.userId = this.getUser._id
+      this.citiesUser.quartiers = this.quartiers.items
+      this.citiesUser.routes = this.routes.items
+      this.citiesUser.transports = this.transports.items
+      this.citiesUser.villeId = this.cityId
+      console.log(this.citiesUser, this.citiesUser)
+      await this.createCityUser({ cityUser: this.citiesUser })
       // sauvegarder dans le user le city user
+      // si elle a un _id, appeler le update
     }
   },
   computed: {
     ...mapState('cities', ['cities']),
     ...mapGetters('cities', ['getCityById']),
-    // charger la liste des villes de l'utilisateur
+    ...mapGetters('user', ['getUser']),
     city () {
       return this.getCityById(this.cityId) || { name: 'Loading..' }
     }

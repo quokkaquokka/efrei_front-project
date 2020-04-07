@@ -13,6 +13,7 @@ const state = {
   token: null,
   tokenExpiryDate: null,
   user: {
+    _id: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -96,6 +97,7 @@ const mutations = {
   },
   AUTH_SUCCESS (state, {
     user: {
+      _id,
       firstname,
       lastname,
       email,
@@ -113,6 +115,7 @@ const mutations = {
   }) {
     state.status = 'success'
     state.connected = true
+    state.user._id = _id
     state.user.firstname = firstname
     state.user.lastname = lastname
     state.user.email = email
