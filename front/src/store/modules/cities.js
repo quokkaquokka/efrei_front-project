@@ -31,8 +31,6 @@ const mutations = {
   },
   removeCity (state, cityId) {
     const existing = state.cities.findIndex(e => e._id === cityId)
-    console.log('existing = ' + existing)
-    console.log('cityId = ' + cityId)
     if (existing !== -1) {
       state.cities.splice(existing, 1)
     }
