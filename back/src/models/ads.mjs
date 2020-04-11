@@ -32,7 +32,25 @@ const MODEL = {
 
 
 const getAds = async (filters = undefined) => {
-  return await mongodb.fetch(COLLECTION_NAME, filters)
+  console.log(filters)
+  let request = undefined
+  // si un des parametres n'est pas null on met un $and sinon juste un $or
+  if(filters) {
+    if(filters.prix || filters.etat || filters.type || filters.surface || filters.prixm2) {
+      console.log('Advanced search')
+      request = {
+        $and : [
+          { $text: { $search: filters } },
+        ]
+      };
+      request.$and.push({ prix: 1 })
+    } else {
+      request = { $text: { $search: filters.ville } }
+      console.log('simple search', request)
+    }
+  }
+  
+  return await mongodb.fetch(COLLECTION_NAME, request)
 }
 
 const getAd = async(id = undefined) => {

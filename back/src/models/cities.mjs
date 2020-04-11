@@ -11,13 +11,19 @@ const MODEL = {
   tailleLogement: [],
   locataires: null,
   propriétaires: null,
+  departement: null,
   catSocioprofessionelle: [],
   eta_scolaires: [],
   parkings: []
 }
 
 const getCities = async (filters = undefined) => {
-  return await mongodb.fetch(COLLECTION_NAME, filters)
+  let request = undefined
+  if(filters) {
+    request = { $text: { $search: filters } }
+  }
+ 
+  return await mongodb.fetch(COLLECTION_NAME, request)
 }
 
 const getCity = async(id = undefined) => {

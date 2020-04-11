@@ -7,6 +7,8 @@ export default {
     auth: false
   },
   handler: async (request, h) => {
-    return await getAds()
+    const params = request.query
+    const filter = params.filters ? JSON.parse(params.filters) : undefined 
+    return await getAds(filter)
   }
 }
