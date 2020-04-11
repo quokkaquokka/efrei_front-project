@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import CityDash from '../components/CityDash.vue'
 import SearchAds from '../components/SearchBar.vue'
 export default {
@@ -35,6 +35,7 @@ export default {
   },
   methods: {
     ...mapActions('cities', ['fetchCities', 'deleteCity']),
+    ...mapMutations('cities', ['addCity', 'removeCity']),
     addCity () {
       this.$router.push('/addcity')
     },
