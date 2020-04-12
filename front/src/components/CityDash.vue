@@ -4,7 +4,7 @@
       <div class="col-md" id="item">
         <div class="description">
           <span id="departement">{{ city.departement }}</span> <br>
-          <button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteCity"><i class="fas fa-trash"></i> Supprimer</button>
+          <button type="button" class="btn btn-outline-primary"  id="delete" @click="$emit('city-deleted', city._id)"><i class="fas fa-trash"></i> Supprimer</button>
           <button type="button" class="btn btn-outline-primary"  id="edit" @click="editCity"><i class="fas fa-edit"></i> Modifier</button>
           <router-link :to="`/city/${city._id}`">
             <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
@@ -24,9 +24,6 @@ export default {
   methods: {
     editCity () {
       this.$router.push(`/editcity/${this.city._id}`)
-    },
-    deleteCity () {
-      // TODO: implement
     }
   }
 }

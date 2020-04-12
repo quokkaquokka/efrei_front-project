@@ -29,8 +29,8 @@ const mutations = {
       state.cities.push(city)
     }
   },
-  removeCity (state, { cityId }) {
-    const existing = state.cities.findIndex(e => e.id === cityId)
+  removeCity (state, cityId) {
+    const existing = state.cities.findIndex(e => e._id === cityId)
     if (existing !== -1) {
       state.cities.splice(existing, 1)
     }
@@ -62,17 +62,17 @@ const actions = {
 
   async createCity ({ commit }, { city }) {
     const { data } = await axios.post(api('/cities'), city)
-    commit('addCity', data)
+    commit('addCity', data[0])
   },
 
   async deleteCity ({ commit }, { cityId }) {
     await axios.delete(api('/cities/' + cityId))
-    commit('removeCity', { cityId })
+    commit('removeCity', cityId)
   },
 
   async updateCity ({ commit }, { city }) {
-    const { data } = await axios.put(api('/cities'), city)
-    commit('addCity', data)
+    await axios.put(api('/cities'), city)
+    commit('addCity', city)
   }
 }
 

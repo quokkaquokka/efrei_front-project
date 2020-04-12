@@ -139,16 +139,27 @@
         </div>
       </form>
     </div>
-    <button type="button" class="btn btn-outline-primary mt-3" @click='editCity' style="float: right">Mettre à jour la ville</button>
+    <button type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
   </div>
 
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   data: () => ({
-    city: [],
+    city: {
+      name: '',
+      departement: '',
+      postalCode: null,
+      prixMoyen: null,
+      tailleLogement: [],
+      locataires: null,
+      propriétaires: null,
+      catSocioprofessionelle: [],
+      eta_scolaires: [],
+      parkings: []
+    },
     nameTaille: '',
     pourcentageTaille: null,
     prixTaille: null,
@@ -158,14 +169,10 @@ export default {
     chiffreParking: ''
   }),
   computed: {
-    ...mapState('cities', ['cities']),
-    ...mapGetters('cities', ['getCityById'])
-  },
-  mounted () {
-    this.city = this.getCityById(this.$route.params.id)
+    ...mapState('cities', ['cities'])
   },
   methods: {
-    ...mapActions('cities', ['updateCity']),
+    ...mapActions('cities', ['createCity']),
     ...mapMutations('cities', ['addCity']),
     addTaille () {
       this.prixTaille.replace('€', '')
@@ -204,8 +211,8 @@ export default {
     deleteParking (parking) {
       this.city.parkings.splice(parking, 1)
     },
-    async editCity () {
-      await this.updateCity({ city: this.city })
+    async addCity () {
+      await this.createCity({ city: this.city })
       this.$router.push('/dashcities')
     }
   }

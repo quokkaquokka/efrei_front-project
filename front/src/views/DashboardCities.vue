@@ -2,9 +2,13 @@
   <div class="list-cities">
     <div class="row">
       <div class="col-9" id="city">
-        <SearchAds :search="searchAttributes"> </SearchAds>
+        <SearchBar
+          :search="searchAttributes"
+          :function="searchAction">
+        </SearchBar>
+        <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit" @click="addCity"><i class="fas fa-plus-square"></i> Ajouter une ville</button>
         <div v-for="city in cities" :key="city._id">
-          <CityDash :city="city"></CityDash>
+          <CityDash :city="city" v-on:city-deleted="removeCity"></CityDash>
         </div>
       </div>
     </div>
@@ -12,18 +16,19 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import CityDash from '../components/CityDash.vue'
-import SearchAds from '../components/SearchDash.vue'
+import SearchBar from '../components/SearchBar.vue'
 export default {
   components: {
     CityDash,
-    SearchAds
+    SearchBar
   },
   data: () => ({
     searchAttributes: {
       placeHolder: 'Ex: Paris',
-      title: 'Ville'
+      title: 'Ville',
+      itemSearch: null
     }
   }),
   async mounted () {
@@ -33,9 +38,17 @@ export default {
     ...mapState('cities', ['cities'])
   },
   methods: {
-    ...mapActions('cities', ['fetchCities']),
+    ...mapActions('cities', ['fetchCities', 'deleteCity']),
+    ...mapMutations('cities', ['addCity', 'removeCity']),
+    async searchAction () {
+      this.fetchCities(this.searchAttributes.itemSearch)
+    },
     addCity () {
-      //  TODO: implement
+      this.$router.push('/addcity')
+    },
+    async removeCity (cityId) {
+      await this.deleteCity({ cityId: cityId })
+      await this.fetchCities()
     }
   }
 }

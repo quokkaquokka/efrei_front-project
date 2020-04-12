@@ -9,6 +9,7 @@ import Cities from '../views/ListCities.vue'
 import City from '../views/City.vue'
 import DashboardCities from '../views/DashboardCities.vue'
 import EditCity from '../views/EditCity.vue'
+import AddCity from '../views/AddCity.vue'
 
 Vue.use(Router)
 
@@ -64,6 +65,12 @@ export default new Router({
       path: '/editcity/:id',
       name: 'editcity',
       component: EditCity
+    },
+    {
+      path: '/addcity',
+      name: 'addcity',
+      component: AddCity
     }
+
   ]
 })
