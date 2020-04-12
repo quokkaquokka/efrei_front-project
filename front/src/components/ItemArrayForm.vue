@@ -1,21 +1,22 @@
 <template>
   <div class="ad" id="item">
-    <h4>{{ dataForm.titre }}</h4>
-    <p>{{ dataForm.description }}</p>
-    <form>
+    <h4 style="display: block">{{ dataForm.titre }}</h4>
       <div v-for="item in dataForm.items" :key="item" id="pills">
       <div class="badge badge-pill badge-info"> {{ item }}</div>
       </div>
+    <form @submit="addItem" class="mt-2">
+      <div class="form-group row">
+        <label class="col-form-label">{{ dataForm.label }}</label>
+        <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="top" :title="`${ dataForm.description }`"><i class="far fa-question-circle"></i>
+        </button>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" v-model='newItem' :placeholder='`${ dataForm.placeHolder }`'>
+        </div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-outline-info">Ajouter</button>
+        </div>
+      </div>
     </form>
-    <div class="form-group row">
-      <label class="col-form-label">{{ dataForm.label }}</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" v-model='newItem' :placeholder='`${ dataForm.placeHolder }`'>
-      </div>
-      <div class="col-sm-2">
-        <button type="button" class="btn btn-outline-info" @click='addItem'>Ajouter</button>
-      </div>
-    </div>
   </div>
 </template>
 
