@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   data: () => ({
     city: {
@@ -160,8 +160,12 @@ export default {
     nameParking: null,
     chiffreParking: ''
   }),
+  computed: {
+    ...mapState('cities', ['cities'])
+  },
   methods: {
     ...mapActions('cities', ['createCity']),
+    ...mapMutations('cities', ['addCity']),
     addTaille () {
       this.prixTaille.replace('€', '')
       this.prixTaille.replace(' ', '')
