@@ -8,6 +8,10 @@
             <div class="col-sm-5">
                 <input type="text" class="form-control" v-model='city.name' placeholder="Ex: Paris">
             </div>
+            <label class="col-form-label">Département</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" v-model='city.departement' placeholder="Ex: Val-de-Marne">
+            </div>
             <label class="col-form-label">Code Postal</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" v-model='city.postalCode' placeholder="Ex: 94800">
@@ -146,6 +150,7 @@ export default {
   data: () => ({
     city: {
       name: '',
+      departement: '',
       postalCode: null,
       prixMoyen: null,
       tailleLogement: [],
