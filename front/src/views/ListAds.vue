@@ -2,10 +2,15 @@
   <div class="list-ads">
     <div class="row">
       <div class="col-2" id="searchDetails">
-        <SearchAdsDetails :city="`${searchAttributes.city}`"></SearchAdsDetails>
+        <SearchAdsDetails
+          :city="`${searchAttributes.city}`"
+          :action="searchActionAdvanced"
+          :details="searchAdvanced" ></SearchAdsDetails>
       </div>
       <div class="col-10">
-        <SearchAds :search="searchAttributes"> </SearchAds>
+        <SearchAds
+          :search="searchAttributes"
+          :function="searchAction" > </SearchAds>
         <div v-for="ad in ads" :key="ad._id">
           <AdItem :ad="ad"></AdItem>
         </div>
@@ -29,10 +34,19 @@ export default {
     searchAttributes: {
       placeHolder: 'Où ?',
       title: 'Acheter',
-      city: SearchAds.searchItem
+      itemSearch: null
+    },
+    searchAdvanced: {
+      prix: 0,
+      surface: 0,
+      prixm2: 0,
+      ancien: true,
+      neuf: true,
+      maison: true,
+      appartement: true,
+      terrain: true
     }
   }),
-  city: SearchAds.searchItem,
   async mounted () {
     await this.fetchAds()
   },
@@ -40,7 +54,20 @@ export default {
     ...mapState('ads', ['ads'])
   },
   methods: {
-    ...mapActions('ads', ['fetchAds'])
+    ...mapActions('ads', ['fetchAds']),
+    async searchAction () {
+      const data = {
+        ville: this.searchAttributes.itemSearch
+      }
+      this.fetchAds(data)
+    },
+    async searchActionAdvanced () {
+      const data = {
+        ville: this.searchAttributes.itemSearch,
+        searchAdvanced: this.searchAdvanced
+      }
+      this.fetchAds(data)
+    }
   }
 }
 

@@ -32,27 +32,44 @@ const MODEL = {
 
 
 const getAds = async (filters = undefined) => {
-  console.log(filters)
+  console.log('tot', filters)
   let request = undefined
-  // si un des parametres n'est pas null on met un $and sinon juste un $or
   if(filters) {
-    if(filters.prix || filters.etat || filters.type || filters.surface || filters.prixm2) {
-      console.log('Advanced search')
+    if(filters.searchAdvanced) {
+      let text = ''
+      const details = filters.searchAdvanced
+      if(details.maison)
+        text += 'maison '
+      if(details.appartement)
+        text += 'appartement '
+      if(details.terrain)
+        text += 'terrain '
       request = {
         $and : [
-          { $text: { $search: filters } },
+          { $text: { $search: text } },
         ]
       };
-      request.$and.push({ prix: 1 })
-    } else {
-      request = { $text: { $search: filters.ville } }
-      console.log('simple search', request)
+      if(details.neuf && details.ancien === false)
+        request.$and.push({ neuf: details.neuf })
+      if(filters.ville)
+        request.$and.push({ ville: filters.ville })
+      const prix = parseInt(details.prix);
+      if(prix > 0)
+        request.$and.push({ prix: { $lte : prix } })
+      const prixm2 = parseInt(details.prixm2);
+      if(prixm2 > 0)
+        request.$and.push({ prixm2: { $lte : prixm2 } })
+      const surface = parseInt(details.surface);
+      if(surface > 0)
+        request.$and.push({ surface: { $gte : surface } })
+    }
+    else {
+      request = { ville: filters.ville}
     }
   }
-  
-  return await mongodb.fetch(COLLECTION_NAME, request)
+  const response = await mongodb.fetch(COLLECTION_NAME, request)
+  return response
 }
-
 const getAd = async(id = undefined) => {
   if(id === undefined) return []
   const data = await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})

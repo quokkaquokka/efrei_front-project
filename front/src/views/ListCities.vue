@@ -2,7 +2,9 @@
   <div class="list-cities">
     <div class="row">
       <div class="col-9" id="city">
-        <SearchAds :search="searchAttributes"> </SearchAds>
+        <SearchCities
+          :search="searchAttributes"
+          :function="searchAction"></SearchCities>
         <div v-for="city in cities" :key="city._id">
           <CityItem :city="city"></CityItem>
         </div>
@@ -10,20 +12,20 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapState, mapActions } from 'vuex'
 import CityItem from '../components/CityItem.vue'
-import SearchAds from '../components/SearchBar.vue'
+import SearchCities from '../components/SearchBar.vue'
 export default {
   components: {
     CityItem,
-    SearchAds
+    SearchCities
   },
   data: () => ({
     searchAttributes: {
       placeHolder: 'Ex: Paris',
-      title: 'Ville'
+      title: 'Ville',
+      itemSearch: null
     }
   }),
   async mounted () {
@@ -33,7 +35,10 @@ export default {
     ...mapState('cities', ['cities'])
   },
   methods: {
-    ...mapActions('cities', ['fetchCities'])
+    ...mapActions('cities', ['fetchCities']),
+    async searchAction () {
+      this.fetchCities(this.searchAttributes.itemSearch)
+    }
   }
 }
 </script>
