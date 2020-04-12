@@ -2,194 +2,207 @@
   <div>
     <div class="ad" id="item">
       <form>
-        <h4>Hotels</h4>
-        <div class="form-group row">
-          <label class="col-form-label">Nombre d'hotels dans la ville</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" v-model='citiesUser.nbHotels'>
-          </div>
-        </div>
         <div>
+            <h4>Informations générales</h4><br>
+            <label class="col-form-label">Nom de la ville</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" v-model='city.name' placeholder="Ex: Paris">
+            </div>
+            <label class="col-form-label">Code Postal</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" v-model='city.postalCode' placeholder="Ex: 94800">
+            </div>
+            <label class="col-form-label">Prix moyen</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" v-model='city.prixMoyen' placeholder="Ex: 120000">
+            </div>
+            <label class="col-form-label">Nombre de locataires</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" v-model='city.locataires' placeholder="Ex: 42">
+            </div>
+            <label class="col-form-label">Nombre de propriétaires</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" v-model='city.propriétaires' placeholder="Ex: 24">
+            </div>
+        </div>
+        <br>
+        <div>
+          <h4>Tailles de logement</h4>
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Nom</th>
+                <th scope="col">Pourcentage</th>
                 <th scope="col">Prix</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="hotel in citiesUser.hotels" :key="hotel.name">
-                <th scope="row">{{ hotel.name }}</th>
-                <td>{{ hotel.prix }}</td>
+              <tr v-for="taille in city.tailleLogement" :key="taille.name">
+                <th scope="row">{{ taille.name }}</th>
+                <td>{{ taille.pourcentage }}</td>
+                <td>{{ taille.prix }}</td>
+                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteTaille"><i class="fas fa-trash"></i> Supprimer</button></td>
               </tr>
             </tbody>
           </table>
-
         </div>
         <div class="form-group row">
           <label class="col-form-label">Nom</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" v-model='nameHotel' placeholder='Ex: Ibis'>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" v-model='nameTaille' placeholder='Ex: T1'>
           </div>
-          <label class="col-form-label">Prix / nuit</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" v-model='prixHotel' placeholder='Ex: 75 €'>
+          <label class="col-form-label">Pourcentage</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" v-model='pourcentageTaille' placeholder='Ex: 4.8'>
+          </div>
+          <label class="col-form-label">Prix</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" v-model='prixTaille' placeholder='Ex: 380 €'>
           </div>
           <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addHotel'>Ajouter</button>
+            <button type="button" class="btn btn-outline-info" @click='addTaille'>Ajouter</button>
           </div>
         </div>
       </form>
     </div>
     <div class="ad" id="item">
       <form>
-        <h4>Attractivités</h4>
+        <h4>Catégories socio-professionnelles</h4>
         <div>
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Nom</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Description</th>
+                <th scope="col">Chiffre</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="attractivite in citiesUser.attractivites" :key="attractivite.name">
-                <th scope="row">{{ attractivite.name }}</th>
-                <td>{{ attractivite.nb }}</td>
-                <td>{{ attractivite.description }}</td>
+              <tr v-for="category in city.catSocioprofessionelle" :key="category.name">
+                <th scope="row">{{ category.name }}</th>
+                <td>{{ category.chiffre }}</td>
+                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteCat"><i class="fas fa-trash"></i> Supprimer</button></td>
               </tr>
             </tbody>
           </table>
-
         </div>
         <div class="form-group row">
           <label class="col-form-label">Nom</label>
-          <div class="col-sm-3">
-            <input type="text" class="form-control" v-model='nameAttractivite' placeholder='Ex: Hopital'>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" v-model='nameCat' placeholder='Ex: Actifs'>
           </div>
-          <label class="col-form-label">Nombre</label>
-          <div class="col-sm-1">
-            <input type="number" class="form-control" v-model='nbAttractivite' placeholder='Ex: 1'>
-          </div>
-          <label class="col-form-label">Description</label>
-          <div class="col-sm-3">
-            <input type="text" class="form-control" v-model='descriptionAttractivite' placeholder='Ex: spécialisé en détection de tumeur'>
+          <label class="col-form-label">Chiffre</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" v-model='chiffreCat' placeholder='Ex: 48.6'>
           </div>
           <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addAttractivite'>Ajouter</button>
+            <button type="button" class="btn btn-outline-info" @click='addCat'>Ajouter</button>
           </div>
         </div>
       </form>
     </div>
-    <ItemArrayForm :dataForm="quartiers"></ItemArrayForm>
-    <ItemArrayForm :dataForm="routes"></ItemArrayForm>
-    <ItemArrayForm :dataForm="transports"></ItemArrayForm>
-     <div class="ad" id="item">
+    <div class="ad" id="item">
       <form>
-        <h4>Démographie</h4>
+        <h4>Parkings</h4>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Chiffre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="parking in city.parkings" :key="parking.name">
+                <th scope="row">{{ parking.name }}</th>
+                <td>{{ parking.chiffre }}</td>
+                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteParking"><i class="fas fa-trash"></i> Supprimer</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="form-group row">
-          <label class="col-form-label">Commentaire sur la démographie</label>
-          <div class="col-sm-7">
-            <input type="text" class="form-control" v-model='nameAttractivite' placeholder='Ex: Hopital'>
+          <label class="col-form-label">Nom</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" v-model='nameParking' placeholder='Ex: Actifs'>
+          </div>
+          <label class="col-form-label">Chiffre</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" v-model='chiffreParking' placeholder='Ex: 48.6'>
           </div>
           <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addAttractivite'>Ajouter</button>
+            <button type="button" class="btn btn-outline-info" @click='addParking'>Ajouter</button>
           </div>
         </div>
       </form>
     </div>
-    <button type="button" class="btn btn-outline-primary mt-3" @click='save' style="float: right">Enregistrer</button>
+    <button type="button" class="btn btn-outline-primary mt-3" @click='editCity' style="float: right">Mettre à jour la ville</button>
   </div>
 
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import ItemArrayForm from '../components/ItemArrayForm.vue'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
-  components: {
-    ItemArrayForm
-  },
-  props: {
-    cityId: String
-  },
   data: () => ({
-    nameHotel: '',
-    prixHotel: null,
-    nameQuartier: '',
-    route: '',
-    nameAttractivite: '',
-    nbAttractivite: null,
-    descriptionAttractivite: '',
-    citiesUser: {
-      villeId: null,
-      userId: null,
-      nbHotels: null,
-      hotels: [],
-      quartiers: [],
-      attractivites: [],
-      routes: [],
-      transports: [],
-      demographie: null
-    },
-    quartiers: {
-      titre: 'Quartiers',
-      description: 'Ici, vous pouvez sauvegarder les quarties de la ville, les lieux où vous voudrez acheter.',
-      items: [],
-      label: 'Nom du quartier',
-      placeHolder: 'Ex: rue des coquettes'
-    },
-    routes: {
-      titre: 'Routes',
-      description: 'Ici, vous pouvez sauvegarder les grands axes routiers qui menent jusqu\'à ville.',
-      items: [],
-      label: 'Nom de la route',
-      placeHolder: 'Ex: A6'
-    },
-    transports: {
-      titre: 'Transports',
-      description: 'Ici, vous pouvez sauvegarder les transports de la ville et menant jusqu\'à la ville.',
-      items: [],
-      label: 'Nom du transport',
-      placeHolder: 'Ex: sncf'
-    }
+    city: [],
+    nameTaille: '',
+    pourcentageTaille: null,
+    prixTaille: null,
+    nameCat: '',
+    chiffreCat: null,
+    nameParking: null,
+    chiffreParking: ''
   }),
-  methods: {
-    addHotel () {
-      this.prixHotel.replace('€', '')
-      this.prixHotel.replace(' ', '')
-      const prix = parseInt(this.prixHotel, 10)
-      this.citiesUser.hotels.push({ name: this.nameHotel, prix: prix })
-      this.nameHotel = ''
-      this.prixHotel = null
-    },
-    addAttractivite () {
-      this.citiesUser.attractivites.push(
-        {
-          name: this.nameAttractivite,
-          nb: this.nbAttractivite,
-          description: this.descriptionAttractivite
-        })
-      this.nameAttractivite = ''
-      this.nbAttractivite = null
-      this.descriptionAttractivite = null
-    },
-    initUserCity () {
-      // si jamais la ville est deja une ville de l'utilisateur la charger
-    },
-    save () {
-      console.log(this.quartiers)
-      console.log(this.routes)
-      // sauvegarder dans le user le city user
-    }
-  },
   computed: {
     ...mapState('cities', ['cities']),
-    ...mapGetters('cities', ['getCityById']),
-    // charger la liste des villes de l'utilisateur
-    city () {
-      return this.getCityById(this.cityId) || { name: 'Loading..' }
+    ...mapGetters('cities', ['getCityById'])
+  },
+  mounted () {
+    this.city = this.getCityById(this.$route.params.id)
+  },
+  methods: {
+    ...mapActions('cities', ['updateCity']),
+    ...mapMutations('cities', ['addCity']),
+    addTaille () {
+      this.prixTaille.replace('€', '')
+      this.prixTaille.replace(' ', '')
+      this.pourcentageTaille.replace('%', '')
+      this.pourcentageTaille.replace(' ', '')
+      const prix = parseInt(this.prixTaille, 10)
+      const pourcentage = parseInt(this.pourcentageTaille, 10)
+      this.city.tailleLogement.push({ name: this.nameTaille, pourcentage: pourcentage, prix: prix })
+      this.nameTaille = ''
+      this.pourcentageTaille = null
+      this.prixTaille = null
+    },
+    deleteTaille (taille) {
+      this.city.tailleLogement.splice(taille, 1)
+    },
+    addCat () {
+      this.chiffreCat.replace('%', '')
+      this.chiffreCat.replace(' ', '')
+      const chiffre = parseInt(this.chiffreCat, 10)
+      this.city.catSocioprofessionelle.push({ name: this.nameCat, chiffre: chiffre })
+      this.nameCat = ''
+      this.chiffreCat = null
+    },
+    deleteCat (cat) {
+      this.city.catSocioprofessionelle.splice(cat, 1)
+    },
+    addParking () {
+      this.chiffreParking.replace('%', '')
+      this.chiffreParking.replace(' ', '')
+      const chiffre = parseInt(this.chiffreParking, 10)
+      this.city.parkings.push({ name: this.nameParking, chiffre: chiffre })
+      this.nameParking = ''
+      this.chiffreParking = null
+    },
+    deleteParking (parking) {
+      this.city.parkings.splice(parking, 1)
+    },
+    async editCity () {
+      await this.updateCity({ city: this.city })
+      this.$router.push('/dashcities')
     }
   }
 }

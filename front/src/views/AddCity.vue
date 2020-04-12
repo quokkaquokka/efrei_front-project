@@ -41,6 +41,7 @@
                 <th scope="row">{{ taille.name }}</th>
                 <td>{{ taille.pourcentage }}</td>
                 <td>{{ taille.prix }}</td>
+                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteTaille"><i class="fas fa-trash"></i> Supprimer</button></td>
               </tr>
             </tbody>
           </table>
@@ -52,7 +53,7 @@
           </div>
           <label class="col-form-label">Pourcentage</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" v-model='prixTaille' placeholder='Ex: 4.8'>
+            <input type="text" class="form-control" v-model='pourcentageTaille' placeholder='Ex: 4.8'>
           </div>
           <label class="col-form-label">Prix</label>
           <div class="col-sm-2">
@@ -78,7 +79,8 @@
             <tbody>
               <tr v-for="category in city.catSocioprofessionelle" :key="category.name">
                 <th scope="row">{{ category.name }}</th>
-                <td>{{ attractivite.chiffre }}</td>
+                <td>{{ category.chiffre }}</td>
+                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteCat"><i class="fas fa-trash"></i> Supprimer</button></td>
               </tr>
             </tbody>
           </table>
@@ -113,6 +115,7 @@
               <tr v-for="parking in city.parkings" :key="parking.name">
                 <th scope="row">{{ parking.name }}</th>
                 <td>{{ parking.chiffre }}</td>
+                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteParking"><i class="fas fa-trash"></i> Supprimer</button></td>
               </tr>
             </tbody>
           </table>
@@ -173,10 +176,13 @@ export default {
       this.pourcentageTaille.replace(' ', '')
       const prix = parseInt(this.prixTaille, 10)
       const pourcentage = parseInt(this.pourcentageTaille, 10)
-      this.citiesUser.hotels.push({ name: this.nameTaille, pourcentage: pourcentage, prix: prix })
+      this.city.tailleLogement.push({ name: this.nameTaille, pourcentage: pourcentage, prix: prix })
       this.nameTaille = ''
-      this.pourcentageHotel = null
-      this.prixHotel = null
+      this.pourcentageTaille = null
+      this.prixTaille = null
+    },
+    deleteTaille (taille) {
+      this.city.tailleLogement.splice(taille, 1)
     },
     addCat () {
       this.chiffreCat.replace('%', '')
@@ -186,6 +192,9 @@ export default {
       this.nameCat = ''
       this.chiffreCat = null
     },
+    deleteCat (cat) {
+      this.city.catSocioprofessionelle.splice(cat, 1)
+    },
     addParking () {
       this.chiffreParking.replace('%', '')
       this.chiffreParking.replace(' ', '')
@@ -194,8 +203,10 @@ export default {
       this.nameParking = ''
       this.chiffreParking = null
     },
+    deleteParking (parking) {
+      this.city.parkings.splice(parking, 1)
+    },
     async addCity () {
-      // console.log(this.city)
       await this.createCity({ city: this.city })
       this.$router.push('/dashcities')
     }
