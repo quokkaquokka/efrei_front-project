@@ -4,7 +4,7 @@
       <div class="col-9" id="city">
         <SearchCities
           :search="searchAttributes"
-          :function="searchAction">
+          :action="searchAction">
         </SearchCities>
         <SearchBar :search="searchAttributes"> </SearchBar>
         <div v-for="city in cities" :key="city._id">

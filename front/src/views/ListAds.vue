@@ -10,7 +10,8 @@
       <div class="col-10">
         <SearchAds
           :search="searchAttributes"
-          :function="searchAction" > </SearchAds>
+          :action="searchAction"
+        > </SearchAds>
         <div v-for="ad in ads" :key="ad._id">
           <AdItem :ad="ad"></AdItem>
         </div>

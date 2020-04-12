@@ -4,9 +4,10 @@
       <div class="col-9" id="city">
         <SearchBar
           :search="searchAttributes"
-          :function="searchAction">
+          :action="searchAction"
+          :rightButton="addCityLabels"
+          :righAction="addCity" >
         </SearchBar>
-        <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit" @click="addCity"><i class="fas fa-plus-square"></i> Ajouter une ville</button>
         <div v-for="city in cities" :key="city._id">
           <CityDash :city="city" v-on:city-deleted="removeCity"></CityDash>
         </div>
@@ -29,6 +30,10 @@ export default {
       placeHolder: 'Ex: Paris',
       title: 'Ville',
       itemSearch: null
+    },
+    addCityLabels: {
+      icon: 'fas fa-plus-square',
+      text: 'Ajouter une ville'
     }
   }),
   async mounted () {
