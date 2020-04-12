@@ -1,172 +1,72 @@
 <template>
-  <div>
+  <div class="col-9" id="city">
     <div class="ad" id="item">
       <form>
         <div>
-            <h4>Informations générales</h4><br>
-            <label class="col-form-label">Nom de la ville</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" v-model='city.name' placeholder="Ex: Paris">
-            </div>
-            <label class="col-form-label">Département</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" v-model='city.departement' placeholder="Ex: Val-de-Marne">
-            </div>
-            <label class="col-form-label">Code Postal</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" v-model='city.postalCode' placeholder="Ex: 94800">
-            </div>
-            <label class="col-form-label">Prix moyen</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" v-model='city.prixMoyen' placeholder="Ex: 120000">
-            </div>
-            <label class="col-form-label">Nombre de locataires</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" v-model='city.locataires' placeholder="Ex: 42">
-            </div>
-            <label class="col-form-label">Nombre de propriétaires</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" v-model='city.propriétaires' placeholder="Ex: 24">
-            </div>
-        </div>
-        <br>
-        <div>
-          <h4>Tailles de logement</h4>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Pourcentage</th>
-                <th scope="col">Prix</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="taille in city.tailleLogement" :key="taille.name">
-                <th scope="row">{{ taille.name }}</th>
-                <td>{{ taille.pourcentage }}</td>
-                <td>{{ taille.prix }}</td>
-                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteTaille"><i class="fas fa-trash"></i> Supprimer</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="form-group row">
-          <label class="col-form-label">Nom</label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" v-model='nameTaille' placeholder='Ex: T1'>
-          </div>
-          <label class="col-form-label">Pourcentage</label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" v-model='pourcentageTaille' placeholder='Ex: 4.8'>
-          </div>
-          <label class="col-form-label">Prix</label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" v-model='prixTaille' placeholder='Ex: 380 €'>
-          </div>
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addTaille'>Ajouter</button>
-          </div>
+          <h4>Informations générales</h4><br>
+          <FormRow :dataForm="name" ></FormRow>
+          <FormRow :dataForm="departement" ></FormRow>
+          <FormRow :dataForm="postalCode" ></FormRow>
+          <FormRow :dataForm="prixMoyen" ></FormRow>
+          <FormRow :dataForm="locataires" ></FormRow>
         </div>
       </form>
     </div>
-    <div class="ad" id="item">
-      <form>
-        <h4>Catégories socio-professionnelles</h4>
-        <div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Chiffre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="category in city.catSocioprofessionelle" :key="category.name">
-                <th scope="row">{{ category.name }}</th>
-                <td>{{ category.chiffre }}</td>
-                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteCat"><i class="fas fa-trash"></i> Supprimer</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="form-group row">
-          <label class="col-form-label">Nom</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" v-model='nameCat' placeholder='Ex: Actifs'>
-          </div>
-          <label class="col-form-label">Chiffre</label>
-          <div class="col-sm-4">
-            <input type="number" class="form-control" v-model='chiffreCat' placeholder='Ex: 48.6'>
-          </div>
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addCat'>Ajouter</button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="ad" id="item">
-      <form>
-        <h4>Parkings</h4>
-        <div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Chiffre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="parking in city.parkings" :key="parking.name">
-                <th scope="row">{{ parking.name }}</th>
-                <td>{{ parking.chiffre }}</td>
-                <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteParking"><i class="fas fa-trash"></i> Supprimer</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="form-group row">
-          <label class="col-form-label">Nom</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" v-model='nameParking' placeholder='Ex: Actifs'>
-          </div>
-          <label class="col-form-label">Chiffre</label>
-          <div class="col-sm-4">
-            <input type="number" class="form-control" v-model='chiffreParking' placeholder='Ex: 48.6'>
-          </div>
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addParking'>Ajouter</button>
-          </div>
-        </div>
-      </form>
-    </div>
+    <FormInTab :dataForm="tailleLogement"> </FormInTab>
+    <FormInTab :dataForm="catSocioprofessionelle"> </FormInTab>
+    <FormInTab :dataForm="parkings"> </FormInTab>
+    <FormInTab :dataForm="eta_scolaires"> </FormInTab>
     <button type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
   </div>
-
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import FormRow from '../components/FormRow.vue'
+import FormInTab from '../components/FormInTab.vue'
 export default {
+  components: {
+    FormRow,
+    FormInTab
+  },
   data: () => ({
-    city: {
-      name: '',
-      departement: '',
-      postalCode: null,
-      prixMoyen: null,
-      tailleLogement: [],
-      locataires: null,
-      propriétaires: null,
-      catSocioprofessionelle: [],
-      eta_scolaires: [],
-      parkings: []
+    name: { title: 'Nom de la ville', model: null, placeholder: 'Ex: Villejuif' },
+    departement: { title: 'Département', model: null, placeholder: 'Ex: Val-de-Marne' },
+    postalCode: { title: 'Code Postal', model: null, placeholder: 'Ex: 94800' },
+    prixMoyen: { title: 'Prix moyen', model: null, placeholder: 'Ex: 5359' },
+    locataires: { title: 'locataires (%)', model: null, placeholder: 'Ex: 61.2' },
+    tailleLogement: {
+      titre: 'Tailles de logement',
+      labels: ['Nom', 'Pourcentage', 'Prix'],
+      keyObj: ['name', 'pourcentagge', 'prix'],
+      placeHolders: ['Ex: T1', 'Ex: 4.8', 'Ex: 380 €'],
+      typeInputs: ['text', 'number', 'text'],
+      items: []
     },
-    nameTaille: '',
-    pourcentageTaille: null,
-    prixTaille: null,
-    nameCat: '',
-    chiffreCat: null,
-    nameParking: null,
-    chiffreParking: ''
+    catSocioprofessionelle: {
+      titre: 'Catégories socio-professionnelles',
+      labels: ['Nom', 'Pourcentage'],
+      keyObj: ['name', 'chiffre'],
+      placeHolders: ['Ex: Actifs', 'Ex: 53'],
+      typeInputs: ['text', 'number'],
+      items: []
+    },
+    eta_scolaires: {
+      titre: 'Les établissements scolaires',
+      labels: ['Nom', 'Nombre'],
+      keyObj: ['name', 'nb'],
+      placeHolders: ['Ex: école primaire', 'Ex: 23'],
+      typeInputs: ['text', 'number'],
+      items: []
+    },
+    parkings: {
+      titre: 'Parkings',
+      labels: ['Nom', 'Pourcentage'],
+      keyObj: ['name', 'chiffre'],
+      placeHolders: ['Ex: Ménages ayant un parking', 'Ex: 51'],
+      typeInputs: ['text', 'number'],
+      items: []
+    }
   }),
   computed: {
     ...mapState('cities', ['cities'])
@@ -174,45 +74,19 @@ export default {
   methods: {
     ...mapActions('cities', ['createCity']),
     ...mapMutations('cities', ['addCity']),
-    addTaille () {
-      this.prixTaille.replace('€', '')
-      this.prixTaille.replace(' ', '')
-      this.pourcentageTaille.replace('%', '')
-      this.pourcentageTaille.replace(' ', '')
-      const prix = parseInt(this.prixTaille, 10)
-      const pourcentage = parseInt(this.pourcentageTaille, 10)
-      this.city.tailleLogement.push({ name: this.nameTaille, pourcentage: pourcentage, prix: prix })
-      this.nameTaille = ''
-      this.pourcentageTaille = null
-      this.prixTaille = null
-    },
-    deleteTaille (taille) {
-      this.city.tailleLogement.splice(taille, 1)
-    },
-    addCat () {
-      this.chiffreCat.replace('%', '')
-      this.chiffreCat.replace(' ', '')
-      const chiffre = parseInt(this.chiffreCat, 10)
-      this.city.catSocioprofessionelle.push({ name: this.nameCat, chiffre: chiffre })
-      this.nameCat = ''
-      this.chiffreCat = null
-    },
-    deleteCat (cat) {
-      this.city.catSocioprofessionelle.splice(cat, 1)
-    },
-    addParking () {
-      this.chiffreParking.replace('%', '')
-      this.chiffreParking.replace(' ', '')
-      const chiffre = parseInt(this.chiffreParking, 10)
-      this.city.parkings.push({ name: this.nameParking, chiffre: chiffre })
-      this.nameParking = ''
-      this.chiffreParking = null
-    },
-    deleteParking (parking) {
-      this.city.parkings.splice(parking, 1)
-    },
     async addCity () {
-      await this.createCity({ city: this.city })
+      const city = {
+        name: this.name.model,
+        departement: this.departement.model,
+        postalCode: this.postalCode.model,
+        prixMoyen: this.prixMoyen.model,
+        locataires: this.locataires.model,
+        tailleLogement: this.tailleLogement.items,
+        catSocioprofessionelle: this.catSocioprofessionelle.items,
+        parkings: this.parkings.items
+      }
+      console.log(city)
+      await this.createCity({ city: city })
       this.$router.push('/dashcities')
     }
   }
