@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home.vue'
+import Home from '../views/Home.vue'
 import SignIn from '../views/signin.vue'
 import SignUp from '../views/signup.vue'
 import Ads from '../views/ListAds.vue'
