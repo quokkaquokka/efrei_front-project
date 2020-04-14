@@ -42,6 +42,7 @@ const mutations = {
 
 const getters = {
   getCityById: state => id => {
+    console.log('state cities', state.cities)
     return state.cities.find(_ => {
       return _._id === id
     })
@@ -53,6 +54,15 @@ const actions = {
     commit('clearAll')
     const { data } = await axios.get(api('/cities'), { params: { filters: filters } })
     data.forEach(d => commit('addCity', d))
+  },
+
+  async fetchCitiesbyIds ({ commit }, { ids }) {
+    console.log(ids, JSON.stringify(ids))
+    const { data } = await axios.get(api('/cities/ids'), { params: { ids: JSON.stringify(ids) } })
+    console.log('response data', data)
+    data.forEach(d => commit('addCity', d))
+    return data
+    // data.forEach(d => commit('addCity', d))
   },
 
   async fetchCity ({ commit }, { id }) {

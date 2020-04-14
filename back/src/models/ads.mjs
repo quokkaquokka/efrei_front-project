@@ -32,7 +32,6 @@ const MODEL = {
 
 
 const getAds = async (filters = undefined) => {
-  console.log('tot', filters)
   let request = undefined
   if(filters) {
     if(filters.searchAdvanced) {

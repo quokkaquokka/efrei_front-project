@@ -38,6 +38,9 @@ const mutations = {
 }
 
 const getters = {
+  getCityUserByCityId: state => id => {
+    return state.citiesUser.find(_ => _.villeId === id)
+  }
 }
 
 const actions = {
@@ -49,6 +52,7 @@ const actions = {
   async fetchCityUser ({ commit }, { uid, cid }) {
     const { data } = await axios.get(api('/cities/' + cid + '/user/' + uid))
     commit('addCityUser', data)
+    return data
   },
 
   async createCityUser ({ commit }, { cityUser }) {

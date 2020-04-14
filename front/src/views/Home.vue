@@ -7,11 +7,9 @@
         <AdItem :ad="ad"></AdItem>
       </div> !-->
     </div>
-    <div class="ad" id="item">
-      <h3>Listes de mes villes</h3>
-      <div v-for="city in citiesUser" :key="city._id">
-        <CityItem :city="city"></CityItem>
-      </div>
+    <h3>Listes de mes villes</h3>
+    <div v-for="city in cities" :key="city._id">
+      <CityItem :city="city"></CityItem>
     </div>
   </div>
 </template>
@@ -25,26 +23,27 @@ export default {
     CityItem
   },
   data: () => ({
+    cities: []
   }),
   computed: {
     ...mapState(['user']),
     ...mapState(['citiesUser']),
+    ...mapState(['cities']),
     ...mapGetters('user', ['getUser', 'isAuthenticated'])
   },
   methods: {
     ...mapActions('user', ['fetchUser']),
-    ...mapActions('citiesUser', ['fetchCitiesUser'])
-  },
-  async created () {
-    await this.fetchCitiesUser({ uid: this.user.user._id })
+    ...mapActions('citiesUser', ['fetchCitiesUser']),
+    ...mapActions('cities', ['fetchCitiesbyIds'])
   },
   async mounted () {
+    await this.fetchCitiesUser({ uid: this.user.user._id })
     const citiesId = _.reduce(this.citiesUser.citiesUser, (acc, e) => {
-      acc.push(e._id)
+      acc.push(e.villeId)
       return acc
     }, [])
-    console.log('citiesId', citiesId)
-    // TODO implemented: search get cities with multiple _id
+    this.cities = await this.fetchCitiesbyIds({ ids: citiesId })
+    console.log('cities run', this.cities)
   }
 }
 </script>

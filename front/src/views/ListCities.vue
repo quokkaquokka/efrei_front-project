@@ -39,7 +39,7 @@ export default {
   methods: {
     ...mapActions('cities', ['fetchCities']),
     async searchAction () {
-      this.fetchCities(this.searchAttributes.itemSearch)
+      await this.fetchCities(this.searchAttributes.itemSearch)
     }
   }
 }

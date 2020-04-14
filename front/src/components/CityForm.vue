@@ -3,6 +3,7 @@
     <div class="ad" id="item">
       <form>
         <h4>Hotels</h4>
+        <FormInTab :dataForm="hotels"> </FormInTab>
         <div class="form-group row">
           <label class="col-form-label">Nombre d'hotels dans la ville</label>
           <div class="col-sm-5">
@@ -82,19 +83,16 @@
         </div>
       </form>
     </div>
-    <ItemArrayForm :dataForm="quartiers"></ItemArrayForm>
-    <ItemArrayForm :dataForm="routes"></ItemArrayForm>
-    <ItemArrayForm :dataForm="transports"></ItemArrayForm>
+    <ItemArrayForm :dataForm="quartiers" :itemToComplete="citiesUser.quartiers"></ItemArrayForm>
+    <ItemArrayForm :dataForm="routes" :itemToComplete="citiesUser.routes"></ItemArrayForm>
+    <ItemArrayForm :dataForm="transports" :itemToComplete="citiesUser.transports"></ItemArrayForm>
      <div class="ad" id="item">
       <form>
         <h4>Démographie</h4>
         <div class="form-group row">
           <label class="col-form-label">Commentaire sur la démographie</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" v-model='nameAttractivite' placeholder='Ex: Hopital'>
-          </div>
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-outline-info" @click='addAttractivite'>Ajouter</button>
+            <input type="text" class="form-control" v-model='citiesUser.demographie' placeholder='Ex: Hopital'>
           </div>
         </div>
       </form>
@@ -107,12 +105,15 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import ItemArrayForm from '../components/ItemArrayForm.vue'
+import FormInTab from '../components/FormInTab.vue'
 export default {
   components: {
-    ItemArrayForm
+    ItemArrayForm,
+    FormInTab
   },
   props: {
-    cityId: String
+    cityId: String,
+    citiesUser: Object
   },
   data: () => ({
     nameHotel: '',
@@ -122,41 +123,36 @@ export default {
     nameAttractivite: '',
     nbAttractivite: null,
     descriptionAttractivite: '',
-    citiesUser: {
-      villeId: null,
-      userId: null,
-      nbHotels: null,
-      hotels: [],
-      quartiers: [],
-      attractivites: [],
-      routes: [],
-      transports: [],
-      demographie: null
-    },
     quartiers: {
       titre: 'Quartiers',
       description: 'Ici, vous pouvez sauvegarder les quarties de la ville, les lieux où vous voudrez acheter.',
-      items: [],
       label: 'Nom du quartier',
       placeHolder: 'Ex: rue des coquettes'
     },
     routes: {
       titre: 'Routes',
       description: 'Ici, vous pouvez sauvegarder les grands axes routiers qui menent jusqu\'à ville.',
-      items: [],
       label: 'Nom de la route',
       placeHolder: 'Ex: A6'
     },
     transports: {
       titre: 'Transports',
       description: 'Ici, vous pouvez sauvegarder les transports de la ville et menant jusqu\'à la ville.',
-      items: [],
       label: 'Nom du transport',
       placeHolder: 'Ex: sncf'
+    },
+    hotels: {
+      titre: 'Hotels',
+      labels: ['Nom', 'Prix/nuit'],
+      keyObj: ['name', 'prix'],
+      placeHolders: ['Ex: Ibis', 'Ex: 75€'],
+      typeInputs: ['text', 'text'],
+      items: []
     }
   }),
   methods: {
     ...mapActions('citiesUser', ['createCityUser']),
+    ...mapActions('citiesUser', ['updateCityUser']),
     addHotel () {
       /* this.prixHotel.replace('€', '')
       this.prixHotel.replace(' ', '')
@@ -176,23 +172,22 @@ export default {
       this.nbAttractivite = null
       this.descriptionAttractivite = null
     },
-    initUserCity () {
-      // si jamais la ville est deja une ville de l'utilisateur la charger
-    },
     async save () {
       if (!this.getUser) {
         // display an error message for the connection of the user
         return
       }
-      this.citiesUser.userId = this.getUser._id
-      this.citiesUser.quartiers = this.quartiers.items
-      this.citiesUser.routes = this.routes.items
-      this.citiesUser.transports = this.transports.items
-      this.citiesUser.villeId = this.cityId
-      console.log(this.citiesUser, this.citiesUser)
-      await this.createCityUser({ cityUser: this.citiesUser })
-      // sauvegarder dans le user le city user
-      // si elle a un _id, appeler le update
+      console.log('id user cities', this.citiesUser._id)
+      if (this.citiesUser._id) {
+        // il existe deja, il faut faire un update
+        await this.updateCityUser({ cityUser: this.citiesUser })
+      } else {
+        // il faut faire un create
+        this.citiesUser.userId = this.getUser._id
+        this.citiesUser.villeId = this.cityId
+        console.log(this.citiesUser)
+        await this.createCityUser({ cityUser: this.citiesUser })
+      }
     }
   },
   computed: {

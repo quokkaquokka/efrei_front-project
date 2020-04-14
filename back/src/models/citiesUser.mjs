@@ -42,6 +42,9 @@ const deleteCityUser = async (id = undefined) => {
 }
 
 const updateCityUser = async (cityUser = undefined) => {
+  if(!cityUser) return {
+    nModified: 0
+  }
   const id = cityUser._id
   delete cityUser._id
   try {

@@ -1,7 +1,7 @@
 <template>
   <div class="ad" id="item">
     <h4 style="display: block">{{ dataForm.titre }}</h4>
-      <div v-for="item in dataForm.items" :key="item" id="pills">
+      <div v-for="item in itemToComplete" :key="item" id="pills">
       <div class="badge badge-pill badge-info"> {{ item }}</div>
       </div>
     <form @submit="addItem" class="mt-2">
@@ -23,14 +23,15 @@
 <script>
 export default {
   props: {
-    dataForm: Object
+    dataForm: Object,
+    itemToComplete: Array
   },
   data: () => ({
     newItem: ''
   }),
   methods: {
     addItem () {
-      this.dataForm.items.push(this.newItem)
+      this.itemToComplete.push(this.newItem)
       this.newItem = ''
     }
   }

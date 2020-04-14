@@ -30,6 +30,7 @@
         </div>
           <CityForm
             :cityId="cityId"
+            :citiesUser="citiesUser"
           ></CityForm>
         <div>
         </div>
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import CityItem from '../components/CityItem.vue'
 import Chart from '../components/Chart.vue'
 import CityForm from '../components/CityForm.vue'
@@ -50,6 +51,7 @@ export default {
     CityForm
   },
   data: () => ({
+    citiesUser: {},
     dataPopulation: {
       values: null,
       labels: ['Propriétaire', 'Locataires'],
@@ -75,19 +77,22 @@ export default {
       type: 'bar'
     },
     nameHotel: '',
-    prixHotel: null,
-    citiesUser: {
-
-    }
+    prixHotel: null
   }),
   async created () {
+    this.city = this.getCityById(this.cityId) || {}
     this.dataPopulation.values = [this.city.proprietaires, this.city.locataires]
     this.dataPopulation.labels = ['Propriétaire', 'Locataires']
-    // console.log('city', this.city, this.dataPopulation)
     this.createDataTypeLogement()
     this.createDataSocio()
+    if (this.user) {
+      await this.fetchCityUser({ uid: this.user.user._id, cid: this.cityId })
+      this.citiesUser = this.getCityUserByCityId(this.cityId)
+    }
   },
   methods: {
+    ...mapActions('user', ['fetchUser']),
+    ...mapActions('citiesUser', ['fetchCityUser']),
     createDataTypeLogement () {
       this.city.tailleLogement.forEach(element => {
         this.dataTypeLogement.values.push(element.pourcentage)
@@ -103,14 +108,19 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     ...mapState('cities', ['cities']),
     ...mapGetters('cities', ['getCityById']),
+    ...mapGetters('citiesUser', ['getCityUserByCityId']),
     cityId () {
       return this.$route.params.id
-    },
+    }
+    /*
     city () {
+      console.log(this.getCityById(this.cityId))
       return this.getCityById(this.cityId) || { name: 'Loading..' }
     }
+    */
   }
 }
 </script>

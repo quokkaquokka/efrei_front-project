@@ -1,6 +1,7 @@
 'use strict'
 import mongodb from '../services/mongodb.mjs'
 import extend from 'lodash/extend.js'
+import _ from 'lodash'
 
 const COLLECTION_NAME = 'cities'
 
@@ -23,6 +24,19 @@ const getCities = async (filters = undefined) => {
     request = { $text: { $search: filters } }
   }
  
+  return await mongodb.fetch(COLLECTION_NAME, request)
+}
+
+const getCitiesbyIds = async (filters = []) => {
+  let request = undefined
+  filters.map(element => {
+    return mongodb.ObjectID(element)
+  });
+  const citiesId = _.reduce(filters, (acc, e) => {
+    acc.push(mongodb.ObjectID(e))
+    return acc
+  }, [])
+  request = { _id : { $in : citiesId }}
   return await mongodb.fetch(COLLECTION_NAME, request)
 }
 
@@ -60,6 +74,7 @@ const updateCity = async (city = undefined) => {
 
 export {
   getCities,
+  getCitiesbyIds,
   getCity,
   insertCity,
   deleteCity,
