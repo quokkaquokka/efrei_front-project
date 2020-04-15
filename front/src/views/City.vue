@@ -51,7 +51,15 @@ export default {
     CityForm
   },
   data: () => ({
-    citiesUser: {},
+    citiesUser: {
+      nbHotels: null,
+      demographie: null,
+      hotels: [],
+      attractivites: [],
+      quartiers: [],
+      routes: [],
+      transports: []
+    },
     dataPopulation: {
       values: null,
       labels: ['Propriétaire', 'Locataires'],

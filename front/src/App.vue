@@ -26,8 +26,8 @@
       </router-link>
       </li>
       <li class="nav-item">
+      <!-- v-if="hasAccessRight" -->
        <router-link
-          v-if="hasAccessRight"
           to="/dashcities"
           replace
         >

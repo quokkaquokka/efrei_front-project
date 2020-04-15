@@ -15,19 +15,19 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
+    /* {
       path: '/',
       redirect: {
         name: 'signin'
       }
-    },
+    }, */
     {
       path: '/home',
       name: 'home',
       component: Home
     },
     {
-      path: '/signin',
+      path: '/',
       name: 'signin',
       component: SignIn
     },

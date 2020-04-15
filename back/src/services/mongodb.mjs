@@ -32,7 +32,7 @@ const insert = async (collectionName, data) => {
     return resultMany.ops
   }
   const result = await collection.insertOne(data)
-  return result.ops
+  return result.ops[0]
 }
 
 const update = async (collectionName, query, options = {}) => {

@@ -29,8 +29,8 @@ const mutations = {
       state.citiesUser.push(cityUser)
     }
   },
-  removeCityUser (state, { cityUserId }) {
-    const existing = state.citiesUser.findIndex(e => e.id === cityUserId)
+  removeCityUser (state, cityUserId) {
+    const existing = state.citiesUser.findIndex(e => e._id === cityUserId)
     if (existing !== -1) {
       state.citiesUser.splice(existing, 1)
     }
@@ -40,11 +40,15 @@ const mutations = {
 const getters = {
   getCityUserByCityId: state => id => {
     return state.citiesUser.find(_ => _.villeId === id)
+  },
+  getCitiesUser: state => {
+    return state.citiesUser
   }
 }
 
 const actions = {
   async fetchCitiesUser ({ commit }, { uid }) {
+    // this.state.citiesUser = []
     const { data } = await axios.get(api('/cities/user/' + uid))
     data.forEach(d => commit('addCityUser', d))
   },
@@ -62,7 +66,7 @@ const actions = {
 
   async deleteCityUser ({ commit }, { cityId }) {
     await axios.delete(api('/cities/user/' + cityId))
-    commit('removeCityUser', { cityId })
+    commit('removeCityUser', cityId)
   },
 
   async updateCityUser ({ commit }, { cityUser }) {

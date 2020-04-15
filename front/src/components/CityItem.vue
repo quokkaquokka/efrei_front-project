@@ -4,7 +4,7 @@
       <div class="col-md" id="item">
         <div class="description">
           <span id="departement">{{ city.departement }}</span> <br>
-          <button type="button" class="btn btn-outline-primary"  id="favorite" @click="addItemFavori"><i class="far fa-star"></i> Suivre cette ville</button>
+          <button type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('cityUser-deleted', city._id)"><i :class="labelItem.icon"></i> {{ labelItem.text }} </button>
           <router-link :to="`/city/${city._id}`">
             <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
           </router-link>
@@ -16,12 +16,34 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import router from '../router/index'
 export default {
   props: {
-    city: Object
+    city: Object,
+    labelItem: {
+      type: Object,
+      default: function () {
+        return {
+          icon: 'far fa-star',
+          text: 'Suivre cette ville'
+        }
+      }
+    }
+  },
+  computed: {
+    ...mapGetters('citiesUser', ['getCityUserByCityId'])
   },
   methods: {
-    addItemFavori () {
+    ...mapActions('citiesUser', ['deleteCityUser']),
+    async itemAction () {
+      if (this.labelItem.text !== 'Suivre cette ville') {
+        // s'il existe suprimer
+        const cityUser = this.getCityUserByCityId(this.city._id)
+        await this.deleteCityUser({ cityId: cityUser._id })
+        router.replace('/home')
+        // location.reload()
+      }
       // TODO: implement
       // add in user the item
     }

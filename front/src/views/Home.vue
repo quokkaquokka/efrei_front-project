@@ -9,7 +9,7 @@
     </div>
     <h3>Listes de mes villes</h3>
     <div v-for="city in cities" :key="city._id">
-      <CityItem :city="city"></CityItem>
+      <CityItem :city="city" :labelItem="deleteLabelItem" v-on:cityUser-deleted="removeCityUser"></CityItem>
     </div>
   </div>
 </template>
@@ -23,18 +23,37 @@ export default {
     CityItem
   },
   data: () => ({
-    cities: []
+    cities: [],
+    deleteLabelItem: {
+      icon: '',
+      text: 'Ne plus suivre'
+    }
   }),
   computed: {
     ...mapState(['user']),
     ...mapState(['citiesUser']),
     ...mapState(['cities']),
-    ...mapGetters('user', ['getUser', 'isAuthenticated'])
+    ...mapGetters('user', ['getUser', 'isAuthenticated']),
+    ...mapGetters('citiesUser', ['getCityUserByCityId']),
+    ...mapGetters('citiesUser', ['getCitiesUser'])
   },
   methods: {
     ...mapActions('user', ['fetchUser']),
     ...mapActions('citiesUser', ['fetchCitiesUser']),
-    ...mapActions('cities', ['fetchCitiesbyIds'])
+    ...mapActions('cities', ['fetchCitiesbyIds']),
+    ...mapActions('citiesUser', ['deleteCityUser']),
+    async removeCityUser (cityId) {
+      const cityUser = this.getCityUserByCityId(cityId)
+      await this.deleteCityUser({ cityId: cityUser._id })
+      await this.fetchCitiesUser({ uid: this.user.user._id })
+      const citiesUsr = this.getCitiesUser
+      const citiesId = _.reduce(citiesUsr, (acc, e) => {
+        acc.push(e.villeId)
+        return acc
+      }, [])
+
+      this.cities = await this.fetchCitiesbyIds({ ids: citiesId })
+    }
   },
   async mounted () {
     await this.fetchCitiesUser({ uid: this.user.user._id })
@@ -43,7 +62,6 @@ export default {
       return acc
     }, [])
     this.cities = await this.fetchCitiesbyIds({ ids: citiesId })
-    console.log('cities run', this.cities)
   }
 }
 </script>

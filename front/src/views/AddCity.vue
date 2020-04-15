@@ -12,10 +12,10 @@
         </div>
       </form>
     </div>
-    <FormInTab :dataForm="tailleLogement"> </FormInTab>
-    <FormInTab :dataForm="catSocioprofessionelle"> </FormInTab>
-    <FormInTab :dataForm="parkings"> </FormInTab>
-    <FormInTab :dataForm="eta_scolaires"> </FormInTab>
+    <FormInTab :dataForm="tailleLogement" :toComplete="city.tailleLogement"> </FormInTab>
+    <FormInTab :dataForm="catSocioprofessionelle" :toComplete="city.catSocioprofessionelle"> </FormInTab>
+    <FormInTab :dataForm="parkings" :toComplete="city.parkings"> </FormInTab>
+    <FormInTab :dataForm="eta_scolaires" :toComplete="city.eta_scolaires"> </FormInTab>
     <button type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
   </div>
 </template>
@@ -30,6 +30,12 @@ export default {
     FormInTab
   },
   data: () => ({
+    city: {
+      tailleLogement: [],
+      catSocioprofessionelle: [],
+      parkings: [],
+      eta_scolaires: []
+    },
     name: { title: 'Nom de la ville', model: null, placeholder: 'Ex: Villejuif' },
     departement: { title: 'Département', model: null, placeholder: 'Ex: Val-de-Marne' },
     postalCode: { title: 'Code Postal', model: null, placeholder: 'Ex: 94800' },
@@ -40,32 +46,28 @@ export default {
       labels: ['Nom', 'Pourcentage', 'Prix'],
       keyObj: ['name', 'pourcentagge', 'prix'],
       placeHolders: ['Ex: T1', 'Ex: 4.8', 'Ex: 380 €'],
-      typeInputs: ['text', 'number', 'text'],
-      items: []
+      typeInputs: ['text', 'number', 'text']
     },
     catSocioprofessionelle: {
       titre: 'Catégories socio-professionnelles',
       labels: ['Nom', 'Pourcentage'],
       keyObj: ['name', 'chiffre'],
       placeHolders: ['Ex: Actifs', 'Ex: 53'],
-      typeInputs: ['text', 'number'],
-      items: []
+      typeInputs: ['text', 'number']
     },
     eta_scolaires: {
       titre: 'Les établissements scolaires',
       labels: ['Nom', 'Nombre'],
       keyObj: ['name', 'nb'],
       placeHolders: ['Ex: école primaire', 'Ex: 23'],
-      typeInputs: ['text', 'number'],
-      items: []
+      typeInputs: ['text', 'number']
     },
     parkings: {
       titre: 'Parkings',
       labels: ['Nom', 'Pourcentage'],
       keyObj: ['name', 'chiffre'],
       placeHolders: ['Ex: Ménages ayant un parking', 'Ex: 51'],
-      typeInputs: ['text', 'number'],
-      items: []
+      typeInputs: ['text', 'number']
     }
   }),
   computed: {
@@ -80,10 +82,7 @@ export default {
         departement: this.departement.model,
         postalCode: this.postalCode.model,
         prixMoyen: this.prixMoyen.model,
-        locataires: this.locataires.model,
-        tailleLogement: this.tailleLogement.items,
-        catSocioprofessionelle: this.catSocioprofessionelle.items,
-        parkings: this.parkings.items
+        locataires: this.locataires.model
       }
       console.log(city)
       await this.createCity({ city: city })

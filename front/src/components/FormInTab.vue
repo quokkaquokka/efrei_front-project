@@ -8,13 +8,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in dataForm.items" :key="item">
-          <th scope="row" v-for="label in dataForm.keyObj" :key="label">{{ item[label] }}</th>
+        <tr v-for="item in toComplete" :key="item">
+          <td v-for="label in dataForm.keyObj" :key="label">{{ item[label] }}</td>
           <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteItem"><i class="fas fa-trash"></i> Supprimer</button></td>
         </tr>
       </tbody>
     </table>
-    <form>
+    <form style="display: inline-block;">
     <div class="form-group row" v-for="(n,i) in dataForm.labels.length" :key="i" style="display: inline-block">
       <label :class="sizeLabel" style="display: inline-block">{{ dataForm.labels[i] }} </label>
       <div :class="sizeInput" style="display: inline-block">
@@ -32,6 +32,12 @@
 export default {
   props: {
     dataForm: Object,
+    toComplete: {
+      type: Array
+      /* default: function () {
+        return []
+      } */
+    },
     sizeLabel: {
       type: String,
       default: 'col-sm-4 col-form-label'
@@ -46,12 +52,11 @@ export default {
   }),
   methods: {
     addItem () {
-      console.log(this.item)
-      this.dataForm.items.push(this.item)
+      this.toComplete.push(this.item)
       this.item = {}
     },
     deleteItem (taille) {
-      this.dataForm.items.splice(taille, 1)
+      this.toComplete.splice(taille, 1)
     }
   }
 }
