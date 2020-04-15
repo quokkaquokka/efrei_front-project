@@ -4,7 +4,7 @@
       <div class="col-md" id="item">
         <div class="description">
           <span id="departement">{{ city.departement }}</span> <br>
-          <button type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('cityUser-deleted', city._id)"><i :class="labelItem.icon"></i> {{ labelItem.text }} </button>
+          <button type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('cityUser-action', city._id)"><i :class="labelItem.icon"></i> {{ labelItem.text }} </button>
           <router-link :to="`/city/${city._id}`">
             <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
           </router-link>
@@ -17,7 +17,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import router from '../router/index'
 export default {
   props: {
     city: Object,
@@ -36,6 +35,7 @@ export default {
   },
   methods: {
     ...mapActions('citiesUser', ['deleteCityUser']),
+    ...mapActions('citiesUser', ['createCityUser'])/*
     async itemAction () {
       if (this.labelItem.text !== 'Suivre cette ville') {
         // s'il existe suprimer
@@ -46,7 +46,7 @@ export default {
       }
       // TODO: implement
       // add in user the item
-    }
+    } */
   }
 }
 </script>

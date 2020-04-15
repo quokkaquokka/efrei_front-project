@@ -9,7 +9,7 @@
     </div>
     <h3>Listes de mes villes</h3>
     <div v-for="city in cities" :key="city._id">
-      <CityItem :city="city" :labelItem="deleteLabelItem" v-on:cityUser-deleted="removeCityUser"></CityItem>
+      <CityItem :city="city" :labelItem="deleteLabelItem" v-on:cityUser-action="removeCityUser"></CityItem>
     </div>
   </div>
 </template>
@@ -25,14 +25,14 @@ export default {
   data: () => ({
     cities: [],
     deleteLabelItem: {
-      icon: '',
+      icon: 'fas fa-trash',
       text: 'Ne plus suivre'
     }
   }),
   computed: {
     ...mapState(['user']),
     ...mapState(['citiesUser']),
-    ...mapState(['cities']),
+    // ...mapState(['cities']),
     ...mapGetters('user', ['getUser', 'isAuthenticated']),
     ...mapGetters('citiesUser', ['getCityUserByCityId']),
     ...mapGetters('citiesUser', ['getCitiesUser'])
@@ -51,7 +51,6 @@ export default {
         acc.push(e.villeId)
         return acc
       }, [])
-
       this.cities = await this.fetchCitiesbyIds({ ids: citiesId })
     }
   },

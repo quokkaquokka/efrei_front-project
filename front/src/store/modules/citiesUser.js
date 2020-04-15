@@ -60,6 +60,7 @@ const actions = {
   },
 
   async createCityUser ({ commit }, { cityUser }) {
+    console.log('cityUser', cityUser)
     const { data } = await axios.post(api('/cities/user'), cityUser)
     commit('addCityUser', data)
   },

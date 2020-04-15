@@ -2,7 +2,7 @@
   <div class="ad" id="item">
     <h4 style="display: block">{{ dataForm.titre }}</h4>
       <div v-for="item in itemToComplete" :key="item" id="pills">
-      <div class="badge badge-pill badge-info"> {{ item }}</div>
+        <button class="badge badge-pill badge-info" id="pill" v-on:click="deletePills(item)">{{ item }}<i class="fas fa-times"></i></button>
       </div>
     <form @submit="addItem" class="mt-2">
       <div class="form-group row">
@@ -33,7 +33,18 @@ export default {
     addItem () {
       this.itemToComplete.push(this.newItem)
       this.newItem = ''
+    },
+    deletePills (item) {
+      this.itemToComplete.splice(this.itemToComplete.indexOf(item), 1)
     }
   }
 }
 </script>
+<style>
+#pill {
+  border: 0
+}
+.fas.fa-times {
+  margin-left: 5px;
+}
+</style>

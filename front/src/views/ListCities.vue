@@ -8,14 +8,14 @@
         </SearchCities>
         <SearchBar :search="searchAttributes"> </SearchBar>
         <div v-for="city in cities" :key="city._id">
-          <CityItem :city="city"></CityItem>
+          <CityItem :city="city" v-on:cityUser-action="addCitiesUser"></CityItem>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import CityItem from '../components/CityItem.vue'
 import SearchCities from '../components/SearchBar.vue'
 export default {
@@ -34,12 +34,24 @@ export default {
     await this.fetchCities()
   },
   computed: {
-    ...mapState('cities', ['cities'])
+    ...mapState('cities', ['cities']),
+    ...mapGetters('user', ['getUser', 'isAuthenticated'])
   },
   methods: {
     ...mapActions('cities', ['fetchCities']),
+    ...mapActions('citiesUser', ['createCityUser']),
     async searchAction () {
       await this.fetchCities(this.searchAttributes.itemSearch)
+    },
+    async addCitiesUser (cityId) {
+      if (this.isAuthenticated) {
+        const cityUser = {
+          villeId: cityId,
+          userId: this.getUser._id
+        }
+        await this.createCityUser({ cityUser: cityUser })
+      }
+      // sinon une erreur et il faut dire de s'authentifier
     }
   }
 }
