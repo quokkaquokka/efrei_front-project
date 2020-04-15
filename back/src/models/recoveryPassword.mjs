@@ -43,7 +43,7 @@ const tokenRecoveryCleaner = async () => {
 
   await mongodb.remove(COLLECTION_NAME, {expiration: {$lt: currentTimestamp} })
 
-  setTimeout(tokenRecoveryCleaner, config.recoveryPasswordToken.cleanInterval)
+  setTimeout(tokenRecoveryCleaner, config.recoveryPasswordToken.cleanInterval).unref()
   console.log('Token cleaned')
 }
 

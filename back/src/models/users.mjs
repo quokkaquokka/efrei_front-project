@@ -1,25 +1,178 @@
-import omit from 'lodash/omit.js'
-import extend from 'lodash/extend.js'
-import Bcrypt from 'bcrypt'
-import mongodb from '../services/mongodb.mjs'
-import { getRecoveryToken, removeRecoveryToken } from './recoveryPassword.mjs'
+import omit from "lodash/omit.js";
+import extend from "lodash/extend.js";
+import Bcrypt from "bcrypt";
+import mongodb from "../services/mongodb.mjs";
+import { getRecoveryToken, removeRecoveryToken } from "./recoveryPassword.mjs";
+import Boom from "@hapi/boom";
 
-const COLLECTION_NAME = 'users'
+const COLLECTION_NAME = "users";
 const MODEL = {
+  _id: null,
   firstname: null,
   lastname: null,
   email: null,
-  password: null,
-  roles: [], // string array
+  scope: [], // string array
   groups: [], // string array
+  providers: {},
   isActive: true,
   deleted: false,
   deletedDate: null,
   createdDate: null,
   lastModifiedDate: null,
   activeAfterDate: null,
-  expirationDate: null
-}
+  expirationDate: null,
+};
+
+const getUserByProvider = async (provider, { email, userId }) => {
+  console.log("getUserByProvider");
+  if (!provider || (!email && !userId)) {
+    throw new Error("Invalid data to find user for this provider");
+  }
+
+  const filters = {
+    [`providers.${provider}.name`]: provider,
+  };
+  if (email) filters[`providers.${provider}.email`] = email;
+  if (userId) filters[`providers.${provider}.userId`] = userId;
+
+  console.log("FiltERS by provider", filters);
+  const users = await mongodb.fetch(COLLECTION_NAME, filters);
+
+  console.log("Mongodb ", users);
+  if (users.length === 0) throw Boom.unauthorized("INVALID_CREDENTIAL");
+  if (users.length !== 1) throw new Error("MULTIPLE_USER_FOR_EMAIL");
+
+  const user = users[0];
+  if (user.isActive !== undefined && !user.isActive) {
+    return Boom.unauthorized("INACTIVE_USER");
+  }
+
+  // account has validation date
+  const currentDate = Date.now();
+  if (user.activeAfterDate && user.activeAfterDate < currentDate) {
+    return Boom.unauthorized("NOT_YET_AVAILABLE_USER");
+  }
+  if (user.expirationDate && user.expirationDate > currentDate) {
+    return Boom.unauthorized("EXPIRED_USER");
+  }
+
+  return user;
+};
+
+const checkIfProviderIdentityAlreadyUsed = async (
+  provider,
+  { email, userId }
+) => {
+  console.log("getUserByProvider");
+  if (!email && !userId) {
+    throw new Error("Invalid data to find user for this provider");
+  }
+
+  const filters = {
+    [`providers.${provider}.name`]: provider,
+  };
+  if (email) filters[`providers.${provider}.email`] = email;
+  if (userId) filters[`providers.${provider}.userId`] = userId;
+
+  console.log("FiltERS by provider", filters);
+  const users = await mongodb.fetch(COLLECTION_NAME, filters);
+
+  console.log("Mongodb ", users);
+  if (users.length === 0) return false;
+  return true;
+};
+
+const resetPassword = async (resetToken, password) => {
+  await mongodb.transaction(async () => {
+    console.log("resetPassword #1");
+    console.log("resetPassword #1 - params", resetToken, password);
+    const data = await getRecoveryToken(resetToken);
+    console.log("resetPassword #2");
+    let passwd
+    try {
+      passwd = await Bcrypt.hash(password, 10);
+    } catch (e) {
+      console.log('EERORORO',e)
+    }
+    console.log("resetPassword #3", passwd);
+
+    if (!data) {
+      console.log("ResetPassword #4.1");
+      throw new Error("NO_TOKEN_FOUND");
+    }
+
+    console.log("resetPassword #4.2");
+    console.log("resetPassword #4.2 - data", data);
+    await updatePasswordFromEmail(data.email, passwd);
+    console.log("resetPassword #5");
+    await removeRecoveryToken(resetToken);
+    console.log("resetPassword #6");
+  });
+};
+
+// { firstname, lastname, email, scope: ['user'], providers: { internal: {name: 'internal', email, password: passwd }} }
+const addUserIfNotExists = async (user) => {
+  console.log("addUserIfNotExists");
+  const { providers } = user;
+
+  await mongodb.transaction(async () => {
+    if (
+      checkIfProviderIdentityAlreadyUsed("internal", {
+        email: providers.internal.email,
+      })
+    ) {
+      console.log("USer already exists");
+      throw new Error("USER_ALREADY_EXISTS");
+    }
+    console.log("Insert new user");
+    await insertUser(user);
+  });
+};
+
+const insertUser = async (user) => {
+  const userObj = extend({ createDate: Date.now() }, MODEL, user);
+  return await mongodb.insert(COLLECTION_NAME, userObj);
+};
+
+const attachProvider = async (id, provider, { email, userId }) => {
+  console.log("attachProvider");
+
+  const filter = { _id: new mongodb.ObjectID(id) };
+  const updateQuery = {
+    $set: {
+      [`providers.${provider}.name`]: provider,
+      [`providers.${provider}.email`]: email,
+      [`providers.${provider}.userId`]: userId,
+    },
+  };
+  const res = await mongodb.update(COLLECTION_NAME, filter, updateQuery);
+  console.log("res", res);
+};
+
+
+
+
+
+const getUsers = async (filters = undefined) => {
+  const users = await mongodb.fetch(COLLECTION_NAME, filters);
+
+  return users.map((user) => omit(user, ["providers.internal.password"]));
+};
+
+const getUserByEmail = async (email, withPassword = false) => {
+  console.log("getUserByEmail");
+  const users = await mongodb.fetch(COLLECTION_NAME, { email });
+
+  if (users.length === 0) return;
+  if (users.length !== 1) throw new Error("MULTIPLE_USER_FOR_EMAIL");
+
+  if (withPassword) {
+    return users[0];
+  }
+
+  return omit(user, ["providers.internal.password"]);
+};
+
 
 const validateCredential = async (email, password) => {
   const user = await getUserByEmail(email)
@@ -52,81 +205,54 @@ const validateCredential = async (email, password) => {
   throw new Error('INVALID_CREDENTIAL')
 }
 
-const getUsers = async (filters = undefined) => {
-  const users = await mongodb.fetch(COLLECTION_NAME, filters)
-
-  return users.map(user => omit(user, ["password"]))
-}
-
-const getUsersByGroups = async (groups) => {
-  return await getUsers({ groups })
-}
-
-const getUserByEmail = async email => {
-  const users = await mongodb.fetch(COLLECTION_NAME, { email })
-
-  if (users.length === 0) return
-  if (users.length !== 1) throw new Error('MULTIPLE_USER_FOR_EMAIL')
-
-  return users[0]
-}
-
-const getUserByUsername = async username => {
-  const users = await mongodb.fetch(COLLECTION_NAME, { username })
-
-  if (users.length === 0) return
-  if (users.length !== 1) throw new Error('DUPLICATE_USERNAME')
-
-  return users[0]
-}
-
 const updatePasswordFromEmail = async (email, password) => {
   try {
-    await getUserByEmail(email)
-    await mongodb.update(COLLECTION_NAME, { email }, { $set: { password } })
+    console.log("updatePasswordFromEmail");
+    await getUserDataForJwtFromProvider("internal", { email });
+    const res = await mongodb.update(
+      COLLECTION_NAME,
+      { "providers.internal.email": email },
+      { $set: { "providers.internal.password": password } }
+    );
+    console.log("res", res);
   } catch (err) {
-    throw err
+    throw err;
   }
-}
+};
 
-const insertUser = async user => {
-  const userObj = extend({}, MODEL, user)
-  return await mongodb.insert(COLLECTION_NAME, userObj)
-}
+const getUserDataForJwtFromProvider = async (provider, data = {}) => {
+  console.log("getUserDataForJwtFromProvider");
+  console.log("getUserDataForJwtFromProvider - params", provider, data);
+  const { email, userId } = data;
+  const filter = {};
 
-const addUserIfNotExists = async user => {
-  const { email } = user
-  await mongodb.transaction(async () => {
-    const data = await getUserByEmail(email)
-    console.log('Users', data)
-    if (data) {
-      throw new Error('USER_ALREADY_EXISTS')
-    }
-    await insertUser(user)
-  })
-}
+  const providerPrefixFilter = "providers." + provider;
+  filter[providerPrefixFilter + ".name"] = provider;
+  if (email) {
+    filter[providerPrefixFilter + ".email"] = email;
+  }
+  if (userId) {
+    filter[providerPrefixFilter + ".userId"] = userId;
+  }
 
-const resetPassword = async ({ token, password }) => {
-  await mongodb.transaction(async () => {
-    const data = await getRecoveryToken(token)
-    const passwd = await Bcrypt.hash(password, 10)
+  console.log("getUserDataForJwtFromProvider - filter", filter);
+  const users = await mongodb.fetch(COLLECTION_NAME, filter);
 
-    if (!data) {
-      throw new Error('NO_TOKEN_FOUND')
-    }
-    await updatePasswordFromEmail(data.email, passwd)
-    await removeRecoveryToken(token)
-  })
-}
+  if (users.length === 0) return;
+  if (users.length !== 1) throw new Error("MULTIPLE_USER_FOR_PROVIDER_DATA");
+
+  return omit(users[0], ["providers.internal.password"]);
+};
 
 export {
-  validateCredential,
+  attachProvider,
+  getUserByProvider,
+  checkIfProviderIdentityAlreadyUsed,
   addUserIfNotExists,
-  getUserByEmail,
-  updatePasswordFromEmail,
-  getUserByUsername,
-  insertUser,
   resetPassword,
+
   getUsers,
-  getUsersByGroups
-}
+  getUserByEmail,
+  validateCredential,
+  updatePasswordFromEmail
+};

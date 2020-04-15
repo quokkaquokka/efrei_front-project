@@ -8,11 +8,11 @@ const register = async (server, options) => {
 
   for (const plugin of Object.values(options.plugins)) {
     const pluginPath = plugin.local ? join(cwd, plugin.name) : plugin.name
-    // console.log('Plugin path', pluginPath)
+    console.log('Plugin path', pluginPath)
     await server.register({
       plugin: (await import(pluginPath)).default,
       options: plugin.options || {}
-    })
+    }, plugin.registrationOptions)
     console.log('Plugin loaded:', plugin.name)
   }
 }

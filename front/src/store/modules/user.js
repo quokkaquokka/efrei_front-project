@@ -18,15 +18,7 @@ const state = {
     lastname: '',
     email: '',
     password: '',
-    scopes: [], // string array
-    groups: [], // string array
-    isActive: true,
-    deleted: false,
-    deletedDate: null,
-    createdDate: null,
-    lastModifiedDate: null,
-    activeAfterDate: null,
-    expirationDate: null
+    scope: [] // string array
   },
   status: ''
 }
@@ -36,7 +28,7 @@ const getters = {
   tokenExpiry: state => state.tokenExpiry,
   isAuthenticated: state => state.connected,
   getUser: state => state.user,
-  hasAccessRight: state => state.user.scopes.includes('admin')
+  hasAccessRight: state => state.user.scope.includes('admin')
 }
 
 const actions = {
@@ -53,18 +45,20 @@ const actions = {
   async signin ({ commit }, { email, password }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/signin'), { email, password })
-      commit('AUTH_SUCCESS', data)
+      const { data } = await axios.post(api('/auth/login'), { email, password })
+      console.log('authentification', data)
       // stock the token of the user
-      state.token = data.token
+      state.token = data
       localStorage.setItem('token', state.token)
       // decode the token to have the expiration date
-      const decoded = jwtDecode(data.token)
+      const decoded = jwtDecode(data)
       state.tokenExpiryDate = decoded.exp
       localStorage.setItem('tokenExpiry', state.tokenExpiryDate)
+      commit('AUTH_SUCCESS', { user: decoded })
       router.replace('/home')
     } catch (err) {
       commit('AUTH_ERROR')
+      console.log('error', err)
     }
   },
 
@@ -101,16 +95,7 @@ const mutations = {
       firstname,
       lastname,
       email,
-      password,
-      scopes, // string array
-      groups, // string array
-      isActive,
-      deleted,
-      deletedDate,
-      createdDate,
-      lastModifiedDate,
-      activeAfterDate,
-      expirationDate
+      scope // string array
     }
   }) {
     state.status = 'success'
@@ -119,16 +104,7 @@ const mutations = {
     state.user.firstname = firstname
     state.user.lastname = lastname
     state.user.email = email
-    state.user.password = password
-    state.user.scopes = scopes
-    state.user.groups = groups
-    state.user.isActive = isActive
-    state.user.deleted = deleted
-    state.user.deletedDate = deletedDate
-    state.user.createdDate = createdDate
-    state.user.lastModifiedDate = lastModifiedDate
-    state.user.activeAfterDate = activeAfterDate
-    state.user.expirationDate = expirationDate
+    state.user.scope = scope
   },
   AUTH_ERROR (state) {
     state.status = 'error'
@@ -142,14 +118,6 @@ const mutations = {
     state.user.email = ''
     state.user.password = ''
     state.user.scopes = [] // string array
-    state.user.groups = [] // string array
-    state.user.isActive = true
-    state.user.deleted = false
-    state.user.deletedDate = null
-    state.user.createdDate = null
-    state.user.lastModifiedDate = null
-    state.user.activeAfterDate = null
-    state.user.expirationDate = null
   }
 }
 export default {
