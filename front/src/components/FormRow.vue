@@ -1,7 +1,7 @@
 <template>
   <div class="form-group row">
-    <label :class="sizeLabel">{{ dataForm.title }}</label>
-    <div class="col-sm-7">
+    <label :class="sizeLabel.label">{{ dataForm.title }}</label>
+    <div :class="sizeLabel.input">
       <input type="text" class="form-control" v-model="dataForm.model" :placeholder="`${ dataForm.placeholder }`">
     </div>
   </div>
@@ -17,8 +17,13 @@ export default {
       }
     },
     sizeLabel: {
-      type: String,
-      default: 'col-2'
+      type: Object,
+      default: () => {
+        return {
+          label: 'col-2',
+          input: 'col-sm-7'
+        }
+      }
     }
   }
 }

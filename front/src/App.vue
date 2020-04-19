@@ -34,9 +34,18 @@
         Dashboard villes
       </router-link>
       </li>
+      <li class="nav-item">
+      <!-- v-if="hasAccessRight" -->
+       <router-link
+          to="/dashads"
+          replace
+        >
+        Dashboard annonces
+      </router-link>
+      </li>
     </ul>
     <router-link class="form-inline my-2 my-lg-0"
-      to="/signin"
+      to="/"
       v-on:click.native="logout()"
       replace>
       <p> Logout </p>
@@ -62,7 +71,7 @@ export default {
   },
   mounted () {
     if (!this.isAuthenticated) {
-      this.$router.push('/signin')
+      this.$router.push('/')
     }
   },
   methods: {

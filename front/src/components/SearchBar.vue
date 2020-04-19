@@ -5,7 +5,7 @@
       <input class="form-control mr-sm-2 col-8" type="search" :placeholder="`${ search.placeHolder }`" v-model="search.itemSearch">
       <button class="btn btn btn-outline-info" type="submit" @click="action"><i class="fas fa-search"></i> Recherche</button>
     </form>
-    <div class="ml-2 col-2 float-right" v-if="rightButton">
+    <div class="ml-2 col-2 float-right" v-if="rightButton" style="display: contents">
       <button class="btn btn btn-outline-info" type="submit" @click="righAction"><i :class="`${ rightButton.icon }`"></i> {{ rightButton.text }}</button>
     </div>
   </nav>

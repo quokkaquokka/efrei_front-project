@@ -76,9 +76,9 @@ const actions = {
   async logout ({ commit }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/logout'))
+      const { data } = await axios.post(api('/auth/logout'))
       commit('UNSET_USER', data)
-      router.replace('/signin')
+      router.replace('/')
     } catch (err) {
       commit('AUTH_ERROR')
     }

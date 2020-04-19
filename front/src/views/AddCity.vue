@@ -84,7 +84,6 @@ export default {
         prixMoyen: this.prixMoyen.model,
         locataires: this.locataires.model
       }
-      console.log(city)
       await this.createCity({ city: city })
       this.$router.push('/dashcities')
     }

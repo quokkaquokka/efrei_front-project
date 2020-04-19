@@ -10,7 +10,9 @@
           <router-link :to="`/ad/${ad._id}`">
             {{ ad.titre }}
           </router-link>
-          <button type="button" class="btn btn-outline-primary"  id="favorite" @click="addItemFavori"><i class="far fa-star"></i> Suivre ce bien</button>
+          <div v-for="label in labelsButton" :key="label.text">
+            <button type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('adUser-action', ad._id, label.text)"><i :class="label.icon"></i> {{ label.text }}</button>
+          </div>
         </h3>
         <h4><i class="fas fa-map-marker-alt"></i> {{ ad.ville }} </h4><span> {{ad.cp}} </span><br>
         <h2> {{ ad.prix }} €</h2><span> {{ ad.prixm2 }} €/m²</span>
@@ -21,17 +23,25 @@
 </template>
 
 <script>
+
 export default {
   props: {
-    ad: Object
+    ad: Object,
+    labelsButton: {
+      type: Array,
+      default: () => {
+        return [
+          {
+            icon: 'far fa-star',
+            text: 'Suivre ce bien'
+          }
+        ]
+      }
+    }
   },
   methods: {
     getImgUrl (ad) {
       return ad.img[0]
-    },
-    addItemFavori () {
-      // TODO: implement
-      // add in user the item
     }
   }
 }
