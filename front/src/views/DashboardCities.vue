@@ -49,7 +49,7 @@ export default {
       this.fetchCities(this.searchAttributes.itemSearch)
     },
     addCity () {
-      this.$router.push('/addcity')
+      this.$router.push('/addcity/')
     },
     async removeCity (cityId) {
       await this.deleteCity({ cityId: cityId })

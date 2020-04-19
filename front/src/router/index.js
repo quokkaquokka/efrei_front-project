@@ -9,7 +9,6 @@ import Cities from '../views/ListCities.vue'
 import City from '../views/City.vue'
 import DashboardCities from '../views/DashboardCities.vue'
 import DashboardAds from '../views/DashboardAds.vue'
-import EditCity from '../views/EditCity.vue'
 import AddCity from '../views/AddCity.vue'
 import AddAd from '../views/AddAd.vue'
 
@@ -69,12 +68,7 @@ export default new Router({
       component: DashboardAds
     },
     {
-      path: '/editcity/:id',
-      name: 'editcity',
-      component: EditCity
-    },
-    {
-      path: '/addcity',
+      path: '/addcity/:id?',
       name: 'addcity',
       component: AddCity
     },
@@ -83,6 +77,5 @@ export default new Router({
       name: 'addad',
       component: AddAd
     }
-
   ]
 })

@@ -24,7 +24,7 @@
           lastname: lastname
         })"
       >
-        Login
+        Sign Up
       </button>
       <router-link to="/signin">Already have an account? Sign In!</router-link> |
     </form>

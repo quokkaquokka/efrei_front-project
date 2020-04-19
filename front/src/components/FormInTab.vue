@@ -4,7 +4,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col" v-for="item of dataForm.labels" :key="item">{{ item }}</th>
+          <th scope="col" v-for="(n,i) in dataForm.labels.length" :key="i">{{ dataForm.labels[i] }}</th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +23,7 @@
     </div>
     </form>
     <div class="col-sm-2 mb-3" style="display: inline-block">
-      <button type="button" class="btn btn-outline-info" @click='addItem'>Ajouter</button>
+      <button type="button" class="btn btn-outline-info" @click="addItem">Ajouter</button>
     </div>
   </div>
 </template>
@@ -55,8 +55,8 @@ export default {
       this.toComplete.push(this.item)
       this.item = {}
     },
-    deleteItem (taille) {
-      this.toComplete.splice(taille, 1)
+    deleteItem (item) {
+      this.toComplete.splice(item, 1)
     }
   }
 }

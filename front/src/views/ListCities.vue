@@ -6,7 +6,6 @@
           :search="searchAttributes"
           :action="searchAction">
         </SearchCities>
-        <SearchBar :search="searchAttributes"> </SearchBar>
         <div v-for="city in cities" :key="city._id">
           <CityItem :city="city" v-on:cityUser-action="addCitiesUser"></CityItem>
         </div>

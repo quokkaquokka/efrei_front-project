@@ -2,13 +2,13 @@
   <div class="col-9" id="city">
     <h1>Welcome {{getUser.firstname}}</h1>
     <div class="ad" id="item">
-      <h3>Listes de mes annonces</h3>
+      <!-- <h3>Listes de mes annonces</h3> !-->
       <!-- <div v-for="ad in ads" :key="ad._id">
         <AdItem :ad="ad"></AdItem>
       </div> !-->
     </div>
     <h3>Listes de mes villes</h3>
-    <div v-for="city in cities" :key="city._id">
+    <div v-for="city in citiesbyId" :key="city._id">
       <CityItem :city="city" :labelItem="deleteLabelItem" v-on:cityUser-action="removeCityUser"></CityItem>
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
     CityItem
   },
   data: () => ({
-    cities: [],
+    citiesbyId: [],
     deleteLabelItem: {
       icon: 'fas fa-trash',
       text: 'Ne plus suivre'
@@ -51,7 +51,7 @@ export default {
         acc.push(e.villeId)
         return acc
       }, [])
-      this.cities = await this.fetchCitiesbyIds({ ids: citiesId })
+      this.citiesbyId = await this.fetchCitiesbyIds({ ids: citiesId })
     }
   },
   async mounted () {
@@ -60,7 +60,7 @@ export default {
       acc.push(e.villeId)
       return acc
     }, [])
-    this.cities = await this.fetchCitiesbyIds({ ids: citiesId })
+    this.citiesbyId = await this.fetchCitiesbyIds({ ids: citiesId })
   }
 }
 </script>
