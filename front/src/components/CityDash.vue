@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     editCity () {
-      this.$router.push(`/editcity/${this.city._id}`)
+      this.$router.push(`/addcity/${this.city._id}`)
     }
   }
 }

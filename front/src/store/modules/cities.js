@@ -72,7 +72,8 @@ const actions = {
 
   async createCity ({ commit }, { city }) {
     const { data } = await axios.post(api('/cities'), city)
-    commit('addCity', data[0])
+    console.log(data)
+    commit('addCity', data)
   },
 
   async deleteCity ({ commit }, { cityId }) {

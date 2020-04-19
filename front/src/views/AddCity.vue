@@ -4,11 +4,11 @@
       <form>
         <div>
           <h4>Informations générales</h4><br>
-          <FormRow :dataForm="name" ></FormRow>
-          <FormRow :dataForm="departement" ></FormRow>
-          <FormRow :dataForm="postalCode" ></FormRow>
-          <FormRow :dataForm="prixMoyen" ></FormRow>
-          <FormRow :dataForm="locataires" ></FormRow>
+          <FormRow :dataForm="name" v-model="city.name" ></FormRow>
+          <FormRow :dataForm="departement" v-model="city.departement"></FormRow>
+          <FormRow :dataForm="postalCode" v-model="city.postalCode"></FormRow>
+          <FormRow :dataForm="prixMoyen" v-model="city.prixMoyen"></FormRow>
+          <FormRow :dataForm="locataires" v-model="city.locataires"></FormRow>
         </div>
       </form>
     </div>
@@ -16,12 +16,13 @@
     <FormInTab :dataForm="catSocioprofessionelle" :toComplete="city.catSocioprofessionelle"> </FormInTab>
     <FormInTab :dataForm="parkings" :toComplete="city.parkings"> </FormInTab>
     <FormInTab :dataForm="eta_scolaires" :toComplete="city.eta_scolaires"> </FormInTab>
-    <button type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
+    <button v-if="!$route.params.id" type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
+    <button v-if="$route.params.id" type="button" class="btn btn-outline-primary mt-3" @click='editCity' style="float: right">Modifier la ville</button>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import FormRow from '../components/FormRow.vue'
 import FormInTab from '../components/FormInTab.vue'
 export default {
@@ -31,16 +32,21 @@ export default {
   },
   data: () => ({
     city: {
+      name: '',
+      departement: null,
+      postalCode: null,
+      prixMoyen: null,
+      locataires: null,
       tailleLogement: [],
       catSocioprofessionelle: [],
       parkings: [],
       eta_scolaires: []
     },
-    name: { title: 'Nom de la ville', model: null, placeholder: 'Ex: Villejuif' },
-    departement: { title: 'Département', model: null, placeholder: 'Ex: Val-de-Marne' },
-    postalCode: { title: 'Code Postal', model: null, placeholder: 'Ex: 94800' },
-    prixMoyen: { title: 'Prix moyen', model: null, placeholder: 'Ex: 5359' },
-    locataires: { title: 'locataires (%)', model: null, placeholder: 'Ex: 61.2' },
+    name: { title: 'Nom de la ville', placeholder: 'Ex: Villejuif' },
+    departement: { title: 'Département', placeholder: 'Ex: Val-de-Marne' },
+    postalCode: { title: 'Code Postal', placeholder: 'Ex: 94800' },
+    prixMoyen: { title: 'Prix moyen', placeholder: 'Ex: 5359' },
+    locataires: { title: 'locataires (%)', placeholder: 'Ex: 61.2' },
     tailleLogement: {
       titre: 'Tailles de logement',
       labels: ['Nom', 'Pourcentage', 'Prix'],
@@ -71,21 +77,23 @@ export default {
     }
   }),
   computed: {
-    ...mapState('cities', ['cities'])
+    ...mapState('cities', ['cities']),
+    ...mapGetters('cities', ['getCityById'])
+  },
+  mounted () {
+    if (this.$route.params.id) {
+      this.city = this.getCityById(this.$route.params.id)
+    }
   },
   methods: {
-    ...mapActions('cities', ['createCity']),
+    ...mapActions('cities', ['createCity', 'updateCity']),
     ...mapMutations('cities', ['addCity']),
     async addCity () {
-      const city = {
-        name: this.name.model,
-        departement: this.departement.model,
-        postalCode: this.postalCode.model,
-        prixMoyen: this.prixMoyen.model,
-        locataires: this.locataires.model
-      }
-      console.log(city)
-      await this.createCity({ city: city })
+      await this.createCity({ city: this.city })
+      this.$router.push('/dashcities')
+    },
+    async editCity () {
+      await this.updateCity({ city: this.city })
       this.$router.push('/dashcities')
     }
   }

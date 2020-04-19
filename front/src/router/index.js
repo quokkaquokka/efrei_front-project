@@ -8,7 +8,6 @@ import Ad from '../views/Ad.vue'
 import Cities from '../views/ListCities.vue'
 import City from '../views/City.vue'
 import DashboardCities from '../views/DashboardCities.vue'
-import EditCity from '../views/EditCity.vue'
 import AddCity from '../views/AddCity.vue'
 
 Vue.use(Router)
@@ -27,7 +26,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/',
+      path: '/signin',
       name: 'signin',
       component: SignIn
     },
@@ -62,15 +61,9 @@ export default new Router({
       component: DashboardCities
     },
     {
-      path: '/editcity/:id',
-      name: 'editcity',
-      component: EditCity
-    },
-    {
-      path: '/addcity',
+      path: '/addcity/:id?',
       name: 'addcity',
       component: AddCity
     }
-
   ]
 })

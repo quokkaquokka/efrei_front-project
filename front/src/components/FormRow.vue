@@ -2,7 +2,7 @@
   <div class="form-group row">
     <label :class="sizeLabel">{{ dataForm.title }}</label>
     <div class="col-sm-7">
-      <input type="text" class="form-control" v-model="dataForm.model" :placeholder="`${ dataForm.placeholder }`">
+      <input type="text" class="form-control" v-bind:value="value" v-on:input="$emit('input', $event.target.value)" :placeholder="`${ dataForm.placeholder }`">
     </div>
   </div>
 </template>
@@ -19,7 +19,8 @@ export default {
     sizeLabel: {
       type: String,
       default: 'col-2'
-    }
+    },
+    value: [String, Number]
   }
 }
 </script>
