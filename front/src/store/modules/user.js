@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from '../../client.config'
 import router from '../../router/index'
 import jwtDecode from 'jwt-decode'
+import { refreshToken } from '../../services/session-manager'
 
 /** @param {String} path */
 function api (path) {
@@ -10,8 +11,6 @@ function api (path) {
 
 const state = {
   connected: false,
-  token: null,
-  tokenExpiryDate: null,
   user: {
     _id: '',
     firstname: '',
@@ -24,11 +23,11 @@ const state = {
 }
 
 const getters = {
-  token: state => state.token,
-  tokenExpiry: state => state.tokenExpiry,
   isAuthenticated: state => state.connected,
   getUser: state => state.user,
-  hasAccessRight: state => state.user.scope.includes('admin')
+  hasAccessRight: state => state.user.scope.includes('admin'),
+  // pour tester
+  state: state => state
 }
 
 const actions = {
@@ -47,12 +46,10 @@ const actions = {
     try {
       const { data } = await axios.post(api('/auth/login'), { email, password })
       // stock the token of the user
-      state.token = data
-      localStorage.setItem('token', state.token)
-      // decode the token to have the expiration date
+      localStorage.setItem('token', data)
       const decoded = jwtDecode(data)
-      state.tokenExpiryDate = decoded.exp
-      localStorage.setItem('tokenExpiry', state.tokenExpiryDate)
+      localStorage.setItem('tokenExpiry', decoded.exp)
+      refreshToken()
       commit('AUTH_SUCCESS', { user: decoded })
       router.replace('/home')
     } catch (err) {

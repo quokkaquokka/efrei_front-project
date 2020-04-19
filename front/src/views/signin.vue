@@ -20,11 +20,15 @@
       <br />
       <router-link to='/signup'>Don't have an account yet? Sign Up!</router-link>|
     </form>
+    <button class="btn btn-outline-primary" style="float: right;"
+        v-on:click="resetPassword"
+      >TEST</button>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import axios from 'axios'
 export default {
   name: 'signin',
   data () {
@@ -35,11 +39,38 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['isAuthenticated']),
-    ...mapState(['user'])
+    ...mapState(['user']),
+    // pour les testes
+    ...mapGetters('user', ['state'])
   },
   methods: {
     ...mapActions('user', ['signin']),
-    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR'])
+    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR']),
+    async resetPassword (event) {
+      // http://localhost:8000/api/v1/auth/forgotten-password?email=mouttecam@gmail.com pas besoin d'etre connecter
+      /* const options = {
+        params: {
+          email: 'mouttecam@gmail.com'
+        }
+      }event
+      const resp = await axios.get('http://localhost:8000/api/v1' + '/auth/forgotten-password', options)
+      console.log(resp) */
+
+      // const option2 = {
+      //   headers: {
+      //     authorization: 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1YzBhYTFjMi05NDc3LTQ3YzAtOTJmYS0zMzk1OWNiYTYwOWUiLCJpc3MiOlsiRlJPTlQtUFJPSkVDVCJdLCJpYXQiOjE1ODczMzAxMzIsImV4cCI6MTU4NzMzMDEzMiwic2NvcGUiOlsidXNlciJdLCJwcm92aWRlciI6eyJuYW1lIjoiaW50ZXJuYWwiLCJlbWFpbCI6Im1vdXR0ZWNhbUBnbWFpbC5jb20ifSwiX2lkIjoiNWU3MzRhYWIxYzlkNDQwMDAwYTM4NDY5IiwiZmlyc3RuYW1lIjoiQ2FtaWxsZSIsImxhc3RuYW1lIjoiTW91dHRlIiwiZW1haWwiOiJtb3V0dGVjYW1AZ21haWwuY29tIn0.d9ZvgosrsvjdDHGR_tbAYShqhntZpze9nJ8IJoFlqYY'
+      //   }
+      // }
+      // const resp2 = await axios.get('http://localhost:8000/api/v1' + '/auth/logout', option2)
+      // console.log('res', resp2)
+      const option2 = {
+        headers: {
+          authorization: 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5MmU1MmEyYS0xNDY3LTQyMGUtYTFhOC0wNDc2ZGI4M2UxNzQiLCJpc3MiOlsiRlJPTlQtUFJPSkVDVCJdLCJpYXQiOjE1ODczMzA0NDEsImV4cCI6MTU4NzMzMDQ0MSwic2NvcGUiOlsidXNlciJdLCJwcm92aWRlciI6eyJuYW1lIjoiaW50ZXJuYWwiLCJlbWFpbCI6Im1vdXR0ZWNhbUBnbWFpbC5jb20ifSwiX2lkIjoiNWU3MzRhYWIxYzlkNDQwMDAwYTM4NDY5IiwiZmlyc3RuYW1lIjoiQ2FtaWxsZSIsImxhc3RuYW1lIjoiTW91dHRlIiwiZW1haWwiOiJtb3V0dGVjYW1AZ21haWwuY29tIn0.7HlTKWJBLZopI3mhBJKH3LwtIPGh05DwjpEmU4S5Rpk'
+        }
+      }
+      const resp2 = await axios.get('http://localhost:8000/api/v1' + '/auth/logout', option2)
+      console.log('res', resp2)
+    }
   }
 }
 </script>

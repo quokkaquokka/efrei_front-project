@@ -47,8 +47,8 @@ module.exports = {
             tokenType: 'Bearer',
 
             /// - custom attributs
-            issuer: defer(function() { return [this.jwt.iss] }),  // 'BOILERPLATE',
-            duration: defer(function() { return [this.jwt.duration] }), // 15, // min
+            issuer: defer(function() { return this.jwt.iss }),  // 'BOILERPLATE',
+            duration: defer(function() { return this.jwt.duration }), // 15, // min
           },
         },
         registrationOptions: {

@@ -267,6 +267,7 @@ const register = async (server, options = { saltRounds: 10 }) => {
       },
     },
     handler: async (request, h) => {
+      console.log('forgotten password', request.query.email)
       const email = request.query.email
       const user = await options.methods.findUserByProvider('internal', {email})
 
