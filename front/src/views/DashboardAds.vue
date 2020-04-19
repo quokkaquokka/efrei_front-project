@@ -64,7 +64,6 @@ export default {
     async actionAdUser (id, label) {
       if (label === 'Supprimer') {
         await this.deleteAd({ adId: id })
-        await this.fetchAds()
       } else {
         this.$router.push('/addad/' + id)
       }

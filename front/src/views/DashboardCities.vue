@@ -53,7 +53,6 @@ export default {
     },
     async removeCity (cityId) {
       await this.deleteCity({ cityId: cityId })
-      await this.fetchCities()
     }
   }
 }

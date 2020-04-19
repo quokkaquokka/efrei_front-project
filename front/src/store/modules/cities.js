@@ -11,8 +11,6 @@ import axios from 'axios'
 import config from '../../client.config'
 import _ from 'lodash'
 
-// GET /ads -> recupere totue les annonces
-// GET /ads/{id}  -> lit une annonce via l'id
 /** @param {String} path */
 function api (path) {
   return config.apiURL + path
@@ -30,14 +28,11 @@ const mutations = {
       state.cities.push(city)
     }
   },
-  removeCity (state, cityId) {
+  removeCity (state, { cityId }) {
     const existing = state.cities.findIndex(e => e._id === cityId)
     if (existing !== -1) {
       state.cities.splice(existing, 1)
     }
-  },
-  clearAll () {
-    state.cities = []
   }
 }
 
@@ -59,7 +54,6 @@ const getters = {
 
 const actions = {
   async fetchCities ({ commit }, filters = undefined) {
-    commit('clearAll')
     const { data } = await axios.get(api('/cities'), { params: { filters: filters } })
     data.forEach(d => commit('addCity', d))
   },
@@ -81,7 +75,7 @@ const actions = {
 
   async deleteCity ({ commit }, { cityId }) {
     await axios.delete(api('/cities/' + cityId))
-    commit('removeCity', cityId)
+    commit('removeCity', { cityId })
   },
 
   async updateCity ({ commit }, { city }) {
