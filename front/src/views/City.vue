@@ -123,12 +123,6 @@ export default {
     cityId () {
       return this.$route.params.id
     }
-    /*
-    city () {
-      console.log(this.getCityById(this.cityId))
-      return this.getCityById(this.cityId) || { name: 'Loading..' }
-    }
-    */
   }
 }
 </script>

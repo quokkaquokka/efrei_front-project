@@ -33,7 +33,7 @@ export default {
       data: data,
       options: options
     })
-    console.log(myPieChart)
+    console.log('graphique', myPieChart)
   }
 
 }

@@ -8,7 +8,6 @@ export default {
   },
   handler: async (request, h) => {
     const cityUser = request.payload;
-    console.log(request.payload)
     return await updateCityUser(cityUser)
   }
 }

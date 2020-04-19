@@ -45,7 +45,7 @@
       </li>
     </ul>
     <router-link class="form-inline my-2 my-lg-0"
-      to="/"
+      to="/signin"
       v-on:click.native="logout()"
       replace>
       <p> Logout </p>
@@ -71,7 +71,7 @@ export default {
   },
   mounted () {
     if (!this.isAuthenticated) {
-      this.$router.push('/')
+      this.$router.push('/signin')
     }
   },
   methods: {

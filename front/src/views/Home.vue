@@ -32,9 +32,10 @@ export default {
   computed: {
     ...mapState(['user']),
     ...mapState(['citiesUser']),
-    // ...mapState(['cities']),
+    ...mapState(['cities']),
     ...mapGetters('user', ['getUser', 'isAuthenticated']),
     ...mapGetters('citiesUser', ['getCityUserByCityId']),
+    ...mapGetters('cities', ['getCitiesbyIds']),
     ...mapGetters('citiesUser', ['getCitiesUser'])
   },
   methods: {
@@ -51,7 +52,8 @@ export default {
         acc.push(e.villeId)
         return acc
       }, [])
-      this.citiesbyId = await this.fetchCitiesbyIds({ ids: citiesId })
+      await this.fetchCitiesbyIds({ ids: citiesId })
+      this.citiesbyId = this.getCitiesbyIds(citiesId)
     }
   },
   async mounted () {
@@ -60,7 +62,8 @@ export default {
       acc.push(e.villeId)
       return acc
     }, [])
-    this.citiesbyId = await this.fetchCitiesbyIds({ ids: citiesId })
+    await this.fetchCitiesbyIds({ ids: citiesId })
+    this.citiesbyId = this.getCitiesbyIds(citiesId)
   }
 }
 </script>

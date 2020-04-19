@@ -28,7 +28,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/',
+      path: '/signin',
       name: 'signin',
       component: SignIn
     },
@@ -73,7 +73,7 @@ export default new Router({
       component: AddCity
     },
     {
-      path: '/addad',
+      path: '/addad/:id?',
       name: 'addad',
       component: AddAd
     }

@@ -2,7 +2,7 @@
   <div class="form-group row">
     <label :class="sizeLabel.label">{{ dataForm.title }}</label>
     <div :class="sizeLabel.input">
-      <input type="text" class="form-control" v-bind:value="value" v-on:input="$emit('input', $event.target.value)" :placeholder="`${ dataForm.placeholder }`">
+      <input :type="inputType" class="form-control" v-bind:value="value" v-on:input="$emit('input', $event.target.value)" :placeholder="`${ dataForm.placeholder }`">
     </div>
   </div>
 </template>
@@ -22,7 +22,11 @@ export default {
         }
       }
     },
-    value: [String, Number]
+    value: [String, Number],
+    inputType: {
+      type: String,
+      default: 'text'
+    }
   }
 }
 </script>

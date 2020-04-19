@@ -9,6 +9,7 @@
 
 import axios from 'axios'
 import config from '../../client.config'
+import _ from 'lodash'
 
 // GET /ads -> recupere totue les annonces
 // GET /ads/{id}  -> lit une annonce via l'id
@@ -35,17 +36,24 @@ const mutations = {
       state.cities.splice(existing, 1)
     }
   },
-  clearAll (state) {
+  clearAll () {
     state.cities = []
   }
 }
 
 const getters = {
   getCityById: state => id => {
-    console.log('state cities', state.cities)
     return state.cities.find(_ => {
       return _._id === id
     })
+  },
+  getCitiesbyIds: state => citiesId => {
+    return _.reduce(state.cities, (acc, o) => {
+      if (citiesId.indexOf(o._id) >= 0) {
+        acc.push(o)
+      }
+      return acc
+    }, [])
   }
 }
 
@@ -57,12 +65,8 @@ const actions = {
   },
 
   async fetchCitiesbyIds ({ commit }, { ids }) {
-    console.log(ids, JSON.stringify(ids))
     const { data } = await axios.get(api('/cities/ids'), { params: { ids: JSON.stringify(ids) } })
-    console.log('response data', data)
     data.forEach(d => commit('addCity', d))
-    return data
-    // data.forEach(d => commit('addCity', d))
   },
 
   async fetchCity ({ commit }, { id }) {
@@ -72,7 +76,6 @@ const actions = {
 
   async createCity ({ commit }, { city }) {
     const { data } = await axios.post(api('/cities'), city)
-    console.log(data)
     commit('addCity', data)
   },
 

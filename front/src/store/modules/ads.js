@@ -11,7 +11,11 @@ const state = {
 }
 
 const getters = {
-  getAdById: state => id => state.ads.find(_ => _.id === parseInt(id))
+  getAdById: state => id => {
+    return state.ads.find(_ => {
+      return _._id === id
+    })
+  }
 }
 
 const mutations = {
@@ -29,7 +33,7 @@ const mutations = {
       state.ads.splice(existing, 1)
     }
   },
-  clearAll (state) {
+  clearAll () {
     state.ads = []
   }
 }

@@ -46,7 +46,6 @@ const actions = {
     commit('AUTH_REQUEST')
     try {
       const { data } = await axios.post(api('/auth/login'), { email, password })
-      console.log('authentification', data)
       // stock the token of the user
       state.token = data
       localStorage.setItem('token', state.token)
@@ -78,7 +77,7 @@ const actions = {
     try {
       const { data } = await axios.post(api('/auth/logout'))
       commit('UNSET_USER', data)
-      router.replace('/')
+      router.replace('/signin')
     } catch (err) {
       commit('AUTH_ERROR')
     }

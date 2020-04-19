@@ -61,13 +61,12 @@ export default {
     goToPageAddAd () {
       this.$router.push('/addad')
     },
-    async actionAdUser (adId, label) {
+    async actionAdUser (id, label) {
       if (label === 'Supprimer') {
-        await this.deleteAd({ adId: adId })
+        await this.deleteAd({ adId: id })
         await this.fetchAds()
       } else {
-        // modify ads
-        this.$router.push('/addad')
+        this.$router.push('/addad/' + id)
       }
     }
   }

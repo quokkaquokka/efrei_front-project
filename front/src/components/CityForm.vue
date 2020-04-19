@@ -89,7 +89,6 @@ export default {
         // display an error message for the connection of the user
         return
       }
-      console.log('id user cities', this.citiesUser._id)
       if (this.citiesUser._id) {
         // il existe deja, il faut faire un update
         await this.updateCityUser({ cityUser: this.citiesUser })
@@ -97,7 +96,6 @@ export default {
         // il faut faire un create
         this.citiesUser.userId = this.getUser._id
         this.citiesUser.villeId = this.cityId
-        console.log(this.citiesUser)
         await this.createCityUser({ cityUser: this.citiesUser })
       }
     }
