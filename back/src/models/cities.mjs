@@ -12,7 +12,7 @@ const MODEL = {
   prixMoyen: null,
   tailleLogement: [],
   locataires: null,
-  propriétaires: null,
+  proprietaires: null,
   departement: null,
   catSocioprofessionelle: [],
   eta_scolaires: [],

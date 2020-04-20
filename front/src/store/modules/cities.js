@@ -33,6 +33,9 @@ const mutations = {
     if (existing !== -1) {
       state.cities.splice(existing, 1)
     }
+  },
+  clearAll () {
+    state.cities = []
   }
 }
 
@@ -54,6 +57,7 @@ const getters = {
 
 const actions = {
   async fetchCities ({ commit }, filters = undefined) {
+    commit('clearAll')
     const { data } = await axios.get(api('/cities'), { params: { filters: filters } })
     data.forEach(d => commit('addCity', d))
   },

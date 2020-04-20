@@ -14,7 +14,7 @@ async function refreshToken () {
 
   const options = {
     headers: {
-      authorization: 'Bearer ' + localStorage.getItem('token')
+      Authorization: 'Bearer ' + localStorage.getItem('token')
     }
   }
   const resp = await axios.get(config.apiURL + '/auth/renew', options)

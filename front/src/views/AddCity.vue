@@ -7,8 +7,8 @@
           <FormRow :dataForm="name" v-model="city.name" ></FormRow>
           <FormRow :dataForm="departement" v-model="city.departement"></FormRow>
           <FormRow :dataForm="postalCode" v-model="city.postalCode"></FormRow>
-          <FormRow :dataForm="prixMoyen" v-model="city.prixMoyen"></FormRow>
-          <FormRow :dataForm="locataires" v-model="city.locataires"></FormRow>
+          <FormRow :dataForm="prixMoyen" v-model="city.prixMoyen" inputType="number"></FormRow>
+          <FormRow :dataForm="locataires" v-model="city.locataires" inputType="number"></FormRow>
         </div>
       </form>
     </div>
@@ -32,11 +32,11 @@ export default {
   },
   data: () => ({
     city: {
-      name: '',
+      name: null,
       departement: null,
       postalCode: null,
-      prixMoyen: null,
-      locataires: null,
+      prixMoyen: 1,
+      locataires: 1,
       tailleLogement: [],
       catSocioprofessionelle: [],
       parkings: [],
@@ -49,10 +49,10 @@ export default {
     locataires: { title: 'locataires (%)', placeholder: 'Ex: 61.2' },
     tailleLogement: {
       titre: 'Tailles de logement',
-      labels: ['Nom', 'Pourcentage', 'Prix'],
-      keyObj: ['name', 'pourcentagge', 'prix'],
-      placeHolders: ['Ex: T1', 'Ex: 4.8', 'Ex: 380 €'],
-      typeInputs: ['text', 'number', 'text']
+      labels: ['Nom', 'Pourcentage', 'Prix (€)'],
+      keyObj: ['name', 'pourcentage', 'prix'],
+      placeHolders: ['Ex: T1', 'Ex: 4.8', 'Ex: 380'],
+      typeInputs: ['text', 'number', 'number']
     },
     catSocioprofessionelle: {
       titre: 'Catégories socio-professionnelles',
@@ -89,6 +89,9 @@ export default {
     ...mapActions('cities', ['createCity', 'updateCity']),
     ...mapMutations('cities', ['addCity']),
     async addCity () {
+      this.city.prixMoyen = parseInt(this.city.prixMoyen, 10)
+      this.city.locataires = parseInt(this.city.locataires, 10)
+      this.city.proprietaires = 100 - this.city.locataires
       await this.createCity({ city: this.city })
       this.$router.push('/dashcities')
     },

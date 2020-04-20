@@ -32,11 +32,15 @@ const mutations = {
     if (existing !== -1) {
       state.ads.splice(existing, 1)
     }
+  },
+  clearAll () {
+    state.ads = []
   }
 }
 
 const actions = {
   async fetchAds ({ commit }, filters = undefined) {
+    commit('clearAll')
     const { data } = await axios.get(api('/ads'), { params: { filters: filters } })
     data.forEach(d => commit('addAd', d))
   },

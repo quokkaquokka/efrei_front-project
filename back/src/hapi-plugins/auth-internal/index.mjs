@@ -280,7 +280,7 @@ const register = async (server, options = { saltRounds: 10 }) => {
 
       console.log('URL TARGET', urlTarget)
       await options.methods.sendMail({
-        from: 'no-reply@chooseyourself.fr',
+        from: 'no-reply@camille-moutte.fr',
         to: email,
         subject: 'Récupération de mot de passe',
         text:

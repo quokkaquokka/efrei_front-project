@@ -52,6 +52,13 @@ export default {
   }),
   methods: {
     addItem () {
+      for (let i = 0; i < this.dataForm.typeInputs.length; i++) {
+        console.log('befor if', this.item[this.dataForm.keyObj[i]], this.dataForm.typeInputs[i])
+        if (this.dataForm.typeInputs[i] === 'number') {
+          this.item[this.dataForm.keyObj[i]] = parseInt(this.item[this.dataForm.keyObj[i]], 10)
+          console.log(this.item[this.dataForm.keyObj[i]], this.dataForm.typeInputs[i])
+        }
+      }
       this.toComplete.push(this.item)
       this.item = {}
     },
