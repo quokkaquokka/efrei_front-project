@@ -41,9 +41,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['isAuthenticated']),
-    ...mapState(['user']),
-    // pour les testes
-    ...mapGetters('user', ['state'])
+    ...mapState(['user'])
   },
   methods: {
     ...mapActions('user', ['signin']),

@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from '../../client.config'
 import router from '../../router/index'
 import jwtDecode from 'jwt-decode'
-import { refreshToken } from '../../services/session-manager'
+import { setToken } from '../../services/session-manager'
 
 /** @param {String} path */
 function api (path) {
@@ -46,10 +46,9 @@ const actions = {
     try {
       const { data } = await axios.post(api('/auth/login'), { email, password })
       // stock the token of the user
-      localStorage.setItem('token', data)
       const decoded = jwtDecode(data)
-      localStorage.setItem('tokenExpiry', decoded.exp)
-      refreshToken()
+      console.log(data)
+      setToken(data)
       commit('AUTH_SUCCESS', { user: decoded })
       router.replace('/home')
     } catch (err) {

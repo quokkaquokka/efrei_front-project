@@ -3,7 +3,7 @@ import config from '../client.config'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
 
-export { refreshToken }
+export { setToken }
 
 async function refreshToken () {
   const tokenExpiryDate = localStorage.getItem('tokenExpiry')
@@ -11,11 +11,7 @@ async function refreshToken () {
     console.log('No token expiry date. user probably never logged in')
     return Router.push('/signin')
   }
-  const reNewAt = tokenExpiryDate - 60
-  let reNewIn = reNewAt - (Date.now() / 1000)
-  if (reNewIn < 0) {
-    reNewIn = 1
-  }
+
   const options = {
     headers: {
       authorization: 'Bearer ' + localStorage.getItem('token')
@@ -26,6 +22,7 @@ async function refreshToken () {
 }
 
 function setToken (token) {
+  axios.defaults.headers.common.Authorization = 'Bearer ' + token
   const credentials = token ? jwtDecode(token) : null
   localStorage.setItem('tokenExpiry', credentials.exp)
   localStorage.setItem('token', token || '')
