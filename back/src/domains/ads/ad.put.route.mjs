@@ -4,7 +4,11 @@ export default {
   method: 'PUT',
   path: '/api/v1/ads',
   options: {
-    auth: false
+    auth: {
+      access: {
+        scope: 'admin'
+      }
+    }
   },
   handler: async (request, h) => {
     const ad = request.payload;

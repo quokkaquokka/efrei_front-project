@@ -4,7 +4,11 @@ export default {
   method: 'PUT',
   path: '/api/v1/ads/user',
   options: {
-    auth: false
+    auth: {
+      access: {
+        scope: 'user'
+      }
+    }
   },
   handler: async (request, h) => {
     const adsUser = request.payload;

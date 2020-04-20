@@ -1,6 +1,7 @@
 'use strict'
 import mongodb from '../services/mongodb.mjs'
 import extend from 'lodash/extend.js'
+import { deleteAdUserbyAdId } from './adsUser.mjs'
 
 const COLLECTION_NAME = 'ads'
 
@@ -81,11 +82,17 @@ const insertAd = async ad => {
 }
 
 const deleteAd = async (id = undefined) => {
-  const result = {
+  let result = {
     n: 0
   }
   if(id === undefined) return result
-  return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+  result = await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+  if(result.deleteCount === 1) {
+    const res = await deleteAdUserbyAdId(id)
+    console.log('delete ads user in delete ad', res)
+    //  commentaire à supprimer
+  }
+  return result
 }
 
 const updateAd = async (ad = undefined) => {

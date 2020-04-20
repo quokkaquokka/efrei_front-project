@@ -69,6 +69,7 @@ const register = async (server, options = {}) => {
     }
     jwtExpValidator.addJwt(newCredentials)
 
+    console.log('newCredential', moment().unix(), newCredentials)
     return jwt.sign(newCredentials, options.jwt.key, { algorithm: options.jwt.verifyOptions.algorithms })
   }
 

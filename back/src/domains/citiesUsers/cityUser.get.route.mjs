@@ -4,7 +4,11 @@ export default {
   method: 'GET',
   path: '/api/v1/cities/{cid}/user/{uid}',
   options: {
-    auth: false
+    auth: {
+      access: {
+        scope: 'user'
+      }
+    }
   },
   handler: async (request, h) => {
     let cid = request.params.cid

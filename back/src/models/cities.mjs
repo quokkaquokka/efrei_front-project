@@ -1,5 +1,6 @@
 'use strict'
 import mongodb from '../services/mongodb.mjs'
+import { deleteCityUserbyCityId }  from './citiesUser.mjs'
 import extend from 'lodash/extend.js'
 import _ from 'lodash'
 
@@ -52,11 +53,17 @@ const insertCity = async city => {
 }
 
 const deleteCity = async (id = undefined) => {
-  const result = {
+  let result = {
     n: 0
   }
   if(id === undefined) return result
-  return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+  result = await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+  if(result.deleteCount === 1) {
+    const res = await deleteCityUserbyCityId(id)
+    console.log('delete cities user in delte city', res)
+    // tester avec plusieur user
+  }
+  return result
 }
 
 const updateCity = async (city = undefined) => {

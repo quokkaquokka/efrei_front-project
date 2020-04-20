@@ -41,6 +41,14 @@ const deleteCityUser = async (id = undefined) => {
   return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
 }
 
+const deleteCityUserbyCityId = async (id = undefined) => {
+  const result = {
+    n: 0
+  }
+  if(id === undefined) return result
+  return await mongodb.remove(COLLECTION_NAME, {"villeId": id})
+}
+
 const updateCityUser = async (cityUser = undefined) => {
   if(!cityUser) return {
     nModified: 0
@@ -62,5 +70,6 @@ export {
   getCityUser,
   insertCityUser,
   deleteCityUser,
-  updateCityUser
+  updateCityUser,
+  deleteCityUserbyCityId
 }

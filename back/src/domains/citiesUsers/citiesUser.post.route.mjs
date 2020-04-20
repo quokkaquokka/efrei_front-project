@@ -4,7 +4,11 @@ export default {
   method: 'POST',
   path: '/api/v1/cities/user',
   options: {
-    auth: false
+    auth: {
+      access: {
+        scope: 'user'
+      }
+    }
   },
   handler: async (request, h) => {
     const cityUser = request.payload;

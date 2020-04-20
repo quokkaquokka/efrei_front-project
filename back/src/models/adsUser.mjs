@@ -33,6 +33,14 @@ const deleteAdUser = async (id = undefined) => {
     return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
 }
 
+const deleteAdUserbyAdId = async (id = undefined) => {
+    const result = {
+      n: 0
+    }
+    if(id === undefined) return result
+    return await mongodb.remove(COLLECTION_NAME, {"annonceId": id})
+  }
+
 const insertAdUser = async adUser => {
     console.log('Insert Ad', typeof adUser)
     const adUserObj = extend({}, MODEL, adUser)
@@ -57,7 +65,8 @@ export {
   getAdUser,
   deleteAdUser,
   insertAdUser,
-  updateAdUser
+  updateAdUser,
+  deleteAdUserbyAdId
 }
 
 
