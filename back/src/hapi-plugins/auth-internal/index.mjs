@@ -122,7 +122,7 @@ const register = async (server, options = { saltRounds: 10 }) => {
           firstname: Joi.string(),
           lastname: Joi.string(),
           email: Joi.string().email(),
-          password: Joi.string().min(8),
+          password: Joi.string(), // .min(8)
         }),
       },
     },
@@ -276,7 +276,7 @@ const register = async (server, options = { saltRounds: 10 }) => {
       }
 
       const token = await options.methods.addRecoveryToken(email)
-      const urlTarget = options.domain.front + '/auth/reset-password?token=' + token
+      const urlTarget = options.domain.front + '/#/auth/reset-password/' + token  //'/auth/reset-password?token='
 
       console.log('URL TARGET', urlTarget)
       await options.methods.sendMail({

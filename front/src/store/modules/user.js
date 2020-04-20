@@ -61,9 +61,9 @@ const actions = {
   async signup ({ commit }, { email, password, firstname, lastname }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/signup'), { email, password, firstname, lastname })
+      const { data } = await axios.post(api('/auth/signup'), { email, password, firstname, lastname })
       commit('AUTH_SUCCESS', data)
-      router.replace('/home')
+      // router.replace('/home')
     } catch (err) {
       commit('AUTH_ERROR')
     }
@@ -72,12 +72,40 @@ const actions = {
   async logout ({ commit }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/auth/logout'))
+      const option = {
+        headers: {
+          authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }
+      const { data } = await axios.get(api('/auth/logout'), option)
       commit('UNSET_USER', data)
+      localStorage.setItem('token', '')
+      localStorage.setItem('tokenExpiry', null)
       router.replace('/signin')
     } catch (err) {
       commit('AUTH_ERROR')
     }
+  },
+
+  async forgottenPassword ({ commit }, { email }) {
+    const options = {
+      params: {
+        email: email
+      }
+    }
+    const { data } = await axios.get(api('/auth/forgotten-password'), options)
+    console.log(data)
+    // ecrire si l'utilisateur recoit bien le mail
+  },
+
+  async resetPassword ({ commit }, { password, resetToken }) {
+    const options = {
+      password: password,
+      resetToken: resetToken
+    }
+    const { data } = await axios.post(api('/auth/reset-password'), options)
+    console.log(data)
+    router.replace('/signin')
   }
 }
 

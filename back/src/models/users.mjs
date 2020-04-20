@@ -77,7 +77,7 @@ const checkIfProviderIdentityAlreadyUsed = async (
   console.log("FiltERS by provider", filters);
   const users = await mongodb.fetch(COLLECTION_NAME, filters);
 
-  console.log("Mongodb ", users);
+  console.log("## Mongodb ", users);
   if (users.length === 0) return false;
   return true;
 };
@@ -117,7 +117,7 @@ const addUserIfNotExists = async (user) => {
 
   await mongodb.transaction(async () => {
     if (
-      checkIfProviderIdentityAlreadyUsed("internal", {
+      await checkIfProviderIdentityAlreadyUsed("internal", {
         email: providers.internal.email,
       })
     ) {

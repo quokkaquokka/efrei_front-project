@@ -52,7 +52,8 @@
     </router-link>
   </div>
 </nav>
-  <router-view @authenticated="isAuthenticated" />
+<!-- @authenticated="isAuthenticated"  !-->
+  <router-view/>
   </div>
 </template>
 
@@ -70,9 +71,9 @@ export default {
     ...mapState(['user'])
   },
   mounted () {
-    if (!this.isAuthenticated) {
+    /* if (!this.isAuthenticated) {
       this.$router.push('/signin')
-    }
+    } */
   },
   methods: {
     ...mapActions('user', ['logout']),

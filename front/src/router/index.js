@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
-import SignIn from '../views/signin.vue'
-import SignUp from '../views/signup.vue'
+import SignIn from '../views/Sign.vue'
 import Ads from '../views/ListAds.vue'
 import Ad from '../views/Ad.vue'
 import Cities from '../views/ListCities.vue'
@@ -11,6 +10,7 @@ import DashboardCities from '../views/DashboardCities.vue'
 import DashboardAds from '../views/DashboardAds.vue'
 import AddCity from '../views/AddCity.vue'
 import AddAd from '../views/AddAd.vue'
+import ResetPassword from '../views/ResetPassword.vue'
 
 Vue.use(Router)
 
@@ -31,11 +31,6 @@ export default new Router({
       path: '/signin',
       name: 'signin',
       component: SignIn
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: SignUp
     },
     {
       path: '/ads',
@@ -76,6 +71,11 @@ export default new Router({
       path: '/addad/:id?',
       name: 'addad',
       component: AddAd
+    },
+    {
+      path: '/auth/reset-password/:token',
+      name: 'resetpassword',
+      component: ResetPassword
     }
   ]
 })
