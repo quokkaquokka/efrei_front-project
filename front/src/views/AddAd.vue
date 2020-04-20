@@ -31,6 +31,9 @@
       </div>
       <ItemArrayForm :dataForm="equipments" :itemToComplete="ad.equipment"></ItemArrayForm>
       <ItemArrayForm :dataForm="imgs" :itemToComplete="ad.img"></ItemArrayForm>
+      <div id="caroussel">
+        <Caroussel :imgs="ad.img" :index="ad.img.lenght"></Caroussel>
+      </div>
       <button type="button" class="btn btn-outline-primary mt-3" @click='addAd' style="float: right">Enregistrer l'annonce</button>
     </form>
   </div>
@@ -40,10 +43,12 @@
 import { mapActions, mapGetters } from 'vuex'
 import ItemArrayForm from '../components/ItemArrayForm.vue'
 import FormRow from '../components/FormRow.vue'
+import Caroussel from '../components/Caroussel.vue'
 export default {
   components: {
     FormRow,
-    ItemArrayForm
+    ItemArrayForm,
+    Caroussel
   },
   data: () => ({
     sizeLabel: {
@@ -51,7 +56,7 @@ export default {
       input: 'col-8'
     },
     ad: {
-      img: [],
+      img: ['https://www.iadfrance.fr/cache/ad_photo_thumb/photo/73105568.jpg', 'https://www.iadfrance.fr/cache/ad_photo_thumb/photo/73105570.jpg'],
       equipment: [],
       titre: null,
       id_annonce: null,
@@ -127,5 +132,12 @@ export default {
 #pills {
   display: inline-block;
   margin-right: 10px;
+}
+
+#caroussel {
+  display: block;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
 }
 </style>
