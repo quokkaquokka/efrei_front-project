@@ -6,6 +6,7 @@
           :search="searchAttributes"
           :action="searchAction">
         </SearchCities>
+        <div class="alert alert-success text-center mt-3" role="alert" v-if="labelAddedCities"> {{ labelAddedCities }} </div>
         <div v-for="city in cities" :key="city._id">
           <CityItem :city="city" :dash="false" v-on:cityUser-action="addCitiesUser"></CityItem>
         </div>
@@ -23,6 +24,7 @@ export default {
     SearchCities
   },
   data: () => ({
+    labelAddedCities: '',
     searchAttributes: {
       placeHolder: 'Ex: Paris',
       title: 'Ville',
@@ -49,6 +51,8 @@ export default {
           userId: this.getUser._id
         }
         await this.createCityUser({ cityUser: cityUser })
+        this.labelAddedCities = 'Vous avez ajouté cette ville dans votre espace'
+        setTimeout(() => { this.labelAddedCities = '' }, 3000)
       }
       // sinon une erreur et il faut dire de s'authentifier
     }

@@ -12,8 +12,9 @@
           :search="searchAttributes"
           :action="searchAction"
         > </SearchAds>
+        <div class="alert alert-success text-center mt-3" role="alert" v-if="labelAddedAd"> {{ labelAddedAd }} </div>
         <div v-for="ad in ads" :key="ad._id">
-          <AdItem :ad="ad"></AdItem>
+          <AdItem :ad="ad" v-on:adUser-action="addAdUser"></AdItem>
         </div>
       </div>
     </div>
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import AdItem from '../components/AdItem.vue'
 import SearchAds from '../components/SearchBar.vue'
 import SearchAdsDetails from '../components/SearchAds.vue'
@@ -32,6 +33,7 @@ export default {
     SearchAdsDetails
   },
   data: () => ({
+    labelAddedAd: '',
     searchAttributes: {
       placeHolder: 'Où ?',
       title: 'Acheter',
@@ -52,10 +54,12 @@ export default {
     await this.fetchAds()
   },
   computed: {
-    ...mapState('ads', ['ads'])
+    ...mapState('ads', ['ads']),
+    ...mapGetters('user', ['getUser', 'isAuthenticated'])
   },
   methods: {
     ...mapActions('ads', ['fetchAds']),
+    ...mapActions('adsUser', ['createAdUser']),
     async searchAction () {
       const data = {
         ville: this.searchAttributes.itemSearch
@@ -68,6 +72,17 @@ export default {
         searchAdvanced: this.searchAdvanced
       }
       this.fetchAds(data)
+    },
+    async addAdUser (id, label) {
+      if (this.isAuthenticated) {
+        const adUser = {
+          annonceId: id,
+          userId: this.getUser._id
+        }
+        await this.createAdUser({ adUser: adUser })
+        this.labelAddedAd = 'Vous avez ajouté cette annonce dans votre espace'
+        setTimeout(() => { this.labelAddedAd = '' }, 3000)
+      }
     }
   }
 }

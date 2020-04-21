@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '../../client.config'
+import _ from 'lodash'
 
 /** @param {String} path */
 function api (path) {
@@ -15,6 +16,14 @@ const getters = {
     return state.ads.find(_ => {
       return _._id === id
     })
+  },
+  getAdsbyIds: state => adsId => {
+    return _.reduce(state.ads, (acc, o) => {
+      if (adsId.indexOf(o._id) >= 0) {
+        acc.push(o)
+      }
+      return acc
+    }, [])
   }
 }
 
@@ -42,6 +51,7 @@ const actions = {
   async fetchAds ({ commit }, filters = undefined) {
     commit('clearAll')
     const { data } = await axios.get(api('/ads'), { params: { filters: filters } })
+    console.log('data fetch', data)
     data.forEach(d => commit('addAd', d))
   },
 

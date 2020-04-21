@@ -2,7 +2,7 @@
   <div class="ad">
     <div class="row">
       <div class="col-4" id="img-size">
-        <img :src="getImgUrl(ad)" v-bind:alt="ad">
+        <img :src="getImgUrl(ad)" v-bind:alt="ad.titre">
       </div>
       <div class="col-md">
         <span> {{ ad.type }} - {{ ad.surface }}m²</span>
@@ -58,7 +58,13 @@ export default {
   },
   methods: {
     getImgUrl (ad) {
-      return ad.img[0]
+      if (!ad.img) {
+        return 'https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.zenit.org%2Farticles%2Fcoree-le-no-man-s-land-devient-un-oasis-de-paix%2F&psig=AOvVaw01U01Wij-rkON3J4kphisS&ust=1587570532277000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCODj6J_v-egCFQAAAAAdAAAAABAD'
+      }
+      if (ad.img !== undefined || ad.img.length > 0) {
+        return ad.img[0]
+      }
+      return 'https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.zenit.org%2Farticles%2Fcoree-le-no-man-s-land-devient-un-oasis-de-paix%2F&psig=AOvVaw01U01Wij-rkON3J4kphisS&ust=1587570532277000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCODj6J_v-egCFQAAAAAdAAAAABAD'
     }
   }
 }

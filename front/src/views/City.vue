@@ -93,8 +93,8 @@ export default {
     this.dataPopulation.labels = ['Propriétaire', 'Locataires']
     this.createDataTypeLogement()
     this.createDataSocio()
-    if (this.user) {
-      await this.fetchCityUser({ uid: this.user.user._id, cid: this.cityId })
+    if (this.isAuthenticated) {
+      await this.fetchCityUser({ uid: this.user._id, cid: this.cityId })
       this.citiesUser = this.getCityUserByCityId(this.cityId)
     }
   },
@@ -116,10 +116,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(['user']),
+    ...mapState('user', ['user']),
     ...mapState('cities', ['cities']),
     ...mapGetters('cities', ['getCityById']),
     ...mapGetters('citiesUser', ['getCityUserByCityId']),
+    ...mapGetters('user', ['isAuthenticated']),
     cityId () {
       return this.$route.params.id
     }

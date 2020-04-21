@@ -67,4 +67,7 @@ export default {
   padding-bottom: 10px;
   padding-top: 20px;
 }
+#nav-home-tab {
+  margin-left: 0;
+}
 </style>

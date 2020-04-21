@@ -26,8 +26,8 @@
       </router-link>
       </li>
       <li class="nav-item">
-      <!-- v-if="hasAccessRight" -->
        <router-link
+          v-if="hasAccessRight"
           to="/dashcities"
           replace
         >
@@ -35,8 +35,8 @@
       </router-link>
       </li>
       <li class="nav-item">
-      <!-- v-if="hasAccessRight" -->
        <router-link
+          v-if="hasAccessRight"
           to="/dashads"
           replace
         >
@@ -82,6 +82,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  margin-bottom: 20px;
 }
 
 nav a {

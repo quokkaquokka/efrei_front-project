@@ -8,10 +8,38 @@ const MODEL = {
     annonceId: null,
     userId: null,
     adresse: null,
-    pieces:[],
-    travauxGeneraux:[],
     prixProposition: null,
-    locationType:[]
+    autre: '',
+    pieces: [],
+    travauxGeneraux: [],
+    locationType: {
+        LN: {
+        name: 'Location longue durée vide',
+        prix: null
+        },
+        LC: {
+        name: 'Colocation',
+        prixChambre: null,
+        nbChambres: null
+        },
+        LM: {
+        name: 'Location longue durée meublé',
+        prix: null
+        },
+        LM_LCD: {
+        name: 'Location mixte (meublé + courte durée)',
+        prixLongueDuree: null,
+        prixNuit: null,
+        nbChambres: null,
+        nbMoisCourteDuree: 2,
+        minNbNuit: 20
+        },
+        LCD: {
+        name: 'Location courte durée meublé',
+        typeLogements: [],
+        minNbNuit: 20
+        }
+    }
 }
 
 const getAdsUser = async (uid = undefined) => {

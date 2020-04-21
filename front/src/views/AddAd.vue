@@ -56,7 +56,7 @@ export default {
       input: 'col-8'
     },
     ad: {
-      img: ['https://www.iadfrance.fr/cache/ad_photo_thumb/photo/73105568.jpg', 'https://www.iadfrance.fr/cache/ad_photo_thumb/photo/73105570.jpg'],
+      img: [],
       equipment: [],
       titre: null,
       id_annonce: null,

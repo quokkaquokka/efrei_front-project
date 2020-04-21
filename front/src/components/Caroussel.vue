@@ -9,8 +9,8 @@
           <div class="carousel-inner">
             <div class="carousel-item" v-bind:class="{ active: index === i }">
               <img class="d-inline-block" :src="`${ imgs[i] }`">
-              <img class="d-inline-block" :src="`${ imgs[i + 1] }`">
-              <img class="d-inline-block" :src="`${ imgs[i + 2] }`">
+              <img v-if="i + 1 < imgs.length" class="d-inline-block" :src="`${ imgs[i + 1] }`">
+              <img v-if="i + 2 < imgs.length" class="d-inline-block" :src="`${ imgs[i + 2] }`">
               <a class="carousel-control-prev" href="#carouselIndicators" v-on:click="prev" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>

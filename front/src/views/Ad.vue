@@ -219,15 +219,23 @@ export default {
     }
   },
   async mounted () {
-    this.ad = await this.getAdById(this.$route.params.id)
+    const adId = this.$route.params.id
+    this.ad = this.getAdById(adId)
+    if (this.isAuthenticated) {
+      await this.fetchAdUser({ uid: this.user._id, aid: adId })
+      this.adUser = this.getAdUserByAdId(adId)
+    }
   },
   computed: {
     ...mapState('ads', ['ads']),
-    ...mapGetters('ads', ['getAdById'])
+    ...mapState('user', ['user']),
+    ...mapGetters('ads', ['getAdById']),
+    ...mapGetters('user', ['getUser', 'isAuthenticated']),
+    ...mapGetters('adsUser', ['getAdUserByAdId'])
   },
   methods: {
     ...mapActions('ads', ['fetchAd']),
-    ...mapActions('adsUser', ['createAdUser']),
+    ...mapActions('adsUser', ['createAdUser', 'fetchAdUser', 'updateAdUser']),
     calculBaissePrix () {
       if (this.adUser.prixProposition) {
         this.adUser.prixProposition = parseInt(this.adUser.prixProposition, 10)
@@ -307,9 +315,18 @@ export default {
       return 0
     },
     async addAdUser () {
-      this.adUser.locationType.LN.prix = parseInt(this.adUser.locationType.LN.prix)
-      this.adUser.locationType.LM.prix = parseInt(this.adUser.locationType.LN.prix)
-      await this.createAdUser({ adUser: this.adUser })
+      if (this.adUser.locationType.LN.prix) {
+        this.adUser.locationType.LN.prix = parseInt(this.adUser.locationType.LN.prix)
+      }
+      if (this.adUser.locationType.LM.prix) {
+        this.adUser.locationType.LM.prix = parseInt(this.adUser.locationType.LN.prix)
+      }
+      if (this.adUser._id) {
+        await this.updateAdUser({ adUser: this.adUser })
+        console.log('update')
+      } else {
+        await this.createAdUser({ adUser: this.adUser })
+      }
     }
   }
 }

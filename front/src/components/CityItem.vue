@@ -42,18 +42,6 @@ export default {
     editCity () {
       this.$router.push(`/addcity/${this.city._id}`)
     }
-    /*
-    async itemAction () {
-      if (this.labelItem.text !== 'Suivre cette ville') {
-        // s'il existe suprimer
-        const cityUser = this.getCityUserByCityId(this.city._id)
-        await this.deleteCityUser({ cityId: cityUser._id })
-        router.replace('/home')
-        // location.reload()
-      }
-      // TODO: implement
-      // add in user the item
-    } */
   }
 }
 </script>

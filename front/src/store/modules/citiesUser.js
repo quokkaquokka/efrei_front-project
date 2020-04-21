@@ -11,6 +11,7 @@
 
 import axios from 'axios'
 import config from '../../client.config'
+import router from '../../router/index'
 
 /** @param {String} path */
 function api (path) {
@@ -48,7 +49,6 @@ const getters = {
 
 const actions = {
   async fetchCitiesUser ({ commit }, { uid }) {
-    // this.state.citiesUser = []
     const { data } = await axios.get(api('/cities/user/' + uid))
     data.forEach(d => commit('addCityUser', d))
   },
@@ -62,6 +62,7 @@ const actions = {
   async createCityUser ({ commit }, { cityUser }) {
     const { data } = await axios.post(api('/cities/user'), cityUser)
     commit('addCityUser', data)
+    router.replace('/cities')
   },
 
   async deleteCityUser ({ commit }, { cityId }) {
@@ -72,6 +73,7 @@ const actions = {
   async updateCityUser ({ commit }, { cityUser }) {
     const { data } = await axios.put(api('/cities/user'), cityUser)
     commit('addCityUser', data)
+    router.replace('/home')
   }
 }
 
