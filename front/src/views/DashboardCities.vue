@@ -9,7 +9,7 @@
           :righAction="addCity" >
         </SearchBar>
         <div v-for="city in cities" :key="city._id">
-          <CityDash :city="city" v-on:city-deleted="removeCity"></CityDash>
+          <CityItem :city="city" :dash="true" v-on:city-deleted="removeCity"></CityItem>
         </div>
       </div>
     </div>
@@ -18,11 +18,11 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
-import CityDash from '../components/CityDash.vue'
+import CityItem from '../components/CityItem.vue'
 import SearchBar from '../components/SearchBar.vue'
 export default {
   components: {
-    CityDash,
+    CityItem,
     SearchBar
   },
   data: () => ({

@@ -8,8 +8,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in toComplete" :key="item">
-          <td v-for="label in dataForm.keyObj" :key="label">{{ item[label] }}</td>
+        <tr v-for="(item, i) in toComplete" :key="i">
+          <td v-for="(label, j) in dataForm.keyObj" :key="j">{{ item[label] }}</td>
           <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteItem"><i class="fas fa-trash"></i> Supprimer</button></td>
         </tr>
       </tbody>

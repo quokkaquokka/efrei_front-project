@@ -7,7 +7,7 @@
           :action="searchAction">
         </SearchCities>
         <div v-for="city in cities" :key="city._id">
-          <CityItem :city="city" v-on:cityUser-action="addCitiesUser"></CityItem>
+          <CityItem :city="city" :dash="false" v-on:cityUser-action="addCitiesUser"></CityItem>
         </div>
       </div>
     </div>

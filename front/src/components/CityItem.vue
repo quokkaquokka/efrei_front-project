@@ -4,7 +4,9 @@
       <div class="col-md" id="item">
         <div class="description">
           <span id="departement">{{ city.departement }}</span> <br>
-          <button type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('cityUser-action', city._id)"><i :class="labelItem.icon"></i> {{ labelItem.text }} </button>
+          <button v-if="dash" type="button" class="btn btn-outline-primary"  id="delete" @click="$emit('city-deleted', city._id)"><i class="fas fa-trash"></i> Supprimer</button>
+          <button v-if="dash" type="button" class="btn btn-outline-primary"  id="edit" @click="editCity"><i class="fas fa-edit"></i> Modifier</button>
+          <button v-if="!dash" type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('cityUser-action', city._id)"><i :class="labelItem.icon"></i> {{ labelItem.text }} </button>
           <router-link :to="`/city/${city._id}`">
             <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
           </router-link>
@@ -20,6 +22,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     city: Object,
+    dash: Boolean,
     labelItem: {
       type: Object,
       default: function () {
@@ -35,7 +38,11 @@ export default {
   },
   methods: {
     ...mapActions('citiesUser', ['deleteCityUser']),
-    ...mapActions('citiesUser', ['createCityUser'])/*
+    ...mapActions('citiesUser', ['createCityUser']),
+    editCity () {
+      this.$router.push(`/addcity/${this.city._id}`)
+    }
+    /*
     async itemAction () {
       if (this.labelItem.text !== 'Suivre cette ville') {
         // s'il existe suprimer
@@ -89,7 +96,12 @@ export default {
   color:#00648E;
   border-color: #00648E;
 }
-
+#delete, #edit {
+  float: right;
+  margin-right: 10px;
+  color:#00648E;
+  border-color: #00648E;
+}
 #favorite:hover {
   background-color: #00648E;
   color:white

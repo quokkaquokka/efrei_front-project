@@ -47,7 +47,7 @@ const actions = {
       const { data } = await axios.post(api('/auth/login'), { email, password })
       // stock the token of the user
       const decoded = jwtDecode(data)
-      console.log(data)
+      // console.log(data)
       setToken(data)
       commit('AUTH_SUCCESS', { user: decoded })
       router.replace('/home')
