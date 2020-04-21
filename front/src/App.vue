@@ -2,6 +2,16 @@
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark"  style="background-color: #00A0C6;" v-if="isAuthenticated">
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-1 mt-2 mt-lg-0">
+      <li class="nav-item">
+        <router-link
+          to="/home"
+          replace
+        >
+        <img src="@/assets/logo_big.png" height="70" alt="logo"/>
+      </router-link>
+      </li>
+    </ul>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
         <router-link
@@ -44,12 +54,16 @@
       </router-link>
       </li>
     </ul>
-    <router-link class="form-inline my-2 my-lg-0"
+    <ul class="navbar-nav mr-1 mt-2 mt-lg-0">
+      <li class="nav-item">
+    <router-link
       to="/signin"
       v-on:click.native="logout()"
       replace>
-      <p> Logout </p>
+      Logout
     </router-link>
+      </li>
+    </ul>
   </div>
 </nav>
   <router-view/>
@@ -87,7 +101,16 @@ export default {
 
 nav a {
   font-weight: bold;
-  color: rgba(0,0,0,.3);
+  color: rgba(0,0,0,.4);
+  margin-right: 20px;
+  margin: 10px;
+  font-size: 20px;
+}
+
+nav a:hover {
+  font-weight: bold;
+  color: rgba(0,0,0,.7);
+  text-decoration: none;
   margin-right: 20px;
   margin: 10px;
   font-size: 20px;
