@@ -56,6 +56,13 @@ export default {
 </script>
 
 <style scoped>
+#card {
+  background-color: #00A0C6;
+  margin: auto;
+  margin-top: 50px;
+  padding: 80px;
+}
+
 #sign {
   width: 700px;
   background-color: #00A0C6;
@@ -65,14 +72,21 @@ export default {
 }
 
 #sign nav a, #sign div.tab-content {
-  background-color: #ffffff;
+  border-style: hidden solid solid;
+  border-color: #cccccc;
 }
 
-#card {
-  background-color: #00A0C6;
-  margin: auto;
-  margin-top: 50px;
-  padding: 80px;
+#sign nav a {
+  background-color: #cccccc;
+}
+
+#sign nav a.active {
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+#sign div.tab-content {
+  background-color: #ffffff;
 }
 
 #nav-tabContent{

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-9" id="city">
+  <div class="col-9 py-3" id="city">
     <h3>Listes de mes annonces</h3>
     <p v-if="adsbyId.length === 0">Vous n'avez pas encore de suivis d'annonce! Vous pouvez vous rendre sur la liste des annonces pour en ajouter</p>
     <div v-for="ad in adsbyId" :key="ad._id">
