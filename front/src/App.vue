@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-dark"  style="background-color: #00A0C6;">
-  <div v-if="isAuthenticated" class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <nav class="navbar navbar-expand-lg navbar-dark"  style="background-color: #00A0C6;" v-if="isAuthenticated">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
         <router-link
@@ -52,7 +52,6 @@
     </router-link>
   </div>
 </nav>
-<!-- @authenticated="isAuthenticated"  !-->
   <router-view/>
   </div>
 </template>
@@ -69,11 +68,6 @@ export default {
   computed: {
     ...mapGetters('user', ['isAuthenticated', 'hasAccessRight']),
     ...mapState(['user'])
-  },
-  mounted () {
-    /* if (!this.isAuthenticated) {
-      this.$router.push('/signin')
-    } */
   },
   methods: {
     ...mapActions('user', ['logout']),

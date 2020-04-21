@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store/index'
 import Home from '../views/Home.vue'
 import SignIn from '../views/Sign.vue'
 import Ads from '../views/ListAds.vue'
@@ -14,6 +15,17 @@ import ResetPassword from '../views/ResetPassword.vue'
 
 Vue.use(Router)
 
+async function beforeEnter (_to, _from, next) {
+  if (!store.getters['user/isAuthenticated']) {
+    await store.dispatch('user/fetchUser')
+  }
+  if (store.getters['user/isAuthenticated']) {
+    next()
+    return
+  }
+  next('/')
+}
+
 export default new Router({
   routes: [
     {
@@ -25,7 +37,8 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      beforeEnter
     },
     {
       path: '/signin',
@@ -35,32 +48,38 @@ export default new Router({
     {
       path: '/ads',
       name: 'ads',
-      component: Ads
+      component: Ads,
+      beforeEnter
     },
     {
       path: '/ad/:id',
       name: 'ad',
-      component: Ad
+      component: Ad,
+      beforeEnter
     },
     {
       path: '/cities',
       name: 'cities',
-      component: Cities
+      component: Cities,
+      beforeEnter
     },
     {
       path: '/city/:id',
       name: 'city',
-      component: City
+      component: City,
+      beforeEnter
     },
     {
       path: '/dashcities',
       name: 'dashcities',
-      component: DashboardCities
+      component: DashboardCities,
+      beforeEnter
     },
     {
       path: '/dashads',
       name: 'dashads',
-      component: DashboardAds
+      component: DashboardAds,
+      beforeEnter
     },
     {
       path: '/addcity/:id?',
@@ -70,7 +89,8 @@ export default new Router({
     {
       path: '/addad/:id?',
       name: 'addad',
-      component: AddAd
+      component: AddAd,
+      beforeEnter
     },
     {
       path: '/auth/reset-password/:token',
