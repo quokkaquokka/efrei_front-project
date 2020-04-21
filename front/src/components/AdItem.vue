@@ -6,7 +6,7 @@
       </div>
       <div class="col-md">
         <span> {{ ad.type }} - {{ ad.surface }}m²</span>
-        <h3>
+        <h3 style="margin-top: 20px">
           <router-link :to="`/ad/${ad._id}`">
             {{ ad.titre }}
           </router-link>
@@ -16,7 +16,24 @@
         </h3>
         <h4><i class="fas fa-map-marker-alt"></i> {{ ad.ville }} </h4><span> {{ad.cp}} </span><br>
         <h2> {{ ad.prix }} €</h2><span> {{ ad.prixm2 }} €/m²</span>
-        <p v-html="`${ ad.description }`"></p>
+        <div class="row" style="margin-top: 120px">
+          <div class="col-3">
+            <p>Surface</p>
+            <h3><i class="fas fa-ruler-combined"></i> {{ ad.surface }}</h3>
+          </div>
+          <div class="col-3">
+            <p>Nb de pièces</p>
+            <h3><i class="fas fa-cube"></i> {{ ad.nbchambres }}</h3>
+          </div>
+          <div class="col-3">
+            <p>Nb de chambres</p>
+            <h3><i class="fas fa-bed"></i> {{ ad.nbchambres }}</h3>
+          </div>
+          <div class="col-3">
+            <p>Date de construction</p>
+            <h3><i class="far fa-calendar-alt"></i> {{ ad.date_construction }}</h3>
+          </div>
+        </div>
       </div>
     </div>
   </div>
