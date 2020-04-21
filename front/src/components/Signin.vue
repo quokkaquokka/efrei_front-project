@@ -1,8 +1,8 @@
 <template>
   <div class="signin">
     <form>
-      <div class="alert alert-danger" role="alert" v-if="status">
-        {{ status }}
+      <div class="alert alert-danger" role="alert" v-if="error">
+        {{ error }}
       </div>
       <div class="input-group mb-3">
         <div class="input-group-append">
@@ -50,7 +50,7 @@ export default {
       })
       if (this.status) {
         this.error = 'Vérifier votre email ou mot de passe.'
-        // setTimeout(() => { this.error = null }, 3000)
+        setTimeout(() => { this.error = '' }, 3000)
       }
     }
   }
