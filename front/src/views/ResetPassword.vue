@@ -10,16 +10,16 @@
           <input required v-model='password' type='password' class="form-control" placeholder='Mot de passe'>
         </div>
       </div>
-    </form>
-    <div class="signin">
-      <button class="btn btn-outline-primary" style="float: right;"
-        color='submit'
-        @click='resetPassword({
-          password: password,
-          resetToken: resetToken
-        })'
-      >Sign In</button>
+      <div class="signin">
+        <button class="btn btn-outline-primary" style="float: right;"
+          color='submit'
+          @click='resetPassword({
+            password: password,
+            resetToken: resetToken
+          })'
+        >Sauvegarder</button>
     </div>
+    </form>
   </div>
 </template>
 

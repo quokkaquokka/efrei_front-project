@@ -29,8 +29,8 @@
           <FormRow :dataForm="nbchambres" v-model="ad.nbchambres"></FormRow>
           <FormRow :dataForm="date_construction" v-model="ad.date_construction"></FormRow>
       </div>
-      <ItemArrayForm :dataForm="equipments" :itemToComplete="ad.equipment"></ItemArrayForm>
-      <ItemArrayForm :dataForm="imgs" :itemToComplete="ad.img"></ItemArrayForm>
+      <PillsTabForm :dataForm="equipments" :itemToComplete="ad.equipment"></PillsTabForm>
+      <PillsTabForm :dataForm="imgs" :itemToComplete="ad.img"></PillsTabForm>
       <div id="caroussel">
         <Caroussel :imgs="ad.img" :index="ad.img.lenght"></Caroussel>
       </div>
@@ -41,13 +41,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import ItemArrayForm from '../components/ItemArrayForm.vue'
+import PillsTabForm from '../components/PillsTabForm.vue'
 import FormRow from '../components/FormRow.vue'
 import Caroussel from '../components/Caroussel.vue'
 export default {
   components: {
     FormRow,
-    ItemArrayForm,
+    PillsTabForm,
     Caroussel
   },
   data: () => ({

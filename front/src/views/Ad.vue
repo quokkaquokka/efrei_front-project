@@ -47,10 +47,10 @@
           <h4 style="float:right" v-if="adUser.prixProposition"> - {{ calculBaissePrix() }} % du prix initial</h4>
         </div>
         <div class="col-10 descriptifTab">
-          <FormInTab :dataForm="travauxGeneraux" :toComplete="adUser.travauxGeneraux" id="formInTab"></FormInTab>
+          <EditableTable :dataForm="travauxGeneraux" :toComplete="adUser.travauxGeneraux" id="formInTab"></EditableTable>
         </div>
         <div class="col-10 descriptifTab">
-          <FormInTab :dataForm="pieces" :toComplete="adUser.pieces" id="formInTab"></FormInTab>
+          <EditableTable :dataForm="pieces" :toComplete="adUser.pieces" id="formInTab"></EditableTable>
         </div>
         <div class="col-10 descriptif">
           <h4>Coût total des travaux</h4>
@@ -91,7 +91,7 @@
             <h6>Location courte durée meublé</h6>
             <FormRow :dataForm="minNbNuit" v-model="adUser.locationType.LCD.minNbNuit" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <p>Vos types de logements</p>
-            <FormInTab :dataForm="typeLogements" :toComplete="adUser.locationType.LCD.typeLogements" id="formInTab"></FormInTab>
+            <EditableTable :dataForm="typeLogements" :toComplete="adUser.locationType.LCD.typeLogements" id="formInTab"></EditableTable>
             <h3 v-if="adUser.locationType.LCD.typeLogements.length > 0" class="float-right">{{ calculprixLCD() }} € / mois</h3>
           </div>
         </div>
@@ -130,12 +130,12 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
 import Caroussel from '../components/Caroussel.vue'
 import FormRow from '../components/FormRow.vue'
-import FormInTab from '../components/FormInTab'
+import EditableTable from '../components/EditableTable'
 export default {
   components: {
     Caroussel,
     FormRow,
-    FormInTab
+    EditableTable
   },
   data () {
     return {

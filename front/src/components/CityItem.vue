@@ -3,10 +3,19 @@
     <div class="row">
       <div class="col-md" id="item">
         <div class="description">
-          <span id="departement">{{ city.departement }}</span> <br>
-          <button v-if="dash" type="button" class="btn btn-outline-primary"  id="delete" @click="$emit('city-deleted', city._id)"><i class="fas fa-trash"></i> Supprimer</button>
-          <button v-if="dash" type="button" class="btn btn-outline-primary"  id="edit" @click="editCity"><i class="fas fa-edit"></i> Modifier</button>
-          <button v-if="!dash" type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('cityUser-action', city._id)"><i :class="labelItem.icon"></i> {{ labelItem.text }} </button>
+          <span id="departement">{{ city.departement }}</span><br>
+          <button v-if="dash" type="button" class="btn btn-outline-primary"  id="delete" @click="$emit('city-deleted', city._id)">
+            <i class="fas fa-trash"></i>
+            Supprimer
+          </button>
+          <button v-if="dash" type="button" class="btn btn-outline-primary"  id="edit" @click="editCity">
+            <i class="fas fa-edit"></i>
+            Modifier
+          </button>
+          <button v-if="!dash" type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('cityUser-action', city._id)">
+            <i :class="labelItem.icon"></i>
+            {{ labelItem.text }}
+          </button>
           <router-link :to="`/city/${city._id}`">
             <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
           </router-link>

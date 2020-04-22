@@ -24,8 +24,8 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import AdItem from '../components/AdItem.vue'
-import SearchAds from '../components/SearchBar.vue'
-import SearchAdsDetails from '../components/SearchAds.vue'
+import SearchAds from '../components/SearchBarForm.vue'
+import SearchAdsDetails from '../components/SearchAdsForm.vue'
 export default {
   components: {
     AdItem,

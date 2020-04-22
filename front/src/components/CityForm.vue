@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FormInTab :dataForm="hotels" :toComplete="citiesUser.hotels"></FormInTab>
+    <EditableTable :dataForm="hotels" :toComplete="citiesUser.hotels"></EditableTable>
     <div class="ad" id="item">
       <form>
         <h4>Nombre d'hôtels</h4>
@@ -12,10 +12,10 @@
         </div>
       </form>
     </div>
-    <FormInTab :dataForm="attractivites" :toComplete="citiesUser.attractivites"></FormInTab>
-    <ItemArrayForm :dataForm="quartiers" :itemToComplete="citiesUser.quartiers"></ItemArrayForm>
-    <ItemArrayForm :dataForm="routes" :itemToComplete="citiesUser.routes"></ItemArrayForm>
-    <ItemArrayForm :dataForm="transports" :itemToComplete="citiesUser.transports"></ItemArrayForm>
+    <EditableTable :dataForm="attractivites" :toComplete="citiesUser.attractivites"></EditableTable>
+    <PillsTabForm :dataForm="quartiers" :itemToComplete="citiesUser.quartiers"></PillsTabForm>
+    <PillsTabForm :dataForm="routes" :itemToComplete="citiesUser.routes"></PillsTabForm>
+    <PillsTabForm :dataForm="transports" :itemToComplete="citiesUser.transports"></PillsTabForm>
      <div class="ad" id="item">
       <form>
         <h4>Démographie</h4>
@@ -34,12 +34,12 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import ItemArrayForm from '../components/ItemArrayForm.vue'
-import FormInTab from '../components/FormInTab.vue'
+import PillsTabForm from '../components/PillsTabForm.vue'
+import EditableTable from '../components/EditableTable.vue'
 export default {
   components: {
-    ItemArrayForm,
-    FormInTab
+    PillsTabForm,
+    EditableTable
   },
   props: {
     cityId: String,

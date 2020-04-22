@@ -18,7 +18,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
-import SearchBar from '../components/SearchBar.vue'
+import SearchBar from '../components/SearchBarForm.vue'
 import AdItem from '../components/AdItem.vue'
 export default {
   components: {

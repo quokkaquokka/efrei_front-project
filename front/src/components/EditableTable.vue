@@ -34,9 +34,6 @@ export default {
     dataForm: Object,
     toComplete: {
       type: Array
-      /* default: function () {
-        return []
-      } */
     },
     sizeLabel: {
       type: String,
@@ -54,7 +51,8 @@ export default {
     addItem () {
       for (let i = 0; i < this.dataForm.typeInputs.length; i++) {
         if (this.dataForm.typeInputs[i] === 'number') {
-          this.item[this.dataForm.keyObj[i]] = parseInt(this.item[this.dataForm.keyObj[i]], 10)
+          const key = this.dataForm.keyObj[i]
+          this.item[key] = parseInt(this.item[key], 10)
         }
       }
       this.toComplete.push(this.item)

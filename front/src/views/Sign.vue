@@ -28,9 +28,9 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import Signin from '../components/Signin.vue'
-import Signup from '../components/Signup.vue'
-import ForgottenPassword from '../components/ForgottenPassword.vue'
+import Signin from '../components/SigninForm.vue'
+import Signup from '../components/SignupForm.vue'
+import ForgottenPassword from '../components/ForgottenPasswordForm.vue'
 export default {
   components: {
     Signin,

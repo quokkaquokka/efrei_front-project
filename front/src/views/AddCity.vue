@@ -12,10 +12,10 @@
         </div>
       </form>
     </div>
-    <FormInTab :dataForm="tailleLogement" :toComplete="city.tailleLogement"> </FormInTab>
-    <FormInTab :dataForm="catSocioprofessionelle" :toComplete="city.catSocioprofessionelle"> </FormInTab>
-    <FormInTab :dataForm="parkings" :toComplete="city.parkings"> </FormInTab>
-    <FormInTab :dataForm="eta_scolaires" :toComplete="city.eta_scolaires"> </FormInTab>
+    <EditableTable :dataForm="tailleLogement" :toComplete="city.tailleLogement"> </EditableTable>
+    <EditableTable :dataForm="catSocioprofessionelle" :toComplete="city.catSocioprofessionelle"> </EditableTable>
+    <EditableTable :dataForm="parkings" :toComplete="city.parkings"> </EditableTable>
+    <EditableTable :dataForm="eta_scolaires" :toComplete="city.eta_scolaires"> </EditableTable>
     <button v-if="!$route.params.id" type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
     <button v-if="$route.params.id" type="button" class="btn btn-outline-primary mt-3" @click='editCity' style="float: right">Modifier la ville</button>
   </div>
@@ -24,11 +24,11 @@
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import FormRow from '../components/FormRow.vue'
-import FormInTab from '../components/FormInTab.vue'
+import EditableTable from '../components/EditableTable.vue'
 export default {
   components: {
     FormRow,
-    FormInTab
+    EditableTable
   },
   data: () => ({
     city: {

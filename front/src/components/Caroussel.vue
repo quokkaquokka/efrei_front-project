@@ -60,5 +60,4 @@ img {
   width: 1800px;
   max-width: 1800px;
 }
-
 </style>

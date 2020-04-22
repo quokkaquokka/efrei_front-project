@@ -19,7 +19,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import CityItem from '../components/CityItem.vue'
-import SearchBar from '../components/SearchBar.vue'
+import SearchBar from '../components/SearchBarForm.vue'
 export default {
   components: {
     CityItem,
