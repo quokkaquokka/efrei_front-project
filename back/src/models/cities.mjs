@@ -6,91 +6,9 @@ import _ from 'lodash'
 
 const COLLECTION_NAME = 'cities'
 
-const MODEL = {
-  name: null,
-  postalCode: null,
-  prixMoyen: null,
-  tailleLogement: [],
-  locataires: null,
-  proprietaires: null,
-  departement: null,
-  catSocioprofessionelle: [],
-  eta_scolaires: [],
-  parkings: []
-}
-
-const getCities = async (filters = undefined) => {
-  let request = undefined
-  if(filters) {
-    request = { $text: { $search: filters } }
-  }
- 
-  return await mongodb.fetch(COLLECTION_NAME, request)
-}
-
-const getCitiesbyIds = async (filters = []) => {
-  let request = undefined
-  filters.map(element => {
-    return mongodb.ObjectID(element)
-  });
-  const citiesId = _.reduce(filters, (acc, e) => {
-    acc.push(mongodb.ObjectID(e))
-    return acc
-  }, [])
-  request = { _id : { $in : citiesId }}
-  return await mongodb.fetch(COLLECTION_NAME, request)
-}
-
-const getCity = async(id = undefined) => {
-  if(id === undefined) return []
-  const data = await mongodb.fetch(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
-  return data[0]
-}
-
-const insertCity = async city => {
-  const cityObj = extend({}, MODEL, city)
-  return await mongodb.insert(COLLECTION_NAME, cityObj)
-}
-
-const deleteCity = async (id = undefined) => {
-  let result = {
-    n: 0
-  }
-  if(id === undefined) return result
-  result = await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
-  if(result.deleteCount === 1) {
-    const res = await deleteCityUserbyCityId(id)
-    console.log('delete cities user in delte city', res)
-    // tester avec plusieur user
-  }
-  return result
-}
-
-const updateCity = async (city = undefined) => {
-  const id = city._id
-  delete city._id
-  try {
-    return await mongodb.update(COLLECTION_NAME, { _id: new mongodb.ObjectID(id) }, { $set: { ...city } })
-  } catch(e) {
-    const result = {
-      nModified: 0
-    }
-    return result
-  }
-}
-
-export {
-  getCities,
-  getCitiesbyIds,
-  getCity,
-  insertCity,
-  deleteCity,
-  updateCity
-}
-
 /*
 
-MODEL MONGO
+Example Model
 {
   "name": "Dreux",
   "postalCode": "28100",
@@ -169,6 +87,86 @@ MODEL MONGO
       "chiffre": 79
     }
   ],
-  "_id": "185234750"
+  "_id": "185uyii0o987yyui78"
 }
 */
+
+const MODEL = {
+  name: null,
+  postalCode: null,
+  prixMoyen: null,
+  tailleLogement: [],
+  locataires: null,
+  proprietaires: null,
+  departement: null,
+  catSocioprofessionelle: [],
+  eta_scolaires: [],
+  parkings: []
+}
+
+const getCities = async (filters = undefined) => {
+  let request = undefined
+  if(filters) {
+    request = { $text: { $search: filters } }
+  }
+ 
+  return await mongodb.fetch(COLLECTION_NAME, request)
+}
+
+const getCitiesbyIds = async (filters = []) => {
+  let request = undefined
+  filters.map(element => {
+    return mongodb.ObjectID(element)
+  });
+  const citiesId = _.reduce(filters, (acc, e) => {
+    acc.push(mongodb.ObjectID(e))
+    return acc
+  }, [])
+  request = { _id : { $in : citiesId }}
+  return await mongodb.fetch(COLLECTION_NAME, request)
+}
+
+const getCity = async(id = undefined) => {
+  if(id === undefined) return []
+  const data = await mongodb.fetch(COLLECTION_NAME, {'_id': new mongodb.ObjectID(id)})
+  return data[0]
+}
+
+const insertCity = async city => {
+  const cityObj = extend({}, MODEL, city)
+  return await mongodb.insert(COLLECTION_NAME, cityObj)
+}
+
+const deleteCity = async (id = undefined) => {
+  let result = {
+    n: 0
+  }
+  if(id === undefined) return result
+  result = await mongodb.remove(COLLECTION_NAME, {'_id': new mongodb.ObjectID(id)})
+  if(result.deleteCount === 1) {
+    const res = await deleteCityUserbyCityId(id)
+  }
+  return result
+}
+
+const updateCity = async (city = undefined) => {
+  const id = city._id
+  delete city._id
+  try {
+    return await mongodb.update(COLLECTION_NAME, { _id: new mongodb.ObjectID(id) }, { $set: { ...city } })
+  } catch(e) {
+    const result = {
+      nModified: 0
+    }
+    return result
+  }
+}
+
+export {
+  getCities,
+  getCitiesbyIds,
+  getCity,
+  insertCity,
+  deleteCity,
+  updateCity
+}

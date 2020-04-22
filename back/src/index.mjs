@@ -8,14 +8,14 @@ import config from 'config'
 import mailer from './services/mailer.mjs'
 import mongodb from './services/mongodb.mjs'
 import pluginLoader from './hapi-plugins/plugins-loader.mjs'
-import { addRecoveryToken, tokenRecoveryCleaner } from "./models/recoveryPassword.mjs";
+import { addRecoveryToken, tokenRecoveryCleaner } from './models/recoveryPassword.mjs';
 import {
   attachProvider,
   getUserByProvider,
   checkIfProviderIdentityAlreadyUsed,
   addUserIfNotExists,
   resetPassword,
-} from "./models/users.mjs";
+} from './models/users.mjs';
 
 config.hapi.plugins['hapi-auth-jwt'].options.methods.findUserByProvider = getUserByProvider
 
@@ -24,9 +24,6 @@ config.hapi.plugins['hapi-auth-internal'].options.methods.resetUserPassword = re
 config.hapi.plugins['hapi-auth-internal'].options.methods.addUserIfNotExists = addUserIfNotExists
 config.hapi.plugins['hapi-auth-internal'].options.methods.addRecoveryToken = addRecoveryToken
 config.hapi.plugins['hapi-auth-internal'].options.methods.sendMail = mailer.send
-
-config.hapi.plugins['hapi-auth-external'].options.methods.attachProvider = attachProvider
-config.hapi.plugins['hapi-auth-external'].options.methods.checkIfProviderIdentityAlreadyUsed = checkIfProviderIdentityAlreadyUsed
 
 
 const hapiServer = async function() {

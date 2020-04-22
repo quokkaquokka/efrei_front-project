@@ -11,7 +11,6 @@ export default {
     }
   },
   handler: async (request, h) => {
-    console.log('Crednetias', request.auth.credentials)
     let id = request.params.id
     return await deleteCity(id)
   }

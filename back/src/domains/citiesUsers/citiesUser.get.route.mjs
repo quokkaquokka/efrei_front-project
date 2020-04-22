@@ -11,7 +11,7 @@ export default {
     }
   },
   handler: async (request, h) => {
-    let uid = request.params.uid
+    const uid = request.params.uid
     return await getCitiesUser(uid)
   }
 }

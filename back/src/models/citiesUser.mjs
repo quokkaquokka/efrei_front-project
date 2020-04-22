@@ -16,15 +16,45 @@ const MODEL = {
   transports: [],
   demographie: null
 }
+/*
 
+Example Model
+{
+  "_id": "5e9f787fad32d54cc31a8eii",
+  "userId":"5e9d5ffc5b9rth6789yui6",
+  "villeId":"5e7332071c40000a384609d4",
+  "prixMoyen":null,
+  "hotels":[
+    {"name":"Campanile","prix":"50"},
+    {"name":"B&B HOTEL","prix":"64"},
+    {"name":"Hotel Beffroi","prix":"94"},
+    {"name":"Hotel Premiere Classe","prix":"31"},
+    {"name":"Domaines de la reposée","prix":"99"}
+  ],
+  "nbHotels":11,
+  "quartiers":[
+    "quartier de la gare",
+    "quartier de l'hopital",
+    "zone commercial nord",
+    "zone commerciale sud"
+  ],
+  "attractivites":[
+    {"name":"Hopital","nb":1},
+    {"name":"Zone commerciale ","nb":2,"description":"grande zone = activité"}
+  ],
+  "routes":["N12"],
+  "transports":["TER","bus"],
+  "demographie":"En conctantes augmentation"
+}
+*/
 const getCitiesUser = async (uid = undefined) => {
     if(uid === undefined) return []
-    return await mongodb.fetch(COLLECTION_NAME, {"userId": uid})
+    return await mongodb.fetch(COLLECTION_NAME, {'userId': uid})
 }
 
 const getCityUser = async(uid = undefined, cid = undefined) => {
   if(uid === undefined || cid === undefined) return []
-  const data = await mongodb.fetch(COLLECTION_NAME, {"userId": uid, "villeId": cid})
+  const data = await mongodb.fetch(COLLECTION_NAME, {'userId': uid, 'villeId': cid})
   return data[0]
 }
 
@@ -38,7 +68,7 @@ const deleteCityUser = async (id = undefined) => {
     n: 0
   }
   if(id === undefined) return result
-  return await mongodb.remove(COLLECTION_NAME, {"_id": new mongodb.ObjectID(id)})
+  return await mongodb.remove(COLLECTION_NAME, {'_id': new mongodb.ObjectID(id)})
 }
 
 const deleteCityUserbyCityId = async (id = undefined) => {
@@ -46,7 +76,7 @@ const deleteCityUserbyCityId = async (id = undefined) => {
     n: 0
   }
   if(id === undefined) return result
-  return await mongodb.remove(COLLECTION_NAME, {"villeId": id})
+  return await mongodb.remove(COLLECTION_NAME, {'villeId': id})
 }
 
 const updateCityUser = async (cityUser = undefined) => {
