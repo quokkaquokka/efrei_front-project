@@ -8,13 +8,13 @@
         <div class="input-group-append">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
         </div>
-        <input required v-model="firstname" type="text" class="form-control" placeholder="Firstname">
+        <input required v-model="firstname" type="text" class="form-control" placeholder="Prénom">
       </div>
       <div class="input-group mb-2">
         <div class="input-group-append">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
         </div>
-        <input required v-model="lastname" type="text" class="form-control" placeholder="lastname">
+        <input required v-model="lastname" type="text" class="form-control" placeholder="Nom">
       </div>
       <div class="input-group mb-2">
         <div class="input-group-append">

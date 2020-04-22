@@ -23,7 +23,7 @@
           <div v-for="parking of city.parkings" :key="parking.name">
             <p><b>{{ parking.name }}</b>: {{ parking.chiffre }}</p>
           </div>
-          <h3>Etablissement Scolaire</h3>
+          <h3>Établissements Scolaires</h3>
           <div v-for="eta of city.eta_scolaires" :key="eta.name">
             <p><b>{{ eta.name }}</b>: {{ eta.nb }}</p>
           </div>
