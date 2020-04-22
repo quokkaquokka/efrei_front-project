@@ -52,7 +52,6 @@ const actions = {
       router.replace('/home')
     } catch (err) {
       commit('AUTH_ERROR')
-      console.log('error', err)
     }
   },
 
@@ -91,7 +90,6 @@ const actions = {
       }
     }
     const { data } = await axios.get(api('/auth/forgotten-password'), options)
-    console.log(data)
     // ecrire si l'utilisateur recoit bien le mail
   },
 
@@ -101,7 +99,6 @@ const actions = {
       resetToken: resetToken
     }
     const { data } = await axios.post(api('/auth/reset-password'), options)
-    console.log(data)
     router.replace('/signin')
   }
 }

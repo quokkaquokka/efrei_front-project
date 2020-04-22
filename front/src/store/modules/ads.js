@@ -51,7 +51,6 @@ const actions = {
   async fetchAds ({ commit }, filters = undefined) {
     commit('clearAll')
     const { data } = await axios.get(api('/ads'), { params: { filters: filters } })
-    console.log('data fetch', data)
     data.forEach(d => commit('addAd', d))
   },
 

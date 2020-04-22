@@ -81,63 +81,6 @@ module.exports = {
           },
         },
       },
-      'hapi-auth-external': {
-        name: 'auth-external/index.mjs',
-        local: true,
-        options: {
-          methods: {
-            attachProvider: () => {},
-            checkIfProviderIdentityAlreadyUsed: () => {}
-          },
-          activeAuth: {
-            google: false,
-            github: false,
-            twitter: false,
-            facebook: false,
-          },
-  
-          providers: {
-            facebook: {
-              provider: 'facebook',
-              password: 'AUTH_BELL_KEY',
-              clientId: 'AUTH_FACEBOOK_CLIENT_ID',
-              clientSecret: 'AUTH_FACEBOOK_CLIENT_SECRET',
-              isSecure: process.env.NODE_ENV === 'production',
-              forceHttps: process.env.NODE_ENV === 'production',
-            },
-            google: {
-              provider: 'google',
-              password: 'AUTH_BELL_KEY',
-              clientId: 'AUTH_GOOGLE_CLIENT_ID',
-              clientSecret: 'AUTH_GOOGLE_CLIENT_SECRET',
-              isSecure: process.env.NODE_ENV === 'production',
-              forceHttps: process.env.NODE_ENV === 'production',
-            },
-            github: {
-              provider: 'github',
-              location: 'http://localhost:3000',
-              password: 'AUTH_BELL_KEY',
-              clientId: 'AUTH_GITHUB_CLIENT_ID',
-              clientSecret: 'AUTH_GITHUB_CLIENT_SECRET',
-              isSecure: process.env.NODE_ENV === 'production',
-              forceHttps: process.env.NODE_ENV === 'production',
-            },
-            twitter: {
-              provider: 'twitter',
-              password: 'AUTH_BELL_KEY',
-              clientId: 'AUTH_TWITTER_CLIENT_ID',
-              clientSecret: 'AUTH_TWITTER_CLIENT_SECRET',
-              isSecure: process.env.NODE_ENV === 'production',
-              forceHttps: process.env.NODE_ENV === 'production',
-            },
-          },
-        },
-        registrationOptions: {
-          routes: {
-            prefix: "/api/v1/auth",
-          },
-        },
-      },
       routeLoader: {
         name: 'route-loader.mjs',
         local: true

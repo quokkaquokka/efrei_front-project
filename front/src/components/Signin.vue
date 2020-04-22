@@ -16,13 +16,13 @@
         </div>
         <input required v-model='password' type='password' class="form-control" placeholder='Mot de passe'>
       </div>
-    </form>
     <div class="signin">
       <button class="btn btn-outline-primary" style="float: right;"
           color='submit'
           @click='login'
       >Se connecter</button>
     </div>
+    </form>
   </div>
 </template>
 

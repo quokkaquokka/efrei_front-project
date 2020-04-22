@@ -36,7 +36,6 @@ export default {
     ...mapState(['user'])
   },
   mounted () {
-    console.log('resetToken:', this.$route.params.token)
     this.resetToken = this.$route.params.token
   },
   methods: {

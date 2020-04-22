@@ -8,7 +8,6 @@ export { setToken }
 async function refreshToken () {
   const tokenExpiryDate = localStorage.getItem('tokenExpiry')
   if (!tokenExpiryDate) {
-    console.log('No token expiry date. user probably never logged in')
     return Router.push('/signin')
   }
 

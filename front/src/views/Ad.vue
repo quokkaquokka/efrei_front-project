@@ -114,10 +114,10 @@
           </div>
           <h3 class="float-right d-block">{{ calculprixTotal() }} €</h3>
         </div>
-        <div class="col-10 descriptif">
+        <!-- <div class="col-10 descriptif">
           <h4>Notes</h4>
           <h4>questions</h4>
-        </div>
+        </div> !-->
         <div class="col-10 descriptif" style="background-color: #f3f5fa; margin-bottom: 20px;">
           <button type="button" class="btn btn-outline-primary mt-3" @click='addAdUser' style="float: right">Enregistrer</button>
         </div>
@@ -323,7 +323,6 @@ export default {
       }
       if (this.adUser._id) {
         await this.updateAdUser({ adUser: this.adUser })
-        console.log('update')
       } else {
         await this.createAdUser({ adUser: this.adUser })
       }

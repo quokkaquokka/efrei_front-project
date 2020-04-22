@@ -8,6 +8,9 @@
 import Chart from 'chart.js'
 
 export default {
+  data: () => ({
+    myChart: null
+  }),
   props: {
     dataChart: Object
   },
@@ -28,12 +31,11 @@ export default {
       }
     }
     var ctx = document.getElementById(this.dataChart.id).getContext('2d')
-    const myPieChart = new Chart(ctx, {
+    this.myChart = new Chart(ctx, {
       type: this.dataChart.type,
       data: data,
       options: options
     })
-    console.log('graphique', myPieChart)
   }
 
 }
