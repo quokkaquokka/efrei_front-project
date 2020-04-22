@@ -1,6 +1,9 @@
 <template>
   <div class="signin">
     <form>
+      <div class="alert alert-danger" role="alert" v-if="error">
+        {{ error }}
+      </div>
       <div class="input-group mb-3">
         <div class="input-group-append">
           <span class="input-group-text"><i class="fas fa-at"></i></span>
