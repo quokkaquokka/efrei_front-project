@@ -17,22 +17,21 @@
               {{ item[label] }}
             </template>
           </td>
-            <td v-if="dataForm.keyObj[label] !== 'number'">{{ item[label] }}</td>
           <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteItem"><i class="fas fa-trash"></i> Supprimer</button></td>
         </tr>
       </tbody>
     </table>
     <form style="display: inline-block;">
-    <div class="form-group row" v-for="(n,i) in dataForm.labels.length" :key="i" style="display: inline-block">
+    <div :class="sizeForm" v-for="(n,i) in dataForm.labels.length" :key="i" style="display: inline-block">
       <label :class="sizeLabel" style="display: inline-block">{{ dataForm.labels[i] }} </label>
       <div :class="sizeInput" style="display: inline-block">
         <input :type="dataForm.typeInputs[i]" class="form-control" v-model='item[dataForm.keyObj[i]]' :placeholder="`${ dataForm.placeHolders[i] }`">
       </div>
     </div>
-    </form>
-    <div class="col-sm-1 mb-3" style="display: inline-block">
+    <div class="col-sm-1" style="display: inline-block">
       <button type="button" class="btn btn-outline-info" @click="addItem">Ajouter</button>
     </div>
+    </form>
   </div>
 </template>
 
@@ -49,7 +48,11 @@ export default {
     },
     sizeInput: {
       type: String,
-      default: 'col-sm-10'
+      default: 'col-sm-7'
+    },
+    sizeForm: {
+      type: String,
+      default: 'form-group row'
     }
   },
   data: () => ({

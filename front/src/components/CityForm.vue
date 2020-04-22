@@ -33,13 +33,15 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
-import PillsTabForm from '../components/PillsTabForm.vue'
+import { mapActions, mapGetters, mapState } from 'vuex'
+import router from '../router/index'
 import EditableTable from '../components/EditableTable.vue'
+import PillsTabForm from '../components/PillsTabForm.vue'
+
 export default {
   components: {
-    PillsTabForm,
-    EditableTable
+    EditableTable,
+    PillsTabForm
   },
   props: {
     cityId: String,
@@ -92,11 +94,13 @@ export default {
       if (this.citiesUser._id) {
         // il existe deja, il faut faire un update
         await this.updateCityUser({ cityUser: this.citiesUser })
+        router.replace('/home')
       } else {
         // il faut faire un create
         this.citiesUser.userId = this.getUser._id
         this.citiesUser.villeId = this.cityId
         await this.createCityUser({ cityUser: this.citiesUser })
+        router.replace('/cities')
       }
     }
   },

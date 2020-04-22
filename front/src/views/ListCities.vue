@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import CityItem from '../components/CityItem.vue'
 import SearchCities from '../components/SearchBarForm.vue'
 export default {

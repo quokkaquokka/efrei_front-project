@@ -14,10 +14,10 @@
 <script>
 export default {
   props: {
-    search: Object,
     action: Function,
+    righAction: Function,
     rightButton: Object,
-    righAction: Function
+    search: Object
   },
   methods: {
     async submit () {

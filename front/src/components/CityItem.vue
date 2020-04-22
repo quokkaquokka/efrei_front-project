@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   props: {
     city: Object,
@@ -46,8 +46,7 @@ export default {
     ...mapGetters('citiesUser', ['getCityUserByCityId'])
   },
   methods: {
-    ...mapActions('citiesUser', ['deleteCityUser']),
-    ...mapActions('citiesUser', ['createCityUser']),
+    ...mapActions('citiesUser', ['createCityUser', 'deleteCityUser']),
     editCity () {
       this.$router.push(`/addcity/${this.city._id}`)
     }

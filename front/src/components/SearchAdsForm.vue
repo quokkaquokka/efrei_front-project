@@ -47,9 +47,9 @@
 <script>
 export default {
   props: {
+    action: { type: Function },
     city: String,
-    details: Object,
-    action: { type: Function }
+    details: Object
   },
   methods: {
     submit () {

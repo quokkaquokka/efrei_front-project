@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import FormRow from '../components/FormRow.vue'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import EditableTable from '../components/EditableTable.vue'
+import FormRow from '../components/FormRow.vue'
 export default {
   components: {
-    FormRow,
-    EditableTable
+    EditableTable,
+    FormRow
   },
   data: () => ({
     city: {

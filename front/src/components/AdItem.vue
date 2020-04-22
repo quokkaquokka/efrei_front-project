@@ -77,27 +77,33 @@ export default {
   margin: 20px 0 0 0;
   text-align: left;
 }
+
 #img-size img{
   width: 100%;
   height: 100%;
 }
+
 span {
   color: #333;
 }
+
 a {
   color: #00648E;
 }
+
 h4 {
   color: #00A0C6;
   width: max-content;
   display: inline-block;
   margin-right: 10px;
 }
+
 h2 {
   color: #086429;
   display: inline-block;
   margin-right: 10px;
 }
+
 #favorite {
   float: right;
   margin-right: 10px;

@@ -41,14 +41,15 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import PillsTabForm from '../components/PillsTabForm.vue'
-import FormRow from '../components/FormRow.vue'
 import Caroussel from '../components/Caroussel.vue'
+import FormRow from '../components/FormRow.vue'
+import PillsTabForm from '../components/PillsTabForm.vue'
+
 export default {
   components: {
+    Caroussel,
     FormRow,
-    PillsTabForm,
-    Caroussel
+    PillsTabForm
   },
   data: () => ({
     sizeLabel: {
@@ -113,8 +114,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('ads', ['createAd']),
-    ...mapActions('ads', ['updateAd']),
+    ...mapActions('ads', ['createAd', 'updateAd']),
     async addAd () {
       if (this.ad._id) {
         await this.updateAd({ ad: this.ad })

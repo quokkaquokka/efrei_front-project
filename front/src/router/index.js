@@ -35,15 +35,16 @@ export default new Router({
       }
     },
     {
-      path: '/home',
-      name: 'home',
-      component: Home,
+      path: '/ad/:id',
+      name: 'ad',
+      component: Ad,
       beforeEnter
     },
     {
-      path: '/signin',
-      name: 'signin',
-      component: SignIn
+      path: '/addad/:id?',
+      name: 'addad',
+      component: AddAd,
+      beforeEnter
     },
     {
       path: '/ads',
@@ -52,9 +53,20 @@ export default new Router({
       beforeEnter
     },
     {
-      path: '/ad/:id',
-      name: 'ad',
-      component: Ad,
+      path: '/addcity/:id?',
+      name: 'addcity',
+      component: AddCity,
+      beforeEnter
+    },
+    {
+      path: '/auth/reset-password/:token',
+      name: 'resetpassword',
+      component: ResetPassword
+    },
+    {
+      path: '/city/:id',
+      name: 'city',
+      component: City,
       beforeEnter
     },
     {
@@ -64,9 +76,9 @@ export default new Router({
       beforeEnter
     },
     {
-      path: '/city/:id',
-      name: 'city',
-      component: City,
+      path: '/dashads',
+      name: 'dashads',
+      component: DashboardAds,
       beforeEnter
     },
     {
@@ -76,26 +88,15 @@ export default new Router({
       beforeEnter
     },
     {
-      path: '/dashads',
-      name: 'dashads',
-      component: DashboardAds,
+      path: '/home',
+      name: 'home',
+      component: Home,
       beforeEnter
     },
     {
-      path: '/addcity/:id?',
-      name: 'addcity',
-      component: AddCity
-    },
-    {
-      path: '/addad/:id?',
-      name: 'addad',
-      component: AddAd,
-      beforeEnter
-    },
-    {
-      path: '/auth/reset-password/:token',
-      name: 'resetpassword',
-      component: ResetPassword
+      path: '/signin',
+      name: 'signin',
+      component: SignIn
     }
   ]
 })

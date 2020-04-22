@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import AdItem from '../components/AdItem.vue'
 import SearchAds from '../components/SearchBarForm.vue'
 import SearchAdsDetails from '../components/SearchAdsForm.vue'

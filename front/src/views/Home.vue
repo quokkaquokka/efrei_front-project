@@ -15,13 +15,14 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import CityItem from '../components/CityItem.vue'
-import AdItem from '../components/AdItem.vue'
 import _ from 'lodash'
+import AdItem from '../components/AdItem.vue'
+import CityItem from '../components/CityItem.vue'
+
 export default {
   components: {
-    CityItem,
-    AdItem
+    AdItem,
+    CityItem
   },
   data: () => ({
     citiesbyId: [],
@@ -36,26 +37,22 @@ export default {
     }
   }),
   computed: {
-    ...mapState('user', ['user']),
-    ...mapState('citiesUser', ['citiesUser']),
-    ...mapState('cities', ['cities']),
     ...mapState('ads', ['ads']),
     ...mapState('adsUser', ['adsUser']),
-    ...mapGetters('user', ['getUser', 'isAuthenticated']),
-    ...mapGetters('citiesUser', ['getCityUserByCityId']),
-    ...mapGetters('cities', ['getCitiesbyIds']),
+    ...mapState('cities', ['cities']),
+    ...mapState('citiesUser', ['citiesUser']),
+    ...mapState('user', ['user']),
     ...mapGetters('ads', ['getAdsbyIds']),
-    ...mapGetters('citiesUser', ['getCitiesUser']),
-    ...mapGetters('adsUser', ['getAdsUser']),
-    ...mapGetters('adsUser', ['getAdUserByAdId'])
+    ...mapGetters('adsUser', ['getAdUserByAdId', 'getAdsUser']),
+    ...mapGetters('cities', ['getCitiesbyIds']),
+    ...mapGetters('citiesUser', ['getCitiesUser', 'getCityUserByCityId']),
+    ...mapGetters('user', ['getUser', 'isAuthenticated'])
   },
   methods: {
-    ...mapActions('citiesUser', ['fetchCitiesUser']),
-    ...mapActions('cities', ['fetchCitiesbyIds']),
-    ...mapActions('citiesUser', ['deleteCityUser']),
     ...mapActions('ads', ['fetchAds']),
-    ...mapActions('adsUser', ['fetchAdsUser']),
-    ...mapActions('adsUser', ['deleteAdUser']),
+    ...mapActions('adsUser', ['deleteAdUser', 'fetchAdsUser']),
+    ...mapActions('cities', ['fetchCitiesbyIds']),
+    ...mapActions('citiesUser', ['deleteCityUser', 'fetchCitiesUser']),
     async removeCityUser (cityId) {
       const cityUser = this.getCityUserByCityId(cityId)
       await this.deleteCityUser({ cityId: cityUser._id })

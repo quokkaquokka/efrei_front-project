@@ -40,15 +40,16 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
-import CityItem from '../components/CityItem.vue'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import Chart from '../components/Chart.vue'
 import CityForm from '../components/CityForm.vue'
+import CityItem from '../components/CityItem.vue'
+
 export default {
   components: {
-    CityItem,
     Chart,
-    CityForm
+    CityForm,
+    CityItem
   },
   data: () => ({
     citiesUser: {
@@ -94,13 +95,15 @@ export default {
     this.createDataTypeLogement()
     this.createDataSocio()
     if (this.isAuthenticated) {
-      await this.fetchCityUser({ uid: this.user._id, cid: this.cityId })
-      this.citiesUser = this.getCityUserByCityId(this.cityId)
+      await this.fetchCitiesUser({ uid: this.user._id })
+      if (this.getCityUserByCityId(this.cityId)) {
+        this.citiesUser = this.getCityUserByCityId(this.cityId)
+      }
     }
   },
   methods: {
     ...mapActions('user', ['fetchUser']),
-    ...mapActions('citiesUser', ['fetchCityUser']),
+    ...mapActions('citiesUser', ['fetchCitiesUser']),
     createDataTypeLogement () {
       this.city.tailleLogement.forEach(element => {
         this.dataTypeLogement.values.push(element.pourcentage)

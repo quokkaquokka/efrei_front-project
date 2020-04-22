@@ -1,7 +1,7 @@
 <template>
   <div class="adDetails">
     <div class="caroussel">
-      <Caroussel :imgs="ad.img" :index="ad.img.lenght"></Caroussel>
+      <Caroussel :imgs="ad.img"></Caroussel>
     </div>
     <div class="details">
         <div class="col-10 descriptif">
@@ -50,7 +50,7 @@
           <EditableTable :dataForm="travauxGeneraux" :toComplete="adUser.travauxGeneraux" id="formInTab"></EditableTable>
         </div>
         <div class="col-10 descriptifTab">
-          <EditableTable :dataForm="pieces" :toComplete="adUser.pieces" id="formInTab"></EditableTable>
+          <EditableTable :dataForm="pieces" :toComplete="adUser.pieces" id="formInTab" sizeInput="col-sm-5" sizeLabel="col-sm-3" sizeForm="col-5"></EditableTable>
         </div>
         <div class="col-10 descriptif">
           <h4>Coût total des travaux</h4>
@@ -65,21 +65,21 @@
             <h3 v-if="adUser.locationType.LN.prix" class="float-right">{{ calculprixLN(adUser.locationType.LN.prix) | numeralFormat }} € / mois</h3>
           </div>
           <div class="mb-5">
-          <h6>Colocation</h6>
+          <h5>Colocation</h5>
             <FormRow :dataForm="nbChambres" v-model="adUser.locationType.LC.nbChambres" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <FormRow :dataForm="prixColocation" v-model="adUser.locationType.LC.prixChambre" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <h3 v-if="adUser.locationType.LC.prixChambre" class="float-right">{{ calculprixLC() | numeralFormat }} € / mois</h3>
           </div>
           <div class="mb-5">
-            <h6>Location longue durée meublé</h6>
+            <h5>Location longue durée meublé</h5>
             <FormRow :dataForm="prixExploitation" v-model="adUser.locationType.LM.prix" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <h3 v-if="adUser.locationType.LM.prix" class="float-right">{{ calculprixLN(adUser.locationType.LM.prix) | numeralFormat }} € / mois</h3>
           </div>
           <div class="mb-5">
-            <h6>Location mixte (meublé + courte durée)</h6>
-            <h7>Longue durée</h7>
+            <h5>Location mixte (meublé + courte durée)</h5>
+            <h6>Longue durée</h6>
             <FormRow :dataForm="prixExploitation" v-model="adUser.locationType.LM_LCD.prixLongueDuree" :sizeLabel="sizeLabel" inputType="number"></FormRow>
-            <h7>Courte durée</h7>
+            <h6>Courte durée</h6>
             <FormRow :dataForm="nbMois" v-model="adUser.locationType.LM_LCD.nbMoisCourteDuree" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <FormRow :dataForm="minNbNuit" v-model="adUser.locationType.LM_LCD.minNbNuit" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <FormRow :dataForm="nbChambres" v-model="adUser.locationType.LM_LCD.nbChambres" :sizeLabel="sizeLabel" inputType="number"></FormRow>
@@ -88,7 +88,7 @@
             <h4 v-if="adUser.locationType.LM_LCD.prixNuit" class="float-right">{{ Math.round(calculprixLM_LCD() / 12) | numeralFormat }} € / mois - </h4>
           </div>
           <div class="mb-5">
-            <h6>Location courte durée meublé</h6>
+            <h5>Location courte durée meublé</h5>
             <FormRow :dataForm="minNbNuit" v-model="adUser.locationType.LCD.minNbNuit" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <p>Vos types de logements</p>
             <EditableTable :dataForm="typeLogements" :toComplete="adUser.locationType.LCD.typeLogements" id="formInTab"></EditableTable>
@@ -126,11 +126,13 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import _ from 'lodash'
+import router from '../router/index'
 import Caroussel from '../components/Caroussel.vue'
-import FormRow from '../components/FormRow.vue'
 import EditableTable from '../components/EditableTable'
+import FormRow from '../components/FormRow.vue'
+
 export default {
   components: {
     Caroussel,
@@ -139,7 +141,7 @@ export default {
   },
   data () {
     return {
-      ad: null,
+      ad: {},
       credit: {
         prixBien: null,
         notaire: null,
@@ -222,20 +224,22 @@ export default {
     const adId = this.$route.params.id
     this.ad = this.getAdById(adId)
     if (this.isAuthenticated) {
-      await this.fetchAdUser({ uid: this.user._id, aid: adId })
-      this.adUser = this.getAdUserByAdId(adId)
+      await this.fetchAdsUser({ uid: this.user._id })
+      if (this.getAdUserByAdId(adId)) {
+        this.adUser = this.getAdUserByAdId(adId)
+      }
     }
   },
   computed: {
     ...mapState('ads', ['ads']),
     ...mapState('user', ['user']),
     ...mapGetters('ads', ['getAdById']),
-    ...mapGetters('user', ['getUser', 'isAuthenticated']),
-    ...mapGetters('adsUser', ['getAdUserByAdId'])
+    ...mapGetters('adsUser', ['getAdUserByAdId']),
+    ...mapGetters('user', ['getUser', 'isAuthenticated'])
   },
   methods: {
     ...mapActions('ads', ['fetchAd']),
-    ...mapActions('adsUser', ['createAdUser', 'fetchAdUser', 'updateAdUser']),
+    ...mapActions('adsUser', ['createAdUser', 'fetchAdsUser', 'updateAdUser']),
     calculBaissePrix () {
       if (this.adUser.prixProposition) {
         this.adUser.prixProposition = parseInt(this.adUser.prixProposition, 10)
@@ -323,8 +327,10 @@ export default {
       }
       if (this.adUser._id) {
         await this.updateAdUser({ adUser: this.adUser })
+        router.replace('/home')
       } else {
         await this.createAdUser({ adUser: this.adUser })
+        router.replace('/ads')
       }
     }
   }

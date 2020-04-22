@@ -27,15 +27,15 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import ForgottenPassword from '../components/ForgottenPasswordForm.vue'
 import Signin from '../components/SigninForm.vue'
 import Signup from '../components/SignupForm.vue'
-import ForgottenPassword from '../components/ForgottenPasswordForm.vue'
 export default {
   components: {
+    ForgottenPassword,
     Signin,
-    Signup,
-    ForgottenPassword
+    Signup
   },
   name: 'signin',
   data () {
@@ -89,7 +89,7 @@ export default {
   background-color: #ffffff;
 }
 
-#nav-tabContent{
+#nav-tabContent {
   border-style: hidden solid solid;
   border-width: 1px;
   border-color: #cccccc;
@@ -97,6 +97,7 @@ export default {
   padding-bottom: 10px;
   padding-top: 20px;
 }
+
 #nav-home-tab {
   margin-left: 0;
 }
