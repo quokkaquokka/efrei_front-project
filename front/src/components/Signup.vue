@@ -1,6 +1,9 @@
 <template>
   <div class="signin">
     <form>
+      <div class="alert alert-danger" role="alert" v-if="error">
+        {{ error }}
+      </div>
       <div class="input-group mb-3">
         <div class="input-group-append">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -29,13 +32,8 @@
     <div class="signin">
       <button class="btn btn-outline-primary" style="float: right;"
           color='submit'
-          @click="signup({
-          email: email,
-          password: password,
-          firstname: firstname,
-          lastname: lastname
-        })"
-      >S'inscrire</button>
+          @click='register'
+      >S'inscire</button>
     </div>
   </div>
 </template>
@@ -43,9 +41,9 @@
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
-  name: 'login',
   data () {
     return {
+      error: null,
       email: '',
       password: '',
       firstname: '',
@@ -53,12 +51,24 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['isAuthenticated']),
+    ...mapGetters('user', ['isAuthenticated', 'status']),
     ...mapState(['user'])
   },
   methods: {
     ...mapActions('user', ['signup']),
-    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR'])
+    ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR']),
+    async register () {
+      await this.signup({
+        email: this.email,
+        password: this.password,
+        firstname: this.firstname,
+        lastname: this.lastname
+      })
+      if (this.status) {
+        this.error = 'Inscription échouée. Adresse mail incomplète ou déjà utilisée.'
+        setTimeout(() => { this.error = '' }, 3000)
+      }
+    }
   }
 }
 </script>
