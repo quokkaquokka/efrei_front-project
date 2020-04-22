@@ -49,7 +49,7 @@ export default {
         password: this.password
       })
       if (this.status) {
-        this.error = 'Vérifier votre email ou mot de passe.'
+        this.error = 'Connexion échouée. Vérifiez votre email ou mot de passe.'
         setTimeout(() => { this.error = '' }, 3000)
       }
     }
