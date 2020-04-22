@@ -3,9 +3,9 @@
     <FormInTab :dataForm="hotels" :toComplete="citiesUser.hotels"></FormInTab>
     <div class="ad" id="item">
       <form>
-        <h4>Nombre d'hotel</h4>
+        <h4>Nombre d'hôtels</h4>
         <div class="form-group row">
-          <label class="col-form-label">Nombre d'hotels dans la ville</label>
+          <label class="col-form-label">Nombre d'hôtels dans la ville</label>
           <div class="col-sm-5">
             <input type="text" class="form-control" v-model='citiesUser.nbHotels'>
           </div>
@@ -67,7 +67,7 @@ export default {
       placeHolder: 'Ex: sncf'
     },
     hotels: {
-      titre: 'Hotels',
+      titre: 'Hôtels',
       labels: ['Nom', 'Prix/nuit'],
       keyObj: ['name', 'prix'],
       placeHolders: ['Ex: Ibis', 'Ex: 75€'],
