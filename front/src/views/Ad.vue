@@ -7,11 +7,11 @@
         <div class="col-10 descriptif">
           <h3>{{ ad.titre }}</h3>
           <h4><i class="fas fa-map-marker-alt"></i> {{ ad.ville }} </h4><span>( {{ad.cp}} )</span><br>
-          <h2> {{ ad.prix }} €</h2><span> {{ ad.prixm2 }} €/m²</span>
+          <h2> {{ ad.prix | numeralFormat }} €</h2><span> {{ ad.prixm2 | numeralFormat }} €/m²</span>
           <div class="row">
             <div class="col-3">
               <p>Surface</p>
-              <h3><i class="fas fa-ruler-combined"></i> {{ ad.surface }}</h3>
+              <h3><i class="fas fa-ruler-combined"></i> {{ ad.surface | numeralFormat }}</h3>
             </div>
             <div class="col-3">
               <p>Nb de pièces</p>
@@ -54,7 +54,7 @@
         </div>
         <div class="col-10 descriptif">
           <h4>Coût total des travaux</h4>
-          <h3 style="float:right"> {{ caculPrixTravaux() }} €</h3>
+          <h3 style="float:right"> {{ caculPrixTravaux() | numeralFormat }} €</h3>
         </div>
         <div class="col-10 descriptif">
           <h4>Potentiel locatif</h4>
@@ -62,18 +62,18 @@
           <div class="mb-5">
             <h5>Location longue durée vide</h5>
             <FormRow :dataForm="prixExploitation" v-model="adUser.locationType.LN.prix" :sizeLabel="sizeLabel" inputType="number"></FormRow>
-            <h3 v-if="adUser.locationType.LN.prix" class="float-right">{{ calculprixLN(adUser.locationType.LN.prix) }} € / mois</h3>
+            <h3 v-if="adUser.locationType.LN.prix" class="float-right">{{ calculprixLN(adUser.locationType.LN.prix) | numeralFormat }} € / mois</h3>
           </div>
           <div class="mb-5">
           <h6>Colocation</h6>
             <FormRow :dataForm="nbChambres" v-model="adUser.locationType.LC.nbChambres" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <FormRow :dataForm="prixColocation" v-model="adUser.locationType.LC.prixChambre" :sizeLabel="sizeLabel" inputType="number"></FormRow>
-            <h3 v-if="adUser.locationType.LC.prixChambre" class="float-right">{{ calculprixLC() }} € / mois</h3>
+            <h3 v-if="adUser.locationType.LC.prixChambre" class="float-right">{{ calculprixLC() | numeralFormat }} € / mois</h3>
           </div>
           <div class="mb-5">
             <h6>Location longue durée meublé</h6>
             <FormRow :dataForm="prixExploitation" v-model="adUser.locationType.LM.prix" :sizeLabel="sizeLabel" inputType="number"></FormRow>
-            <h3 v-if="adUser.locationType.LM.prix" class="float-right">{{ calculprixLN(adUser.locationType.LM.prix) }} € / mois</h3>
+            <h3 v-if="adUser.locationType.LM.prix" class="float-right">{{ calculprixLN(adUser.locationType.LM.prix) | numeralFormat }} € / mois</h3>
           </div>
           <div class="mb-5">
             <h6>Location mixte (meublé + courte durée)</h6>
@@ -84,15 +84,15 @@
             <FormRow :dataForm="minNbNuit" v-model="adUser.locationType.LM_LCD.minNbNuit" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <FormRow :dataForm="nbChambres" v-model="adUser.locationType.LM_LCD.nbChambres" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <FormRow :dataForm="prixColocation" v-model="adUser.locationType.LM_LCD.prixNuit" :sizeLabel="sizeLabel" inputType="number"></FormRow>
-            <h3 v-if="adUser.locationType.LM_LCD.prixNuit" class="float-right">{{ calculprixLM_LCD() }} € / an</h3>
-            <h4 v-if="adUser.locationType.LM_LCD.prixNuit" class="float-right">{{ Math.round(calculprixLM_LCD() / 12) }} € / mois - </h4>
+            <h3 v-if="adUser.locationType.LM_LCD.prixNuit" class="float-right">{{ calculprixLM_LCD() | numeralFormat }} € / an</h3>
+            <h4 v-if="adUser.locationType.LM_LCD.prixNuit" class="float-right">{{ Math.round(calculprixLM_LCD() / 12) | numeralFormat }} € / mois - </h4>
           </div>
           <div class="mb-5">
             <h6>Location courte durée meublé</h6>
             <FormRow :dataForm="minNbNuit" v-model="adUser.locationType.LCD.minNbNuit" :sizeLabel="sizeLabel" inputType="number"></FormRow>
             <p>Vos types de logements</p>
             <EditableTable :dataForm="typeLogements" :toComplete="adUser.locationType.LCD.typeLogements" id="formInTab"></EditableTable>
-            <h3 v-if="adUser.locationType.LCD.typeLogements.length > 0" class="float-right">{{ calculprixLCD() }} € / mois</h3>
+            <h3 v-if="adUser.locationType.LCD.typeLogements.length > 0" class="float-right">{{ calculprixLCD() | numeralFormat }} € / mois</h3>
           </div>
         </div>
         <div class="col-10 descriptif">
@@ -112,7 +112,7 @@
               </select>
             </div>
           </div>
-          <h3 class="float-right d-block">{{ calculprixTotal() }} €</h3>
+          <h3 class="float-right d-block">{{ calculprixTotal() | numeralFormat }} €</h3>
         </div>
         <!-- <div class="col-10 descriptif">
           <h4>Notes</h4>

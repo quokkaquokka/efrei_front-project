@@ -5,7 +5,7 @@
         <img :src="getImgUrl(ad)" v-bind:alt="ad.titre">
       </div>
       <div class="col-md">
-        <span> {{ ad.type }} - {{ ad.surface }}m²</span>
+        <span> {{ ad.type }} - {{ ad.surface | numeralFormat }}m²</span>
         <h3 style="margin-top: 20px">
           <router-link :to="`/ad/${ad._id}`">
             {{ ad.titre }}
@@ -15,11 +15,11 @@
           </div>
         </h3>
         <h4><i class="fas fa-map-marker-alt"></i> {{ ad.ville }} </h4><span> {{ad.cp}} </span><br>
-        <h2> {{ ad.prix }} €</h2><span> {{ ad.prixm2 }} €/m²</span>
+        <h2> {{ ad.prix | numeralFormat }} €</h2><span> {{ ad.prixm2 | numeralFormat }} €/m²</span>
         <div class="row" style="margin-top: 120px">
           <div class="col-3">
             <p>Surface</p>
-            <h3><i class="fas fa-ruler-combined"></i> {{ ad.surface }}</h3>
+            <h3><i class="fas fa-ruler-combined"></i> {{ ad.surface | numeralFormat }}</h3>
           </div>
           <div class="col-3">
             <p>Nb de pièces</p>

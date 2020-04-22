@@ -9,7 +9,15 @@
       </thead>
       <tbody>
         <tr v-for="(item, i) in toComplete" :key="i">
-          <td v-for="(label, j) in dataForm.keyObj" :key="j">{{ item[label] }}</td>
+          <td v-for="(label, j) in dataForm.keyObj" :key="j">
+            <template v-if="dataForm.typeInputs[j] === 'number'">
+              {{ item[label] | numeralFormat }}
+            </template>
+            <template v-if="dataForm.typeInputs[j] !== 'number'">
+              {{ item[label] }}
+            </template>
+          </td>
+            <td v-if="dataForm.keyObj[label] !== 'number'">{{ item[label] }}</td>
           <td><button type="button" class="btn btn-outline-primary"  id="delete" @click="deleteItem"><i class="fas fa-trash"></i> Supprimer</button></td>
         </tr>
       </tbody>

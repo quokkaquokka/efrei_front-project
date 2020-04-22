@@ -20,7 +20,7 @@
             <h3 id="myH3">{{ city.name }}</h3><span id="postalCode">({{ city.postalCode }})</span>
           </router-link>
         </div>
-        <h4 id="myH4">Prix moyen: {{ city.prixMoyen }} €</h4>
+        <h4 id="myH4">Prix moyen: {{ city.prixMoyen | numeralFormat }} €</h4>
       </div>
     </div>
   </div>
