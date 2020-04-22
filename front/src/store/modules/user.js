@@ -85,14 +85,18 @@ const actions = {
   },
 
   async forgottenPassword ({ commit }, { email }) {
-    const options = {
-      params: {
-        email: email
+    commit('AUTH_REQUEST')
+    try {
+      const options = {
+        params: {
+          email: email
+        }
       }
+      const { data } = await axios.get(api('/auth/forgotten-password'), options)
+      commit('AUTH_SUCCESS', data)
+    } catch (err) {
+      commit('AUTH_ERROR')
     }
-    const { data } = await axios.get(api('/auth/forgotten-password'), options)
-    console.log(data)
-    // ecrire si l'utilisateur recoit bien le mail
   },
 
   async resetPassword ({ commit }, { password, resetToken }) {
