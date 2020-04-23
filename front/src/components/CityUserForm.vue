@@ -87,15 +87,12 @@ export default {
     ...mapActions('citiesUser', ['updateCityUser']),
     async save () {
       if (!this.getUser) {
-        // display an error message for the connection of the user
         return
       }
       if (this.citiesUser._id) {
-        // il existe deja, il faut faire un update
         await this.updateCityUser({ cityUser: this.citiesUser })
         router.replace('/home')
       } else {
-        // il faut faire un create
         this.citiesUser.userId = this.getUser._id
         this.citiesUser.cityId = this.cityId
         await this.createCityUser({ cityUser: this.citiesUser })

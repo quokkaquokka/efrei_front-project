@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import SignIn from '../views/Sign.vue'
 import Ads from '../views/ListAds.vue'
 import Ad from '../views/Ad.vue'
+import AddAdByUser from '../views/AddAdByUser.vue'
 import Cities from '../views/ListCities.vue'
 import City from '../views/City.vue'
 import DashboardCities from '../views/DashboardCities.vue'
@@ -44,6 +45,12 @@ export default new Router({
       path: '/addad/:id?',
       name: 'addad',
       component: AddAd,
+      beforeEnter
+    },
+    {
+      path: '/addadbyuser/:id?',
+      name: 'addadbyuser',
+      component: AddAdByUser,
       beforeEnter
     },
     {

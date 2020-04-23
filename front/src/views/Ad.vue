@@ -41,13 +41,19 @@
         <p>id de l'annonce: {{ ad.idAd }}</p>
         <p>contact: {{ ad.phone }}</p>
       </div>
-      <AdUserForm :adId="adId" :adUser="adUser" :ad="ad"></AdUserForm>
+      <form>
+        <AdUserForm :adUser="adUser" :ad="ad"></AdUserForm>
+        <div class="col-10 descriptif" style="background-color: #f3f5fa; margin-bottom: 20px;">
+          <button type="button" class="btn btn-outline-primary mt-3" @click='addAdUser' style="float: right">Enregistrer</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
+import router from '../router/index'
 import AdUserForm from '../components/AdUserForm.vue'
 import Caroussel from '../components/Caroussel.vue'
 
@@ -64,7 +70,7 @@ export default {
         address: null,
         propositionPrice: null,
         comment: '',
-        rooms: [],
+        roomsWorks: [],
         generalWorks: [],
         locationType: {
           LN: {
@@ -116,7 +122,24 @@ export default {
   },
   methods: {
     ...mapActions('ads', ['fetchAd']),
-    ...mapActions('adsUser', ['createAdUser', 'fetchAdsUser', 'updateAdUser'])
+    ...mapActions('adsUser', ['createAdUser', 'fetchAdsUser', 'updateAdUser']),
+    async addAdUser () {
+      if (this.adUser.locationType.LN.price) {
+        this.adUser.locationType.LN.price = parseInt(this.adUser.locationType.LN.price)
+      }
+      if (this.adUser.locationType.LM.price) {
+        this.adUser.locationType.LM.price = parseInt(this.adUser.locationType.LN.price)
+      }
+      if (this.adUser._id) {
+        await this.updateAdUser({ adUser: this.adUser })
+        router.replace('/home')
+      } else {
+        this.adUser.adId = this.adId
+        this.adUser.userId = this.getUser._id
+        await this.createAdUser({ adUser: this.adUser })
+        router.replace('/ads')
+      }
+    }
   }
 }
 </script>

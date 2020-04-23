@@ -9,7 +9,7 @@
       <EditableTable :dataForm="generalWorks" :toComplete="adUser.generalWorks" id="formInTab"></EditableTable>
     </div>
     <div class="col-10 descriptifTab">
-      <EditableTable :dataForm="rooms" :toComplete="adUser.rooms" id="formInTab" sizeInput="col-sm-5" sizeLabel="col-sm-3" sizeForm="col-5"></EditableTable>
+      <EditableTable :dataForm="roomsWorks" :toComplete="adUser.roomsWorks" id="formInTab" sizeInput="col-sm-5" sizeLabel="col-sm-3" sizeForm="col-5"></EditableTable>
     </div>
     <div class="col-10 descriptif">
       <h4>Coût total des travaux</h4>
@@ -77,22 +77,17 @@
       <h4>Notes</h4>
       <h4>questions</h4>
     </div> !-->
-    <div class="col-10 descriptif" style="background-color: #f3f5fa; margin-bottom: 20px;">
-      <button type="button" class="btn btn-outline-primary mt-3" @click='addAdUser' style="float: right">Enregistrer</button>
-    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
 import _ from 'lodash'
-import router from '../router/index'
 import EditableTable from '../components/EditableTable'
 import FormRow from '../components/FormRow.vue'
 
 export default {
   props: {
-    adId: String,
     ad: Object,
     adUser: {
       type: Object
@@ -121,7 +116,7 @@ export default {
         placeHolders: ['Ex: électricité', 'Ex: 30 000'],
         typeInputs: ['text', 'number']
       },
-      rooms: {
+      roomsWorks: {
         title: 'Travaux par pièce',
         labels: ['Intitulé', 'Surface ( m² )', 'Travaux', 'Prix (€)'],
         keyObj: ['name', 'area', 'works', 'price'],
@@ -166,7 +161,7 @@ export default {
       return 0
     },
     calculWorksPrice () {
-      let price = _.reduce(this.adUser.rooms, (acc, o) => {
+      let price = _.reduce(this.adUser.roomsWorks, (acc, o) => {
         return o.price + acc
       }, 0)
       price = price + _.reduce(this.adUser.generalWorks, (acc, o) => {
@@ -234,23 +229,6 @@ export default {
         return price * this.adUser.locationType.LCD.minNumberNight - this.credit.monthlyPayment
       }
       return 0
-    },
-    async addAdUser () {
-      if (this.adUser.locationType.LN.price) {
-        this.adUser.locationType.LN.price = parseInt(this.adUser.locationType.LN.price)
-      }
-      if (this.adUser.locationType.LM.price) {
-        this.adUser.locationType.LM.price = parseInt(this.adUser.locationType.LN.price)
-      }
-      if (this.adUser._id) {
-        await this.updateAdUser({ adUser: this.adUser })
-        router.replace('/home')
-      } else {
-        this.adUser.adId = this.adId
-        this.adUser.userId = this.getUser._id
-        await this.createAdUser({ adUser: this.adUser })
-        router.replace('/ads')
-      }
     }
   }
 }

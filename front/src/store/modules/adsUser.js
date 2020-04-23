@@ -30,6 +30,9 @@ const getters = {
   getAdUserByAdId: state => id => {
     return state.adsUser.find(_ => _.adId === id)
   },
+  getAdUserById: state => id => {
+    return state.adsUser.find(_ => _._id === id)
+  },
   getAdsUser: state => {
     return state.adsUser
   }

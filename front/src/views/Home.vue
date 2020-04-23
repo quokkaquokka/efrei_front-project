@@ -1,9 +1,19 @@
 <template>
   <div class="col-9 py-3" id="city">
+    <div class="float-right">
+      <div class="ml-2 col-2 float-right" style="display: contents">
+        <button class="btn btn btn-outline-info mr-3" type="submit" @click="addAdUserbyUser"><i class="fas fa-plus-square"></i> Ajouter une annonce
+        </button>
+        <button class="btn btn btn-outline-info " type="submit" @click="addCityUserbyUser"><i class="fas fa-plus-square"></i> Ajouter une ville</button>
+      </div>
+    </div>
     <h3>Listes de mes annonces</h3>
     <p v-if="adsbyId.length === 0">Vous n'avez pas encore de suivis d'annonce! Vous pouvez vous rendre sur la liste des annonces pour en ajouter</p>
     <div v-for="ad in adsbyId" :key="ad._id">
       <AdItem :ad="ad" :labelsButton="labelsButton" v-on:adUser-action="removeAdUser"></AdItem>
+    </div>
+    <div v-for="adUser in adsUserbyUser" :key="adUser._id">
+      <AdUserItem :ad="adUser" :labelsButton="labelsButton" v-on:adUser-action="removeAdUser"></AdUserItem>
     </div>
     <h3>Listes de mes villes</h3>
     <p v-if="citiesbyId.length === 0">Vous n'avez pas encore de suivis de ville! Vous pouvez vous rendre sur la liste des villes pour en ajouter</p>
@@ -16,17 +26,21 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import _ from 'lodash'
+import router from '../router/index'
 import AdItem from '../components/AdItem.vue'
+import AdUserItem from '../components/AdUserItem.vue'
 import CityItem from '../components/CityItem.vue'
 
 export default {
   components: {
     AdItem,
+    AdUserItem,
     CityItem
   },
   data: () => ({
     citiesbyId: [],
     adsbyId: [],
+    adsUserbyUser: [],
     labelsButton: [{
       icon: 'fas fa-trash',
       text: 'Ne plus suivre'
@@ -46,13 +60,18 @@ export default {
     ...mapGetters('adsUser', ['getAdUserByAdId', 'getAdsUser']),
     ...mapGetters('cities', ['getCitiesbyIds']),
     ...mapGetters('citiesUser', ['getCitiesUser', 'getCityUserByCityId']),
-    ...mapGetters('user', ['getUser', 'isAuthenticated'])
+    ...mapGetters('user', ['isAuthenticated'])
   },
   methods: {
     ...mapActions('ads', ['fetchAds']),
     ...mapActions('adsUser', ['deleteAdUser', 'fetchAdsUser']),
     ...mapActions('cities', ['fetchCitiesbyIds']),
     ...mapActions('citiesUser', ['deleteCityUser', 'fetchCitiesUser']),
+    addAdUserbyUser () {
+      router.replace('/addadbyuser')
+    },
+    addCityUserbyUser () {
+    },
     async removeCityUser (cityId) {
       const cityUser = this.getCityUserByCityId(cityId)
       await this.deleteCityUser({ cityId: cityUser._id })
@@ -90,6 +109,12 @@ export default {
     await this.fetchAdsUser({ uid: this.user._id })
     const adsId = _.reduce(this.adsUser, (acc, e) => {
       acc.push(e.adId)
+      return acc
+    }, [])
+    this.adsUserbyUser = _.reduce(this.adsUser, (acc, e) => {
+      if (e.title) {
+        acc.push(e)
+      }
       return acc
     }, [])
     this.adsbyId = this.getAdsbyIds(adsId)

@@ -68,12 +68,7 @@ const actions = {
   async logout ({ commit }) {
     commit('AUTH_REQUEST')
     try {
-      const option = {
-        headers: {
-          authorization: 'Bearer ' + localStorage.getItem('token')
-        }
-      }
-      const { data } = await axios.get(api('/auth/logout'), option)
+      const { data } = await axios.get(api('/auth/logout'))
       commit('UNSET_USER', data)
       localStorage.setItem('token', '')
       localStorage.setItem('tokenExpiry', null)
