@@ -2,9 +2,8 @@
   <div class="col-9 py-3" id="city">
     <div class="float-right">
       <div class="ml-2 col-2 float-right" style="display: contents">
-        <button class="btn btn btn-outline-info mr-3" type="submit" @click="addAdUserbyUser"><i class="fas fa-plus-square"></i> Ajouter une annonce
-        </button>
-        <button class="btn btn btn-outline-info " type="submit" @click="addCityUserbyUser"><i class="fas fa-plus-square"></i> Ajouter une ville</button>
+        <button class="btn btn btn-outline-info mr-3" type="submit" @click="addAdUserbyUser"><i class="fas fa-plus-square"></i> Ajouter une annonce</button>
+        <!-- <button class="btn btn btn-outline-info " type="submit" @click="addCityUserbyUser"><i class="fas fa-plus-square"></i> Ajouter une ville</button> !-->
       </div>
     </div>
     <h3>Listes de mes annonces</h3>
