@@ -4,7 +4,11 @@ export default {
   method: 'GET',
   path: '/api/v1/ads/{aid}/user/{uid}',
   options: {
-    auth: false
+    auth: {
+      access: {
+        scope: 'user'
+      }
+    }
   },
   handler: async (request, h) => {
     let aid = request.params.aid

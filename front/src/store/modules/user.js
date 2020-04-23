@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from '../../client.config'
 import router from '../../router/index'
 import jwtDecode from 'jwt-decode'
+import { setToken } from '../../services/session-manager'
 
 /** @param {String} path */
 function api (path) {
@@ -10,37 +11,23 @@ function api (path) {
 
 const state = {
   connected: false,
-  token: null,
-  tokenExpiryDate: null,
   user: {
+    _id: '',
     firstname: '',
     lastname: '',
     email: '',
     password: '',
-    scopes: [], // string array
-    groups: [], // string array
-    isActive: true,
-    deleted: false,
-    deletedDate: null,
-    createdDate: null,
-    lastModifiedDate: null,
-    activeAfterDate: null,
-    expirationDate: null
+    scope: [] // string array
   },
   status: ''
 }
 
 const getters = {
-  token: state => state.token,
-  tokenExpiry: state => state.tokenExpiry,
   isAuthenticated: state => state.connected,
   getUser: state => state.user,
-  hasAccessRight: state => right => {
-    if (state.user.role && state.user.role.rights) {
-      return !!state.user.role.rights.find(r => r === right)
-    }
-    return false
-  }
+  hasAccessRight: state => state.user.scope.includes('admin'),
+  state: state => state,
+  status: state => state.status
 }
 
 const actions = {
@@ -57,15 +44,11 @@ const actions = {
   async signin ({ commit }, { email, password }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/signin'), { email, password })
-      commit('AUTH_SUCCESS', data)
+      const { data } = await axios.post(api('/auth/login'), { email, password })
       // stock the token of the user
-      state.token = data.token
-      localStorage.setItem('token', state.token)
-      // decode the token to have the expiration date
-      const decoded = jwtDecode(data.token)
-      state.tokenExpiryDate = decoded.exp
-      localStorage.setItem('tokenExpiry', state.tokenExpiryDate)
+      const decoded = jwtDecode(data)
+      setToken(data)
+      commit('AUTH_SUCCESS', { user: decoded })
       router.replace('/home')
     } catch (err) {
       commit('AUTH_ERROR')
@@ -73,22 +56,51 @@ const actions = {
   },
 
   async signup ({ commit }, { email, password, firstname, lastname }) {
-    commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/signup'), { email, password, firstname, lastname })
-      commit('AUTH_SUCCESS', data)
-      router.replace('/home')
+      return await axios.post(api('/auth/signup'), { email, password, firstname, lastname })
     } catch (err) {
-      commit('AUTH_ERROR')
+      return err
     }
   },
 
   async logout ({ commit }) {
     commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/logout'))
+      const { data } = await axios.get(api('/auth/logout'))
       commit('UNSET_USER', data)
+      localStorage.setItem('token', '')
+      localStorage.setItem('tokenExpiry', null)
       router.replace('/signin')
+    } catch (err) {
+      commit('AUTH_ERROR')
+    }
+  },
+
+  async forgottenPassword ({ commit }, { email }) {
+    commit('AUTH_REQUEST')
+    try {
+      const options = {
+        params: {
+          email: email
+        }
+      }
+      const { data } = await axios.get(api('/auth/forgotten-password'), options)
+      commit('AUTH_SUCCESS', data)
+    } catch (err) {
+      commit('AUTH_ERROR')
+    }
+  },
+
+  async resetPassword ({ commit }, { password, resetToken }) {
+    commit('AUTH_REQUEST')
+    try {
+      const options = {
+        password: password,
+        resetToken: resetToken
+      }
+      const { data } = await axios.post(api('/auth/reset-password'), options)
+      router.replace('/signin')
+      commit('AUTH_SUCCESS', data)
     } catch (err) {
       commit('AUTH_ERROR')
     }
@@ -96,41 +108,28 @@ const actions = {
 }
 
 const mutations = {
+  AUTH_INSCRIPTION (state) {
+    state.status = 'error'
+  },
   AUTH_REQUEST (state) {
     state.status = 'loading'
   },
   AUTH_SUCCESS (state, {
     user: {
+      _id,
       firstname,
       lastname,
       email,
-      password,
-      scopes, // string array
-      groups, // string array
-      isActive,
-      deleted,
-      deletedDate,
-      createdDate,
-      lastModifiedDate,
-      activeAfterDate,
-      expirationDate
+      scope // string array
     }
   }) {
     state.status = 'success'
     state.connected = true
+    state.user._id = _id
     state.user.firstname = firstname
     state.user.lastname = lastname
     state.user.email = email
-    state.user.password = password
-    state.user.scopes = scopes
-    state.user.groups = groups
-    state.user.isActive = isActive
-    state.user.deleted = deleted
-    state.user.deletedDate = deletedDate
-    state.user.createdDate = createdDate
-    state.user.lastModifiedDate = lastModifiedDate
-    state.user.activeAfterDate = activeAfterDate
-    state.user.expirationDate = expirationDate
+    state.user.scope = scope
   },
   AUTH_ERROR (state) {
     state.status = 'error'
@@ -144,14 +143,6 @@ const mutations = {
     state.user.email = ''
     state.user.password = ''
     state.user.scopes = [] // string array
-    state.user.groups = [] // string array
-    state.user.isActive = true
-    state.user.deleted = false
-    state.user.deletedDate = null
-    state.user.createdDate = null
-    state.user.lastModifiedDate = null
-    state.user.activeAfterDate = null
-    state.user.expirationDate = null
   }
 }
 export default {

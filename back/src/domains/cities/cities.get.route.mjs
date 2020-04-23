@@ -7,6 +7,7 @@ export default {
     auth: false
   },
   handler: async (request, h) => {
-    return await getCities()
+    const params = request.query
+    return await getCities(params.filters)
   }
 }

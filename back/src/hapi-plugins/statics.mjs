@@ -13,6 +13,9 @@ const register = async (server, options = {}) => {
   server.route({
     method: 'GET',
     path: '/{param*}',
+    options: {
+      auth: false
+    },
     handler: {
       directory: {
         path: root,

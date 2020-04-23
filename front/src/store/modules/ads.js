@@ -1,8 +1,7 @@
 import axios from 'axios'
 import config from '../../client.config'
+import _ from 'lodash'
 
-// GET /ads -> recupere totue les annonces
-// GET /ads/{id}  -> lit une annonce via l'id
 /** @param {String} path */
 function api (path) {
   return config.apiURL + path
@@ -13,7 +12,19 @@ const state = {
 }
 
 const getters = {
-  getAdById: state => id => state.ads.find(_ => _.id === parseInt(id))
+  getAdById: state => id => {
+    return state.ads.find(_ => {
+      return _._id === id
+    })
+  },
+  getAdsbyIds: state => adsId => {
+    return _.reduce(state.ads, (acc, o) => {
+      if (adsId.indexOf(o._id) >= 0) {
+        acc.push(o)
+      }
+      return acc
+    }, [])
+  }
 }
 
 const mutations = {
@@ -26,22 +37,26 @@ const mutations = {
     }
   },
   removeAd (state, { adId }) {
-    const existing = state.ads.findIndex(e => e.id === adId)
+    const existing = state.ads.findIndex(e => e._id === adId)
     if (existing !== -1) {
       state.ads.splice(existing, 1)
     }
+  },
+  clearAll () {
+    state.ads = []
   }
 }
 
 const actions = {
-  async fetchAds ({ commit }) {
-    const { data } = await axios.get(api('/ads'))
+  async fetchAds ({ commit }, filters = undefined) {
+    commit('clearAll')
+    const { data } = await axios.get(api('/ads'), { params: { filters: filters } })
     data.forEach(d => commit('addAd', d))
   },
 
   async fetchAd ({ commit }, { id }) {
     const { data } = await axios.get(api('/ads/' + id))
-    commit('addCity', data)
+    commit('addAd', data)
   },
 
   async createAd ({ commit }, { ad }) {
@@ -54,8 +69,8 @@ const actions = {
     commit('removeAd', { adId })
   },
 
-  async updateAd ({ commit }, { id, ad }) {
-    const { data } = await axios.put(api('/ads/' + id), ad)
+  async updateAd ({ commit }, { ad }) {
+    const { data } = await axios.put(api('/ads'), ad)
     commit('addAd', data)
   }
 }
