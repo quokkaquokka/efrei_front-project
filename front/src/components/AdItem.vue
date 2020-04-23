@@ -2,36 +2,36 @@
   <div class="ad">
     <div class="row">
       <div class="col-4" id="img-size">
-        <img :src="getImgUrl(ad)" v-bind:alt="ad.titre">
+        <img :src="getImgUrl(ad)" v-bind:alt="ad.title">
       </div>
       <div class="col-md">
-        <span> {{ ad.type }} - {{ ad.surface | numeralFormat }}m²</span>
+        <span> {{ ad.type }} - {{ ad.buildingArea | numeralFormat }}m²</span>
         <h3 style="margin-top: 20px">
           <router-link :to="`/ad/${ad._id}`">
-            {{ ad.titre }}
+            {{ ad.title }}
           </router-link>
           <div v-for="label in labelsButton" :key="label.text">
             <button type="button" class="btn btn-outline-primary"  id="favorite" @click="$emit('adUser-action', ad._id, label.text)"><i :class="label.icon"></i> {{ label.text }}</button>
           </div>
         </h3>
-        <h4><i class="fas fa-map-marker-alt"></i> {{ ad.ville }} </h4><span> {{ad.cp}} </span><br>
-        <h2> {{ ad.prix | numeralFormat }} €</h2><span> {{ ad.prixm2 | numeralFormat }} €/m²</span>
+        <h4><i class="fas fa-map-marker-alt"></i> {{ ad.city }} </h4><span> {{ ad.postalCode }} </span><br>
+        <h2> {{ ad.price | numeralFormat }} €</h2><span> {{ ad.pricem2 | numeralFormat }} €/m²</span>
         <div class="row" style="margin-top: 120px">
           <div class="col-3">
             <p>Surface</p>
-            <h3><i class="fas fa-ruler-combined"></i> {{ ad.surface | numeralFormat }}</h3>
+            <h3><i class="fas fa-ruler-combined"></i> {{ ad.buildingArea | numeralFormat }}</h3>
           </div>
           <div class="col-3">
             <p>Nb de pièces</p>
-            <h3><i class="fas fa-cube"></i> {{ ad.nbchambres }}</h3>
+            <h3><i class="fas fa-cube"></i> {{ ad.rooms }}</h3>
           </div>
           <div class="col-3">
             <p>Nb de chambres</p>
-            <h3><i class="fas fa-bed"></i> {{ ad.nbchambres }}</h3>
+            <h3><i class="fas fa-bed"></i> {{ ad.bedRooms }}</h3>
           </div>
           <div class="col-3">
             <p>Date de construction</p>
-            <h3><i class="far fa-calendar-alt"></i> {{ ad.date_construction }}</h3>
+            <h3><i class="far fa-calendar-alt"></i> {{ ad.constructionDate }}</h3>
           </div>
         </div>
       </div>
@@ -58,11 +58,11 @@ export default {
   },
   methods: {
     getImgUrl (ad) {
-      if (!ad.img) {
+      if (!ad.pictures) {
         return 'https://fr.zenit.org/wp-content/uploads/2018/05/no-image-icon.png'
       }
-      if (ad.img !== undefined || ad.img.length > 0) {
-        return ad.img[0]
+      if (ad.pictures !== undefined || ad.pictures.length > 0) {
+        return ad.pictures[0]
       }
       return 'https://fr.zenit.org/wp-content/uploads/2018/05/no-image-icon.png'
     }

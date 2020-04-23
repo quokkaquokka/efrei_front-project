@@ -14,34 +14,34 @@ export default {
       payload: Joi.object({
         name: Joi.string(),
         postalCode: Joi.string().allow(null),
-        prixMoyen: Joi.number().min(0).max(1000000),
-        locataires: Joi.number().min(0).max(100),
-        proprietaires: Joi.number().min(0).max(100),
-        departement: Joi.string().allow(null),
-        tailleLogement: Joi.array()
+        averagePrice: Joi.number().min(0).max(1000000),
+        tenants: Joi.number().min(0).max(100),
+        owners: Joi.number().min(0).max(100),
+        department: Joi.string().allow(null),
+        sizeBuildings: Joi.array()
           .items(
             Joi.object({
               name: Joi.string(),
-              pourcentage: Joi.number().min(0).max(100),
-              prix: Joi.number().min(0)
+              percent: Joi.number().min(0).max(100),
+              price: Joi.number().min(0)
           })),
-          catSocioprofessionelle: Joi.array()
+          socioProfessionalCat: Joi.array()
           .items(
             Joi.object({
               name: Joi.string(),
-              chiffre: Joi.number().min(0).max(100),
+              percent: Joi.number().min(0).max(100),
           })),
-        eta_scolaires: Joi.array()
+        schools: Joi.array()
         .items(
           Joi.object({
             name: Joi.string(),
-            nb: Joi.number().integer(),
+            number: Joi.number().integer(),
         })),
         parkings: Joi.array()
         .items(
           Joi.object({
             name: Joi.string(),
-            chiffre: Joi.number().min(0),
+            number: Joi.number().min(0),
         }))
       }).unknown()
     },

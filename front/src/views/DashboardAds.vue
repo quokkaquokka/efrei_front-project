@@ -81,6 +81,7 @@ export default {
   background-color: #F9F9F9;
   max-width: 250px
 }
+
 #city{
   margin-left: auto;
   margin-right: auto;

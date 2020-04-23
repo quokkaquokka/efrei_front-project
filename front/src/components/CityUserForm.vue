@@ -7,29 +7,28 @@
         <div class="form-group row">
           <label class="col-form-label">Nombre d'hôtels dans la ville</label>
           <div class="col-sm-5">
-            <input type="text" class="form-control" v-model='citiesUser.nbHotels'>
+            <input type="text" class="form-control" v-model='citiesUser.hotelsCount'>
           </div>
         </div>
       </form>
     </div>
-    <EditableTable :dataForm="attractivites" :toComplete="citiesUser.attractivites"></EditableTable>
-    <PillsTabForm :dataForm="quartiers" :itemToComplete="citiesUser.quartiers"></PillsTabForm>
-    <PillsTabForm :dataForm="routes" :itemToComplete="citiesUser.routes"></PillsTabForm>
-    <PillsTabForm :dataForm="transports" :itemToComplete="citiesUser.transports"></PillsTabForm>
+    <EditableTable :dataForm="attractivities" :toComplete="citiesUser.attractivities"></EditableTable>
+    <PillsTabForm :dataForm="streets" :itemToComplete="citiesUser.streets"></PillsTabForm>
+    <PillsTabForm :dataForm="roads" :itemToComplete="citiesUser.roads"></PillsTabForm>
+    <PillsTabForm :dataForm="publicTransports" :itemToComplete="citiesUser.publicTransports"></PillsTabForm>
      <div class="ad" id="item">
       <form>
         <h4>Démographie</h4>
         <div class="form-group row">
           <label class="col-form-label">Commentaire sur la démographie</label>
           <div class="col-sm-7">
-            <input type="text" class="form-control" v-model='citiesUser.demographie' placeholder='Ex: Hopital'>
+            <input type="text" class="form-control" v-model='citiesUser.demography' placeholder='Ex: Hopital'>
           </div>
         </div>
       </form>
     </div>
     <button type="button" class="btn btn-outline-primary mt-3" @click='save' style="float: right">Enregistrer</button>
   </div>
-
 </template>
 
 <script>
@@ -50,35 +49,35 @@ export default {
     }
   },
   data: () => ({
-    quartiers: {
-      titre: 'Quartiers',
+    streets: {
+      title: 'Quartiers',
       description: 'Ici, vous pouvez sauvegarder les quarties de la ville, les lieux où vous voudrez acheter.',
       label: 'Nom du quartier',
       placeHolder: 'Ex: rue des coquettes'
     },
-    routes: {
-      titre: 'Routes',
+    roads: {
+      title: 'Routes',
       description: 'Ici, vous pouvez sauvegarder les grands axes routiers qui menent jusqu\'à ville.',
       label: 'Nom de la route',
       placeHolder: 'Ex: A6'
     },
-    transports: {
-      titre: 'Transports',
+    publicTransports: {
+      title: 'Transports',
       description: 'Ici, vous pouvez sauvegarder les transports de la ville et menant jusqu\'à la ville.',
       label: 'Nom du transport',
       placeHolder: 'Ex: sncf'
     },
     hotels: {
-      titre: 'Hôtels',
+      title: 'Hôtels',
       labels: ['Nom', 'Prix/nuit'],
-      keyObj: ['name', 'prix'],
+      keyObj: ['name', 'price'],
       placeHolders: ['Ex: Ibis', 'Ex: 75€'],
       typeInputs: ['text', 'text']
     },
-    attractivites: {
-      titre: 'Attractivités',
+    attractivities: {
+      title: 'Attractivités',
       labels: ['Nom', 'Nombre', 'Description'],
-      keyObj: ['name', 'nb', 'description'],
+      keyObj: ['name', 'number', 'description'],
       placeHolders: ['Ex: Hopital', 'Ex: 1', 'Ex: spécilisé en détection de tumeur'],
       typeInputs: ['text', 'number', 'text']
     }
@@ -98,7 +97,7 @@ export default {
       } else {
         // il faut faire un create
         this.citiesUser.userId = this.getUser._id
-        this.citiesUser.villeId = this.cityId
+        this.citiesUser.cityId = this.cityId
         await this.createCityUser({ cityUser: this.citiesUser })
         router.replace('/cities')
       }

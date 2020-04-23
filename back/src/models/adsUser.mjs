@@ -9,7 +9,7 @@ const COLLECTION_NAME = 'adsUser'
 Example Model
 {
   "_id":5e768b1c9d44000ae0e09b90",
-  "annonceId":"51c9d4400e7332c400a38461",
+  "adId":"51c9d4400e7332c400a38461",
   "userId":"5e734a0a3846ab1c9d440009",
   "adresse":"Pont de Kervaric, 56100 Lorient",
   "autre":"a visiter en juillet",
@@ -57,41 +57,41 @@ Example Model
 */
 
 const MODEL = {
-    annonceId: null,
-    userId: null,
-    adresse: null,
-    prixProposition: null,
-    autre: '',
-    pieces: [],
-    travauxGeneraux: [],
-    locationType: {
-        LN: {
-        name: 'Location longue durée vide',
-        prix: null
-        },
-        LC: {
-        name: 'Colocation',
-        prixChambre: null,
-        nbChambres: null
-        },
-        LM: {
-        name: 'Location longue durée meublé',
-        prix: null
-        },
-        LM_LCD: {
-        name: 'Location mixte (meublé + courte durée)',
-        prixLongueDuree: null,
-        prixNuit: null,
-        nbChambres: null,
-        nbMoisCourteDuree: 2,
-        minNbNuit: 20
-        },
-        LCD: {
-        name: 'Location courte durée meublé',
-        typeLogements: [],
-        minNbNuit: 20
-        }
+  adId: null,
+  userId: null,
+  address: null,
+  propositionPrice: null,
+  comment: '',
+  rooms: [],
+  generalWorks: [],
+  locationType: {
+    LN: {
+      name: 'Location longue durée vide',
+      price: null
+    },
+    LC: {
+      name: 'Colocation',
+      bedRoomPrice: null,
+      countBedRoom: null
+    },
+    LM: {
+      name: 'Location longue durée meublé',
+      price: null
+    },
+    LM_LCD: {
+      name: 'Location mixte (meublé + courte durée)',
+      priceLM: null,
+      pricePerNight: null,
+      countBedRoom: null,
+      countMonthLCD: 2,
+      minNumberNight: 20
+    },
+    LCD: {
+      name: 'Location courte durée meublé',
+      logementsType: [],
+      minNumberNight: 20
     }
+  }
 }
 
 const getAdsUser = async (uid = undefined) => {
@@ -101,7 +101,7 @@ const getAdsUser = async (uid = undefined) => {
 
 const getAdUser = async(aid = undefined, uid = undefined) => {
   if(uid === undefined || aid === undefined) return []
-  const data = await mongodb.fetch(COLLECTION_NAME, {'userId': uid, 'annonceId': aid})
+  const data = await mongodb.fetch(COLLECTION_NAME, {'userId': uid, 'adId': aid})
   return data[0]
 }
 
@@ -118,7 +118,7 @@ const deleteAdUserbyAdId = async (id = undefined) => {
       n: 0
     }
     if(id === undefined) return result
-    return await mongodb.remove(COLLECTION_NAME, { 'annonceId': id })
+    return await mongodb.remove(COLLECTION_NAME, { 'adId': id })
   }
 
 const insertAdUser = async adUser => {

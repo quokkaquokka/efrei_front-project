@@ -59,7 +59,7 @@ export default {
       await this.fetchCitiesUser({ uid: this.user._id })
       const citiesUsr = this.getCitiesUser
       const citiesId = _.reduce(citiesUsr, (acc, e) => {
-        acc.push(e.villeId)
+        acc.push(e.cityId)
         return acc
       }, [])
       await this.fetchCitiesbyIds({ ids: citiesId })
@@ -71,7 +71,7 @@ export default {
       await this.fetchAdsUser({ uid: this.user._id })
       const adsUsr = this.getAdsUser
       const adsId = _.reduce(adsUsr, (acc, e) => {
-        acc.push(e.annonceId)
+        acc.push(e.adId)
         return acc
       }, [])
       await this.fetchAds()
@@ -81,7 +81,7 @@ export default {
   async mounted () {
     await this.fetchCitiesUser({ uid: this.user._id })
     const citiesId = _.reduce(this.citiesUser, (acc, e) => {
-      acc.push(e.villeId)
+      acc.push(e.cityId)
       return acc
     }, [])
     await this.fetchCitiesbyIds({ ids: citiesId })
@@ -89,7 +89,7 @@ export default {
     await this.fetchAds()
     await this.fetchAdsUser({ uid: this.user._id })
     const adsId = _.reduce(this.adsUser, (acc, e) => {
-      acc.push(e.annonceId)
+      acc.push(e.adId)
       return acc
     }, [])
     this.adsbyId = this.getAdsbyIds(adsId)

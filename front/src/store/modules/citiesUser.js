@@ -28,7 +28,7 @@ const mutations = {
 
 const getters = {
   getCityUserByCityId: state => id => {
-    return state.citiesUser.find(_ => _.villeId === id)
+    return state.citiesUser.find(_ => _.cityId === id)
   },
   getCitiesUser: state => {
     return state.citiesUser

@@ -47,7 +47,7 @@ export default {
     async addCitiesUser (cityId) {
       if (this.isAuthenticated) {
         const cityUser = {
-          villeId: cityId,
+          cityId: cityId,
           userId: this.getUser._id
         }
         await this.createCityUser({ cityUser: cityUser })
@@ -69,9 +69,9 @@ export default {
   background-color: #F9F9F9;
   max-width: 250px
 }
+
 #city{
   margin-left: auto;
   margin-right: auto;
 }
-
 </style>

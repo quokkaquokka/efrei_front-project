@@ -63,7 +63,7 @@ Example Model
       "chiffre": 7.8
     }
   ],
-  "eta_scolaires": [
+  "schools": [
     {
       "name": "Ecole primaire",
       "nb": 24
@@ -94,13 +94,13 @@ Example Model
 const MODEL = {
   name: null,
   postalCode: null,
-  prixMoyen: null,
-  tailleLogement: [],
-  locataires: null,
-  proprietaires: null,
-  departement: null,
-  catSocioprofessionelle: [],
-  eta_scolaires: [],
+  averagePrice: null,
+  sizeBuildings: [],
+  tenants: null,
+  owners: null,
+  department: null,
+  socioProfessionalCat: [],
+  schools: [],
   parkings: []
 }
 

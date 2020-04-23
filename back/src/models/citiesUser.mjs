@@ -6,15 +6,14 @@ const COLLECTION_NAME = 'citiesUser'
 
 const MODEL = {
   userId: null,
-  villeId: null,
-  prixMoyen: null,
+  cityId: null,
   hotels: [],
-  nbHotels: null,
-  quartiers: [],
-  attractivites: [],
-  routes: [],
-  transports: [],
-  demographie: null
+  hotelsCount: null,
+  streets: [],
+  attractivities: [],
+  roads: [],
+  publicTransports: [],
+  demography: null
 }
 /*
 
@@ -22,7 +21,7 @@ Example Model
 {
   "_id": "5e9f787fad32d54cc31a8eii",
   "userId":"5e9d5ffc5b9rth6789yui6",
-  "villeId":"5e7332071c40000a384609d4",
+  "cityId":"5e7332071c40000a384609d4",
   "prixMoyen":null,
   "hotels":[
     {"name":"Campanile","prix":"50"},
@@ -54,7 +53,7 @@ const getCitiesUser = async (uid = undefined) => {
 
 const getCityUser = async(uid = undefined, cid = undefined) => {
   if(uid === undefined || cid === undefined) return []
-  const data = await mongodb.fetch(COLLECTION_NAME, {'userId': uid, 'villeId': cid})
+  const data = await mongodb.fetch(COLLECTION_NAME, {'userId': uid, 'cityId': cid})
   return data[0]
 }
 
@@ -76,7 +75,7 @@ const deleteCityUserbyCityId = async (id = undefined) => {
     n: 0
   }
   if(id === undefined) return result
-  return await mongodb.remove(COLLECTION_NAME, {'villeId': id})
+  return await mongodb.remove(COLLECTION_NAME, {'cityId': id})
 }
 
 const updateCityUser = async (cityUser = undefined) => {

@@ -1,6 +1,6 @@
 <template>
   <div class="ad" id="item">
-    <h4 style="display: block">{{ dataForm.titre }}</h4>
+    <h4 style="display: block">{{ dataForm.title }}</h4>
       <div v-for="item in itemToComplete" :key="item" id="pills">
         <button class="badge badge-pill badge-info" id="pill" v-on:click="deletePills(item)">{{ item }}<i class="fas fa-times"></i></button>
       </div>
@@ -40,10 +40,12 @@ export default {
   }
 }
 </script>
+
 <style>
 #pill {
   border: 0
 }
+
 .fas.fa-times {
   margin-left: 5px;
 }

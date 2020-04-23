@@ -40,14 +40,14 @@ export default {
       itemSearch: null
     },
     searchAdvanced: {
-      prix: 0,
-      surface: 0,
-      prixm2: 0,
-      ancien: true,
-      neuf: true,
-      maison: true,
-      appartement: true,
-      terrain: true
+      price: 0,
+      buildingArea: 0,
+      pricem2: 0,
+      oldBuilding: true,
+      newBuilding: true,
+      house: true,
+      appartment: true,
+      land: true
     }
   }),
   async mounted () {
@@ -62,13 +62,13 @@ export default {
     ...mapActions('adsUser', ['createAdUser']),
     async searchAction () {
       const data = {
-        ville: this.searchAttributes.itemSearch
+        city: this.searchAttributes.itemSearch
       }
       this.fetchAds(data)
     },
     async searchActionAdvanced () {
       const data = {
-        ville: this.searchAttributes.itemSearch,
+        city: this.searchAttributes.itemSearch,
         searchAdvanced: this.searchAdvanced
       }
       this.fetchAds(data)
@@ -76,7 +76,7 @@ export default {
     async addAdUser (id, label) {
       if (this.isAuthenticated) {
         const adUser = {
-          annonceId: id,
+          adId: id,
           userId: this.getUser._id
         }
         await this.createAdUser({ adUser: adUser })
@@ -86,7 +86,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style>

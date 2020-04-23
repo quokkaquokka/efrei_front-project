@@ -5,17 +5,17 @@
         <div>
           <h4>Informations générales</h4><br>
           <FormRow :dataForm="name" v-model="city.name" ></FormRow>
-          <FormRow :dataForm="departement" v-model="city.departement"></FormRow>
+          <FormRow :dataForm="departement" v-model="city.department"></FormRow>
           <FormRow :dataForm="postalCode" v-model="city.postalCode"></FormRow>
-          <FormRow :dataForm="prixMoyen" v-model="city.prixMoyen" inputType="number"></FormRow>
-          <FormRow :dataForm="locataires" v-model="city.locataires" inputType="number"></FormRow>
+          <FormRow :dataForm="prixMoyen" v-model="city.averagePrice" inputType="number"></FormRow>
+          <FormRow :dataForm="locataires" v-model="city.tenants" inputType="number"></FormRow>
         </div>
       </form>
     </div>
-    <EditableTable :dataForm="tailleLogement" :toComplete="city.tailleLogement"> </EditableTable>
-    <EditableTable :dataForm="catSocioprofessionelle" :toComplete="city.catSocioprofessionelle"> </EditableTable>
+    <EditableTable :dataForm="sizeBuildings" :toComplete="city.sizeBuildings"> </EditableTable>
+    <EditableTable :dataForm="socioProfessionalCat" :toComplete="city.socioProfessionalCat"> </EditableTable>
     <EditableTable :dataForm="parkings" :toComplete="city.parkings"> </EditableTable>
-    <EditableTable :dataForm="eta_scolaires" :toComplete="city.eta_scolaires"> </EditableTable>
+    <EditableTable :dataForm="schools" :toComplete="city.schools"> </EditableTable>
     <button v-if="!$route.params.id" type="button" class="btn btn-outline-primary mt-3" @click='addCity' style="float: right">Ajouter la ville</button>
     <button v-if="$route.params.id" type="button" class="btn btn-outline-primary mt-3" @click='editCity' style="float: right">Modifier la ville</button>
   </div>
@@ -33,45 +33,45 @@ export default {
   data: () => ({
     city: {
       name: null,
-      departement: null,
+      department: null,
       postalCode: null,
-      prixMoyen: 1,
-      locataires: 1,
-      tailleLogement: [],
-      catSocioprofessionelle: [],
+      averagePrice: 1,
+      tenants: 1,
+      sizeBuildings: [],
+      socioProfessionalCat: [],
       parkings: [],
-      eta_scolaires: []
+      schools: []
     },
     name: { title: 'Nom de la ville', placeholder: 'Ex: Villejuif' },
     departement: { title: 'Département', placeholder: 'Ex: Val-de-Marne' },
     postalCode: { title: 'Code Postal', placeholder: 'Ex: 94800' },
     prixMoyen: { title: 'Prix moyen', placeholder: 'Ex: 5359' },
     locataires: { title: 'locataires (%)', placeholder: 'Ex: 61.2' },
-    tailleLogement: {
-      titre: 'Tailles de logement',
+    sizeBuildings: {
+      title: 'Tailles de logement',
       labels: ['Nom', 'Pourcentage', 'Prix (€)'],
-      keyObj: ['name', 'pourcentage', 'prix'],
+      keyObj: ['name', 'percent', 'price'],
       placeHolders: ['Ex: T1', 'Ex: 4.8', 'Ex: 380'],
       typeInputs: ['text', 'number', 'number']
     },
-    catSocioprofessionelle: {
-      titre: 'Catégories socio-professionnelles',
+    socioProfessionalCat: {
+      title: 'Catégories socio-professionnelles',
       labels: ['Nom', 'Pourcentage'],
-      keyObj: ['name', 'chiffre'],
+      keyObj: ['name', 'percent'],
       placeHolders: ['Ex: Actifs', 'Ex: 53'],
       typeInputs: ['text', 'number']
     },
-    eta_scolaires: {
-      titre: 'Les établissements scolaires',
+    schools: {
+      title: 'Les établissements scolaires',
       labels: ['Nom', 'Nombre'],
-      keyObj: ['name', 'nb'],
+      keyObj: ['name', 'number'],
       placeHolders: ['Ex: école primaire', 'Ex: 23'],
       typeInputs: ['text', 'number']
     },
     parkings: {
-      titre: 'Parkings',
+      title: 'Parkings',
       labels: ['Nom', 'Pourcentage'],
-      keyObj: ['name', 'chiffre'],
+      keyObj: ['name', 'number'],
       placeHolders: ['Ex: Ménages ayant un parking', 'Ex: 51'],
       typeInputs: ['text', 'number']
     }
@@ -90,8 +90,8 @@ export default {
     ...mapMutations('cities', ['addCity']),
     async addCity () {
       this.city.prixMoyen = parseInt(this.city.prixMoyen, 10)
-      this.city.locataires = parseInt(this.city.locataires, 10)
-      this.city.proprietaires = 100 - this.city.locataires
+      this.city.tenants = parseInt(this.city.tenants, 10)
+      this.city.owners = 100 - this.city.tenants
       await this.createCity({ city: this.city })
       this.$router.push('/dashcities')
     },

@@ -28,7 +28,7 @@ const mutations = {
 
 const getters = {
   getAdUserByAdId: state => id => {
-    return state.adsUser.find(_ => _.annonceId === id)
+    return state.adsUser.find(_ => _.adId === id)
   },
   getAdsUser: state => {
     return state.adsUser

@@ -18,11 +18,6 @@ export default {
     righAction: Function,
     rightButton: Object,
     search: Object
-  },
-  methods: {
-    async submit () {
-      this.function()
-    }
   }
 }
 </script>
