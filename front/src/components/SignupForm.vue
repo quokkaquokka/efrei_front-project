@@ -4,6 +4,9 @@
       <div class="alert alert-danger" role="alert" v-if="error">
         {{ error }}
       </div>
+      <div class="alert alert-success" role="alert" v-if="validate">
+        {{ validate }}
+      </div>
       <div class="input-group mb-3">
         <div class="input-group-append">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -44,6 +47,7 @@ export default {
   data () {
     return {
       error: null,
+      validate: null,
       email: '',
       password: '',
       firstname: '',
@@ -58,15 +62,18 @@ export default {
     ...mapActions('user', ['signup']),
     ...mapMutations('user', ['AUTH_SUCCESS', 'AUTH_ERROR']),
     async register () {
-      await this.signup({
+      const { data } = await this.signup({
         email: this.email,
         password: this.password,
         firstname: this.firstname,
         lastname: this.lastname
       })
-      if (this.status) {
+      if (!data) {
         this.error = 'Inscription échouée. Adresse mail incomplète ou déjà utilisée.'
         setTimeout(() => { this.error = '' }, 3000)
+      } else {
+        this.validate = 'Votre incription a bien été effectué, vous pouvez désormais vous connecter.'
+        setTimeout(() => { this.validate = '' }, 3000)
       }
     }
   }

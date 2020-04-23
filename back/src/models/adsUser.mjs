@@ -62,7 +62,7 @@ const MODEL = {
   address: null,
   propositionPrice: null,
   comment: '',
-  rooms: [],
+  roomsWorks: [],
   generalWorks: [],
   locationType: {
     LN: {

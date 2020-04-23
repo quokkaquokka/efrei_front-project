@@ -56,12 +56,10 @@ const actions = {
   },
 
   async signup ({ commit }, { email, password, firstname, lastname }) {
-    commit('AUTH_REQUEST')
     try {
-      const { data } = await axios.post(api('/auth/signup'), { email, password, firstname, lastname })
-      commit('AUTH_SUCCESS', data)
+      return await axios.post(api('/auth/signup'), { email, password, firstname, lastname })
     } catch (err) {
-      commit('AUTH_ERROR')
+      return err
     }
   },
 
@@ -110,6 +108,9 @@ const actions = {
 }
 
 const mutations = {
+  AUTH_INSCRIPTION (state) {
+    state.status = 'error'
+  },
   AUTH_REQUEST (state) {
     state.status = 'loading'
   },

@@ -66,7 +66,7 @@ const MODEL = {
   equipments: [],
   areaLand: 0,
   rooms: null,
-  bebRooms: null,
+  bedRooms: null,
   constructionDate: 'N.C'
 }
 
